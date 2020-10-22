@@ -32,7 +32,13 @@ Splnění bodu 1 a 3 zadání.
 Umělá inteligence
 
 
-**Literatura:**
+**Literatura:** (poslaná)
 
 * https://www.researchgate.net/publication/221404321_Automatic_Generation_of_Four-part_Harmony
-
+* https://is.cuni.cz/webapps/zzp/download/120353489
+* https://towardsdatascience.com/generating-piano-music-with-dilated-convolutional-neural-networks-d81d02e1dda6
+* https://deepmind.com/blog/article/wavenet-generative-model-raw-audio
+* https://arxiv.org/abs/2001.02360
+* https://arxiv.org/abs/2002.10266
+* https://arxiv.org/abs/2002.02393
+* https://arxiv.org/abs/1712.01011
