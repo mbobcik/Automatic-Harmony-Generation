@@ -26,6 +26,11 @@
 
 Splnění bodu 1 a 3 zadání.
 
+**Počet normostran:** 
+
+| Min |    Opt   | Max |
+|:---:|:--------:|:---:|
+|  50 | 80 - 100 | 120 |
 
 **Kategorie:**
 
