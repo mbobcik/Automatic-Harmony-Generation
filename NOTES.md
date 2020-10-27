@@ -1,6 +1,6 @@
 # Poznámky
 
-## Formát not
+## Formáty not
 
 * ABC notation
 
@@ -10,3 +10,13 @@ https://github.com/colxi/midi-parser-js
 * __GUIDO__ - https://en.wikipedia.org/wiki/GUIDO_music_notation
 
 * GNU LilyPond - https://en.wikipedia.org/wiki/LilyPond
+
+
+## Machine Learning Frameworky (Python)
+
+* TensorFlow
+
+* Keras =  Python interface for artificial neural networks. Keras acts as an interface for the TensorFlow library.
+
+* PyTorch - based on the Torch library
+    * nn module -  for defining complex neural networks
