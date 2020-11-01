@@ -20,3 +20,5 @@ https://github.com/colxi/midi-parser-js
 
 * PyTorch - based on the Torch library
     * nn module -  for defining complex neural networks
+
+* Caffe - merged into PyTorch ( https://en.wikipedia.org/wiki/Caffe_(software) )
