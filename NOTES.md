@@ -22,3 +22,13 @@ https://github.com/colxi/midi-parser-js
     * nn module -  for defining complex neural networks
 
 * Caffe - merged into PyTorch ( https://en.wikipedia.org/wiki/Caffe_(software) )
+
+## Nezařazené
+
+* HMM = Hidden Markov Model
+
+* HMM-based modely hojně využívány při generování akordů před současnou érou Deep Learningu(comparativeStudy)
+
+* asi bude lepší nepracovat s konkrétníma akordama, ale se stupni tóniny. a teprve po vygenerování převést podle potřeby do tóniny
+
+* zakomponovat i funkci akordů do učení (tónika, dominanta, subdominanta, ostatní) (comparativeStudy, str. 8)
