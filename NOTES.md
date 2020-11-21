@@ -10,6 +10,7 @@ https://github.com/colxi/midi-parser-js
 * __GUIDO__ - https://en.wikipedia.org/wiki/GUIDO_music_notation
 
 * GNU LilyPond - https://en.wikipedia.org/wiki/LilyPond
+    * https://pypi.org/project/python-ly/
 
 
 ## Machine Learning Frameworky (Python)
@@ -23,6 +24,8 @@ https://github.com/colxi/midi-parser-js
 
 * Caffe - merged into PyTorch ( https://en.wikipedia.org/wiki/Caffe_(software) )
 
+
+https://towardsdatascience.com/pytorch-vs-tensorflow-spotting-the-difference-25c75777377b
 ## Nezařazené
 
 * HMM = Hidden Markov Model
