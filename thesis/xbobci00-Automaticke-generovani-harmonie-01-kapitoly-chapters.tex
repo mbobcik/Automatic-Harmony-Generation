@@ -80,8 +80,8 @@ Alterace je pak shrnující název pro zvyšování a snižování tónů.
 Zvýšení tónu značíme příponou -is v jeho názvu.
 Naopak snížení označujeme příponou -es.
 Existují ovšem různé výjimky.
-Například snížením tónů e a a získáme es, respektive as.
-Pro snížené h se, místo hes, používá název b.\cite{zenkl}\par
+Například snížením tónů~e~a~a získáme es, respektive as.
+Pro snížené h se, místo hes, používá název~b.\cite{zenkl}\par
 
 Alterace posunuje tón vždy právě o půltón, 
 což je nejmenší vzdálenost mezi dvěma tóny užívaná v naší hudbě.
@@ -99,14 +99,56 @@ Těmto tónům říkáme enharmonické, enharmonická záměna je pak nahrazení
     \includegraphics[width=0.4\linewidth]{obrazky/klaviatura.jpg}\\[1pt]  
     \caption{Přehledné uspořádání tónů a půltónů v oktávě \cite{orientaceNaKlaviature}}    
     \label{obrazekRozlozeniKlaviatury}
-  \end{figure*}
+\end{figure*}
 
 \section*{Noty}
-\halfNote{} půlová nota
 %   noty (délky, výšky)
-%   akordy (?)
+Alfabetické znaky nejsou pro značení tónů dostatečné, protože popisují pouze výšku tónu.
+Pro hru na hudební nástroj, nebo skládání hudby je potřeba specifikovat také zbývající vlastnosti.
+Po staletí trvajícím vývoji se ustálil a používá se notopis.
+Základem jsou noty a notová osnova, kterou tvoří pět linek a čtyři mezery.
+Noty se zapisují na linky i do mezer.
+Takto lze zapsat pouze devět not.
+Notovou osnovu však můžeme rozšířit pomocnými linkami nad, popřípadě pod notovou osnovou. 
+Pomocné linky zapisujeme pouze tak dlouhé, jak je nezbytně nutné.
+Pro snadnou orientaci v osnově se v praxi počítají linky a mezery směrem nahoru (s vyjímkou pomocných linek pod osnovou). 
+Linky a mezery se počítají zvlášť. 
+První mezera je mezi první a druhou linkou.\par
+
+\label{ TODO Obrazek notove osnovy} 
+
+Samotné noty jsou písemné značky pro tóny.
+Tvar noty vyjadřuje délku noty a pozice v notové osnově její výšku.
+Nota se skládá z několika částí.
+Hlavička určuje pozici noty, a může být buď vyplněná ( \halfNote ), nebo nevyplněná ( \quarterNote ). 
+Nožka opět buď může být, a nebo nemusí ( \wholeNote ). 
+Pokud nota nožku má, pak ji, u not na třetí, prostřední lince a vyšších, píšeme směrem dolů ( \halfNoteDown ),
+a naopak u nižších not směrem nahoru.
+I toto pravidlo má ovšem nějaké vyjímky.
+Poslední částí noty je praporec, těch může mít nota nula až čtyři ( \eighthNote \sixteenthNote \dots ).
+Pokud je za sebou víc not s praporci, lze je spojit, a praporce nahradit trámci ( \twoBeamedQuavers )
+V hudbě se používají tyto základní noty:
+
+\begin{itemize}
+    \item \wholeNote celá
+    \item \halfNote \halfNoteDown půlová
+    \item \quarterNote \quarterNoteDown čtvrťová
+    \item \eighthNote \eighthNoteDown osminová
+    \item \sixteenthNote \sixteenthNote šestnáctinová
+    \item \thirtysecondNote \thirtysecondNoteDown dvaatřicetinová
+    \item \sixtyfourthNote \sixtyfourthNoteDown čtyřiašedesátinová
+\end{itemize}
+
+Podle názvů not je zřejmé, že nota celá má délku dvou půlových not, čtyř čtvrtinových osmi osminových a tak dále.
+Nejbližší nižší nota má délku poloviční a nejbližší vyšší dvojnásobnou.\paragraph
+
+Jména (výšky) not v osnově jsou určeny takzvaným klíčem, který se píše vždy na začátek každého řádku.
+Klíčem se označuje pozici a jméno jedné notě a od ní se pojmenují ostatní v pořadí.
+Pojmenování se řídí hudební abecedou.
+
+% akordy (?)
 % melodie / harmonie
-%   tóniny a stupně
+% tóniny a stupně
 
 \chapter{Reprezentace dat}
 % ABC, MIDI, GUIDO ... viz NOTES.md
