@@ -1164,7 +1164,6 @@ Management}{\@fit@EN}%
   \usepackage{ae}
 \fi
 
-\usepackage{lilyglyphs}
 
 %--------------------------------------------------------
 % Oprava pro Čechy a Slováky -- vyžaduje aktuální balíčky!
