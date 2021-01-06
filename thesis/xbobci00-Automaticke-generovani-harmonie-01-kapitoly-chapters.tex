@@ -217,16 +217,32 @@ Tuto změnu značíme taktovým označením hned za taktovou čáru, kde změna 
 
 
 \chapter{Přehled přístupů automatické harmonizace}
-% viz 04_Automatic Melody Harmonization with Triad Chords - A Comparative Study.pdf
 Pojem automatická harmonizace melodie označuje disciplínu, která se zabývá tvorbou modelu, 
 který dokáže vygenerovat harmonický doprovod k dané melodii.
 Samotná harmonizace je složitý úkol, protože tu samou melodii můžeme harmonizovat mnoha různými způsoby.
 Správná harmonie závisí na subjektivním pocitu, hudebním žánru a dalších faktorech.
 V hudbě se ustálilo mnoho pouček a zákonů o tom, které akordy k sobě patří,
 a jak na sebe navazují.
-Často určují jemné nuance, či jsou podmíněny kulturním vlivem, což je pro stroj velmi obtížné zachytit.
+Často určují jemné nuance, či jsou podmíněny kulturním vlivem, což je pro stroj velmi obtížné zachytit.\cite{YinCheng_comparativeStudy}
+\par
+V této kapitole bude představeno několik přístupů právě k automatické harmonizaci.
 
-
+\section{Model založený na shodě šablon}
+Tento model nejdříve rozdělí všechny melodie z trénovací sady po polovinách taktů, 
+a pro každý, takto vytvořený segment vytvoří profil výšky tónů (Dále jen PCP\footnote{z anglického Pitch Class Profile}).\cite{YinCheng_comparativeStudy}
+PCP je dvanácti-dimenzionální binární vektor, 
+kde každá složka reprezentuje přítomnost každého z dvanácti možných půltónů v daném půl-taktu.\cite{fujishima}
+PCP nového segmentu se porovná s těmi z trénovací sady
+a spočítá se podobnostní skóre.
+Nový segment je pak označen takovým akordem,
+který měl jemu nejpodobnější segment v trénovací sadě -- s nejvyšším skóre.
+Jestliže má nejvyšší skóre několik segmentů.
+je výsledný akord vybrán náhodně s rovnoměrným rozložením pravděpodobnosti.
+Označení akordu je opět ve formě PCP, a to tak,
+že všechny tóny náležící akordu jsou nastaveny do 1.
+\par
+Nevýhodou tohoto modelu je, že určuje jednotlivé segmenty nezávisle bez toho,
+aby bral v úvahu sousední akordy, nebo postup akordů ve skladbě. \cite{YinCheng_comparativeStudy}
 
 \chapter{Strojové učení}
 % rešerše strojového učení, jak funguje
