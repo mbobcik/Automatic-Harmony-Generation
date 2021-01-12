@@ -229,20 +229,28 @@ V této kapitole bude představeno několik přístupů právě k automatické h
 
 \section{Model založený na shodě šablon}
 Tento model nejdříve rozdělí všechny melodie z trénovací sady po polovinách taktů, 
-a pro každý, takto vytvořený segment vytvoří profil výšky tónů (Dále jen PCP\footnote{z anglického Pitch Class Profile}).\cite{YinCheng_comparativeStudy}
+a pro každý, takto vytvořený segment vytvoří profil výšky tónů (dále jen PCP\footnote{z anglického Pitch Class Profile}).\cite{YinCheng_comparativeStudy}
 PCP je dvanácti-dimenzionální binární vektor, 
 kde každá složka reprezentuje přítomnost každého z dvanácti možných půltónů v daném půl-taktu.\cite{fujishima}
 PCP nového segmentu se porovná s těmi z trénovací sady
 a spočítá se podobnostní skóre.
 Nový segment je pak označen takovým akordem,
 který měl jemu nejpodobnější segment v trénovací sadě -- s nejvyšším skóre.
-Jestliže má nejvyšší skóre několik segmentů.
+Jestliže má nejvyšší skóre několik segmentů,
 je výsledný akord vybrán náhodně s rovnoměrným rozložením pravděpodobnosti.
 Označení akordu je opět ve formě PCP, a to tak,
 že všechny tóny náležící akordu jsou nastaveny do 1.
 \par
 Nevýhodou tohoto modelu je, že určuje jednotlivé segmenty nezávisle bez toho,
-aby bral v úvahu sousední akordy, nebo postup akordů ve skladbě. \cite{YinCheng_comparativeStudy}
+aby bral v úvahu sousední akordy, nebo postup akordů ve skladbě.\cite{YinCheng_comparativeStudy}
+
+\section{Skryté Markovovy modely}
+Jednou z nejpoužívanějších metod generování akordů a harmonizace melodie, 
+před současným rozšířením hlubokého učení, byly skryté Markovovy modely (dále HMM \footnote{z anglického Hidden Markov Model}).
+HMM jsou pravděpodobnostní nástroj s jehož pomocí lze modelovat sekvence se skrytými proměnnými.
+Označení akordů je považovano právě za skrytou proměnnou a 
+HMM se snaží odhadnout nejpravděpodobnější sekvenci akordů na k daným notám melodie.
+Narozdíl od předchozího přístupu tento model bere v úvahu předcházející akordy.\cite{YinCheng_comparativeStudy}
 
 \chapter{Strojové učení}
 % rešerše strojového učení, jak funguje
