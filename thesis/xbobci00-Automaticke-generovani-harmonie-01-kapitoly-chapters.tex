@@ -205,16 +205,12 @@ Tuto změnu značíme taktovým označením hned za taktovou čáru, kde změna 
 Čtyřčtvrťový takt se většinou nazývá celý, a místo zlomku je značen velkým písmenem C
 \cite{cmiral,zenkl}
 
-%\subsection*{Repetice}
-
-
 % akordy (?)
 % melodie / harmonie
 % tóniny a stupně
 
 \chapter{Reprezentace dat}
 % ABC, MIDI, GUIDO ... viz NOTES.md
-
 
 \chapter{Přehled přístupů automatické harmonizace}
 Pojem automatická harmonizace melodie označuje disciplínu, která se zabývá tvorbou modelu, 
@@ -248,13 +244,101 @@ aby bral v úvahu sousední akordy, nebo postup akordů ve skladbě.\cite{YinChe
 Jednou z nejpoužívanějších metod generování akordů a harmonizace melodie, 
 před současným rozšířením hlubokého učení, byly skryté Markovovy modely (dále HMM \footnote{z anglického Hidden Markov Model}).
 HMM jsou pravděpodobnostní nástroj s jehož pomocí lze modelovat sekvence se skrytými proměnnými.
-Označení akordů je považovano právě za skrytou proměnnou a 
+Označení akordů je považováno právě za skrytou proměnnou a 
 HMM se snaží odhadnout nejpravděpodobnější sekvenci akordů na k daným notám melodie.
-Narozdíl od předchozího přístupu tento model bere v úvahu předcházející akordy.\cite{YinCheng_comparativeStudy}
+Na rozdíl od předchozího přístupu tento model bere v úvahu předcházející akordy.\cite{YinCheng_comparativeStudy}
 
 \chapter{Strojové učení}
 % rešerše strojového učení, jak funguje
-% neuronové sítě
+Umělá inteligence dokázala relativně rychle řešit problémy, 
+které jsou pro člověka intelektuálně náročné, 
+ale jsou popsány formálními pravidly.
+Avšak pro člověka intuitivní \"problémy\" lze jen s těží formálně popsat.
+Strojové učení umožňuje počítači naučit se ze zkušeností
+a porozumět světu v souvislostech.
+Získáváním zkušeností je odbourán proces formálního zápisu veškerých vědomostí,
+které jsou k řešení problému potřeba.\cite{Goodfellow-et-al-2016}
+Harmonizace melodie je někde na půl cesty mezi těmito extrémy.
+Na jednu stranu popsána pravidly hudební nauky,
+na stranu druhou nejsou pravidla zcela striktní 
+a ponechávají skladateli volnou ruku.
+\par
+
+Strojové učení je v podstatě forma aplikované statistiky,
+s důrazem na odhad složitých funkcí počítačem.
+Většina algoritmů lze rozdělit do dvou kategorií -- učení s učitelem (supervised) 
+a učení bez učitele (unsupervised).
+Při učení s učitelem se algoritmus snaží nějakému vstupu přiřadit daný výstup
+na základě trénovací sady příkladů vstupů a výstupů.
+Trénovací výstupy může být obtížné získat automaticky,
+a proto musí být dodány člověkem, učitelem.
+Mezi algoritmy učící se s učitelem patří například Support Vector Machines,
+k-nejbližších sousedů, nebo rozhodovací stromy.\cite{Goodfellow-et-al-2016}
+\par
+
+Algoritmy bez učitele se učí pouze na základě vlastností objektů 
+a už nemají reflexi, zda se naučili správně, nebo ne.
+Učení bez učitele se zabývá extrakcí informací z rozdělení,
+u kterého nejsou potřeba člověkem označené trénovací data.
+Nejčastěji se jedná o odhad hustoty, odšumění dat s nějakým rozdělením,
+hledání střední hodnoty všech dat nebo shlukování dat do skupin podobných objektů.
+Hledáme tedy nejlepší reprezentaci dat.
+Tato reprezentace data zjednodušuje, ale tak, aby bylo zachováno co nejvíc informací.
+Mezi představitele tohoto přístupu patří například shlukování k-nejbližších sousedů, 
+analýza hlavních komponent nebo lineární regrese. 
+\cite{Goodfellow-et-al-2016}
+
+\section{Neuronové sítě}
+Neuronové sítě jsou množina algoritmů určených k rozpoznávání vzorů.
+Vzory rozumíme jakékoliv data, čísla, obrázky, zvuk, text a další.
+Ty musí být převedeny na vektory čísel, 
+které jsou následně použity jako vstup.\cite{Nicholson_NeuralNets}
+\par
+
+Neuronové sítě mají většinou několik propojených vrstev.
+První vrstva se také nazývá vstupní, 
+zatímco poslední je výstupní.
+Vrstvy mezi vstupní a výstupní jsou takzvaně skryté.
+Počet vrstev udává hloubku modelu, odtud také hluboké učení, 
+a velikost vektoru jeho šířku.
+
+\begin{figure*}[ht]\centering
+    \centering
+    \includegraphics[width=0.8\linewidth]{obrazky/NNSchema.png}\\[1pt]  
+    \caption{Schéma neuronové sítě}    
+    \label{obrazekSchemaNeuronoveSite}
+\end{figure*}
+
+
+Úkolem neuronové sítě je aproximovat neznámou funkci $ y=f'(x)$
+funkcí $ y=f(x;\theta )$, kde \emph{x} a \emph{y} značí vstup, respektive výstup.
+K hodnotě $\theta$ dojde neuronová síť tak,
+aby výsledný model nejlépe aproximoval původní funkci.
+Samotná funkce \emph{f} se skládá z několika zřetězených funkcí $f(x)=f^{(3)}(f^{(2)}(f^{(1)}(x)))$,
+kde $f^{(n)}$ označuje vrstvy sítě, jejichž vstupem je vektor z předchozí vrstvy 
+a výstupem je opět vektor.\cite{Goodfellow-et-al-2016}
+
+\subsection*{Neurony}
+Mnohem obvykleji jsou vrstvy reprezentovány uzly, které nazýváme neurony.
+Vstupem každého neuronu je celý vektor předchozí vrstvy 
+a výstupem je skalární hodnota, prvek výstupního vektoru jeho vrstvy.
+Paralelním výpočtem všech neuronů vrstvy je získán její výsledek.\cite{Goodfellow-et-al-2016}
+\par
+Každému vstupu neuronu je přiřazena váha, která jej buď posílí nebo utlumí.
+Suma všech váhovaných vstupů poté prochází takzvanou aktivační funkcí,
+která určuje jestli, a jak moc může signál pokračovat skrz síť.
+Pokud signál projde, pak o neuronu můžeme říct, že byl aktivován.\cite{Nicholson_NeuralNets}
+
+\begin{figure*}[ht]\centering
+    \centering
+    \includegraphics[width=0.8\linewidth]{obrazky/neuronSchema.png}\\[1pt]  
+    \caption{Schéma neuronu}    
+    \label{obrazekSchemaNeuronoveSite}
+\end{figure*}
+
+
+\section{Rekurentní neuronové sítě}
+
 % frameworky ... viz NOTES.md
 
 \chapter{Návrh systému}
