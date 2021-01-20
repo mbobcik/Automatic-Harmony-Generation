@@ -225,7 +225,8 @@ V této kapitole bude představeno několik přístupů právě k automatické h
 
 \section{Model založený na shodě šablon}
 Tento model nejdříve rozdělí všechny melodie z trénovací sady po polovinách taktů, 
-a pro každý, takto vytvořený segment vytvoří profil výšky tónů (dále jen PCP\footnote{z anglického Pitch Class Profile}).\cite{YinCheng_comparativeStudy}
+a pro každý, takto vytvořený segment vytvoří profil výšky tónů 
+(dále jen PCP\footnote{z anglického Pitch Class Profile}).\cite{YinCheng_comparativeStudy}
 PCP je dvanácti-dimenzionální binární vektor, 
 kde každá složka reprezentuje přítomnost každého z dvanácti možných půltónů v daném půl-taktu.\cite{fujishima}
 PCP nového segmentu se porovná s těmi z trénovací sady
@@ -336,8 +337,17 @@ Pokud signál projde, pak o neuronu můžeme říct, že byl aktivován.\cite{Ni
     \label{obrazekSchemaNeuronoveSite}
 \end{figure*}
 
+\label{TODO - Dopsat jak princip uceni NN}
 
 \section{Rekurentní neuronové sítě}
+Samotné neuronové sítě jsou pro některé typy problémů pořád příliš omezené.
+Jejich vstupem je vektor pevně dané velikosti, 
+výpočet probíhá v předem známém počtu kroků a na jeho konci je opět vektor pevné délky.
+Taková omezení neberou v úvahu proudová data, tedy sekvence na sobě závislých vektorů.
+Rekurentní sítě umožňují mít takovou sekvenci jako vstup i jako výstup.\cite{Karpathy_RNNs}.
+
+
+\section{LSTM}
 
 % frameworky ... viz NOTES.md
 
