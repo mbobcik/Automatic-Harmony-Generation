@@ -32,7 +32,7 @@ Následují cíle celé diplomové práce.
 
 Poté implementovat daný systém s pomocí vhodného frameworku pro neuronové sítě.
 Implementovaný systém je potřeba otestovat na vhodné datové sadě. 
-Datová sada bude obsahovat přepis rozličných písniček ze serveru \url{www.hooktheory.com}
+Ta bude obsahovat přepis rozličných písniček ze serveru \url{www.hooktheory.com}
 do formátu MIDI.
 Na závěr budou diskutovány výsledky testování a možné pokračování této práce.
 
@@ -278,7 +278,8 @@ Samotná harmonizace je složitý úkol, protože tu samou melodii můžeme harm
 Správná harmonie závisí na subjektivním pocitu, hudebním žánru a dalších faktorech.
 V hudbě se ustálilo mnoho pouček a zákonů o tom, které akordy k sobě patří,
 a jak na sebe navazují.
-Často určují jemné nuance, či jsou podmíněny kulturním vlivem, což je pro stroj velmi obtížné zachytit.\cite{YinCheng_comparativeStudy}
+Často určují jemné nuance, či jsou podmíněny kulturním vlivem, 
+což je pro stroj velmi obtížné zachytit.\cite{YinCheng_comparativeStudy}
 \par
 V této kapitole bude představeno několik přístupů právě k automatické harmonizaci.
 
@@ -411,7 +412,23 @@ Rekurentní sítě umožňují mít takovou sekvenci jako vstup i jako výstup.\
 % frameworky ... viz NOTES.md
 
 \chapter{Návrh systému}
+V této kapitole je představen návrh systému,
+který umožní automatické generování harmonie na základě známé melodie.
+Jak bylo napsáno, harmonie je souzvuk více zvuků najednou.
+Aby systém dokázal generovat tóny, které spolu opravdu souzní,
+musí obsahovat správně naučený model.
+
+
+
+\section{Vstup}
+Vstupem celého systému je MIDI soubor, obsahující melodii,
+pro kterou chceme vygenerovat harmonický doprovod.
+Neuronové sítě si ale s takovými soubory neumí moc poradit,
+a tak je soubor potřeba převést na vhodnější reprezentaci.
+
+
 % popis systému, který bude výstupem práce
+
 % vstupy
 % způsob práce
 % výstup

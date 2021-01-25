@@ -26,6 +26,7 @@ https://github.com/colxi/midi-parser-js
 
 
 https://towardsdatascience.com/pytorch-vs-tensorflow-spotting-the-difference-25c75777377b
+
 ## Nezařazené
 
 * HMM = Hidden Markov Model
@@ -35,3 +36,9 @@ https://towardsdatascience.com/pytorch-vs-tensorflow-spotting-the-difference-25c
 * asi bude lepší nepracovat s konkrétníma akordama, ale se stupni tóniny. a teprve po vygenerování převést podle potřeby do tóniny
 
 * zakomponovat i funkci akordů do učení (tónika, dominanta, subdominanta, ostatní) (comparativeStudy, str. 8)
+
+* Akordy jsou také zapsané v notovém zápise
+
+* Akordy jde hrát "vcelku", nebo rozloženě - jde to vidět v notách na basové lince
+
+* Jak zjistit tóninu melodie? (15) není to tak jednoduché
