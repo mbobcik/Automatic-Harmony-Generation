@@ -42,3 +42,7 @@ https://towardsdatascience.com/pytorch-vs-tensorflow-spotting-the-difference-25c
 * Akordy jde hrát "vcelku", nebo rozloženě - jde to vidět v notách na basové lince
 
 * Jak zjistit tóninu melodie? (15) není to tak jednoduché
+
+* pitch class profile x chromagram??
+
+* Popsat aktivační funkce, vložit několik grafů viz https://www.vutbr.cz/www_base/zav_prace_soubor_verejne.php?file_id=180895

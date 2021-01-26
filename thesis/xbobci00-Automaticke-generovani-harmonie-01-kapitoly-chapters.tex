@@ -284,6 +284,7 @@ což je pro stroj velmi obtížné zachytit.\cite{YinCheng_comparativeStudy}
 V této kapitole bude představeno několik přístupů právě k automatické harmonizaci.
 
 \section{Model založený na shodě šablon}
+\label{shodaSablon}
 Tento model nejdříve rozdělí všechny melodie z trénovací sady po polovinách taktů, 
 a pro každý, takto vytvořený segment vytvoří profil výšky tónů 
 (dále jen PCP\footnote{z anglického Pitch Class Profile}).\cite{YinCheng_comparativeStudy}
@@ -353,7 +354,8 @@ analýza hlavních komponent nebo lineární regrese.
 Neuronové sítě jsou množina algoritmů určených k rozpoznávání vzorů.
 Vzory rozumíme jakékoliv data, čísla, obrázky, zvuk, text a další.
 Ty musí být převedeny na vektory čísel, 
-které jsou následně použity jako vstup.\cite{Nicholson_NeuralNets}
+které jsou následně použity jako vstup.
+Tyto sítě se také nazývají dopředné (Feedforward Neural Networks)\cite{Nicholson_NeuralNets}
 \par
 
 Neuronové sítě mají většinou několik propojených vrstev.
@@ -380,7 +382,7 @@ kde $f^{(n)}$ označuje vrstvy sítě, jejichž vstupem je vektor z předchozí 
 a výstupem je opět vektor.\cite{Goodfellow-et-al-2016}
 
 \subsection*{Neurony}
-Mnohem obvykleji jsou vrstvy reprezentovány uzly, které nazýváme neurony.
+Mnohem obvykleji jsou vrstvy reprezentovány množinou uzlů, které nazýváme neurony.
 Vstupem každého neuronu je celý vektor předchozí vrstvy 
 a výstupem je skalární hodnota, prvek výstupního vektoru jeho vrstvy.
 Paralelním výpočtem všech neuronů vrstvy je získán její výsledek.\cite{Goodfellow-et-al-2016}
@@ -397,17 +399,30 @@ Pokud signál projde, pak o neuronu můžeme říct, že byl aktivován.\cite{Ni
     \label{obrazekSchemaNeuronoveSite}
 \end{figure*}
 
-\label{TODO - Dopsat jak princip uceni NN}
+\label{TODO - Dopsat princip uceni NN}
 
 \section{Rekurentní neuronové sítě}
 Samotné neuronové sítě jsou pro některé typy problémů pořád příliš omezené.
 Jejich vstupem je vektor pevně dané velikosti, 
 výpočet probíhá v předem známém počtu kroků a na jeho konci je opět vektor pevné délky.
 Taková omezení neberou v úvahu proudová data, tedy sekvence na sobě závislých vektorů.
-Rekurentní sítě umožňují mít takovou sekvenci jako vstup i jako výstup.\cite{Karpathy_RNNs}.
+Rekurentní sítě umožňují mít takovou sekvenci jako vstup, jako výstup, nebo jako obojí.\cite{Karpathy_RNNs}.
 
+\begin{figure*}[h]\centering
+    \centering
+    \includegraphics[width=0.6\linewidth]{obrazky/RNNSchema.png}\\[1pt]  
+    \caption{Schéma rekurentní neuronové sítě\cite{colah_lstm}}    
+    \label{obrazekSchemaRekurentniNeuronoveSite}
+\end{figure*}
 
 \section{LSTM}
+\label{lstmTeorie}
+Long Short-Term Network (dále jen LSTM), jsou speciálním druhem rekurentních neuronových sítí.
+Jsou schopny se naučit i dlouhodobější závislosti v sekvencích dat.
+S touto vlastností byly primárně navrženy.\cite{colah_lstm}
+\par
+Narozdíl od RNN mají LSTM čtyři vrstvy v jednom opakujícím se modulu.
+
 
 % frameworky ... viz NOTES.md
 
@@ -417,14 +432,50 @@ který umožní automatické generování harmonie na základě známé melodie.
 Jak bylo napsáno, harmonie je souzvuk více zvuků najednou.
 Aby systém dokázal generovat tóny, které spolu opravdu souzní,
 musí obsahovat správně naučený model.
-
-
+Ten bude pro každý půltakt generovat akord,
+který s ním ladí.
 
 \section{Vstup}
 Vstupem celého systému je MIDI soubor, obsahující melodii,
 pro kterou chceme vygenerovat harmonický doprovod.
 Neuronové sítě si ale s takovými soubory neumí moc poradit,
 a tak je soubor potřeba převést na vhodnější reprezentaci.
+Tou jsou vektory.
+Jak melodii převést na vektor bylo nastíněno v části \ref{shodaSablon}.
+Vstup bude tedy rozdělen po polovinách taktů, 
+a pro každý se spočítá jeho PCP -- dvanácti-dimenzionální vektor,
+který obsahuje jaké tóny a jak dlouho v daném půltaktu zní.
+Výsledná posloupnost vektorů bude vstupem modelu.
+
+\section{Model}
+Základem modelu strojového učení bude LSTM rekurentní neuronová síť.
+Díky nim se bude model učit nejenom na základě aktuálního vstupu,
+ale také bude brát v úvahu parametry předchozích stavů.
+Samotná rekurentní neuronová síť však tyto parametry nedrží dostatečně dlouho.
+Proto budou využity LSTM vrstvy, 
+které tuto limitaci vylepší.
+Jak již bylo naznačeno, 
+vstupní vektor má 12 dimenzí.
+Tolik tedy bude vstupních uzlů.
+Počet vnitřních vrstev bude empiricky vybrán na základě experimentů.
+\par
+Při učení modelu bude potřeba vyhodnotit jak moc se mýlil.
+Toho dosáhneme tak, že výslednou sekvenci porovnáme s
+testovací a porovnáme, v kolika případech se model spletl.
+
+
+
+\section{Výstup}
+Výstupem modelu bude stejný vektor jako na vstupu.
+Nyní ale bude PCP obsahovat jen tóny akordu, 
+který má znít v daném půltaktu.
+Pokud budeme brát v úvahu pouze kvintakordy (dur, moll, zvětšený, zmenšený),
+pak může mít výstup 48 možných stavů.
+Vezmeme-li v úvahu také možnost, že v daném půltaktu nehraje žádný akord,
+existuje 49 tříd.
+\par
+Výsledná sekvence akordů bude přidána k původní melodii
+a vytvoří se nový, harmonizovaný MIDI soubor.
 
 
 % popis systému, který bude výstupem práce
@@ -433,14 +484,14 @@ a tak je soubor potřeba převést na vhodnější reprezentaci.
 % způsob práce
 % výstup
 
-\chapter{Implementace}
+%%%\chapter{Implementace}
 % popis implementace
 
-\chapter{Experimenty}
+%%%\chapter{Experimenty}
 % experimentování s implementovaným systémem
 % představení výsledků
 
-\chapter{Diskuse}
+%%%\chapter{Diskuse}
 % diskuse výsledků
 % jak je použít
 % srovnání s cizími pracemi a papery
@@ -450,3 +501,12 @@ a tak je soubor potřeba převést na vhodnější reprezentaci.
 % shrnutí práce
 % možný budoucí vývoj práce
 % celkový přínos
+Cílem této práce bylo seznámit se s harmonizací známé melodie a s možností automatizace této činnosti za pomoci neuronových sítí.
+Následně navrhnout systém, který bude automatickou harmonizaci umožňovat.
+\par
+Základům hudby byla věnována první kapitola, 
+další se popisovala různé přístupy k automatické harmonizaci. Některé poznatky z těchto prací byly vybrány a použity v návrhu v následující kapitole.
+Na základě tohoto návrhu bude poté, ve výsledné diplomové práci, implementován systém a jeho neuronová síť s využitím frameworku PyTorch.
+Toto řešení bude, na základě testovacích dat, vyhodnoceno.
+V závěru budou diskutovány výsledky a možné pokračování této práce.
+
