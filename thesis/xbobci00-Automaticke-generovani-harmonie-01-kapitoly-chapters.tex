@@ -236,6 +236,19 @@ Mimo to má každý stupeň svůj funkční název:\cite{kofron}
     \item citlivý tón - tíhne k půltónovému pokračování k tónice
 \end{enumerate}
 
+\par
+Tóniny a stupnice mají stejné základní tóny, a od toho také jména.
+Opět, například pokud je tónina G dur, pak jejím základním tónem, tónikou je tón g.
+Tónina je volné pořadí tónů stupnice tvořící hudbu.
+Není nutné aby byly použity všechny tóny stupnice, 
+ale jejich uspořádání musí dát vyniknout tónice.
+Tónika se určuje sluchem pomocí tonálnícho cítění.
+Velmi často melodie tónikou začíná, nebo se k ní vrací.
+V závěru melodie bývá tónika uplatňována nejčastěji.
+V takovém případě působí melodie přesvědčivě uzavřena 
+a posluchač necítí potřebu dalšího pokračování.\cite{zenkl}
+\par
+
 \subsection{Durové stupnice}
 Základní durovou stupnicí je C dur (c, d, e, f, g, a, h, c).
 Durové, neboli tvrdé stupnice jsou charakteristické III. stupněm,
@@ -350,11 +363,38 @@ Tuto změnu značíme taktovým označením hned za taktovou čáru, kde změna 
 \cite{cmiral,zenkl}
 
 % melodie / harmonie
-% tóniny a stupně
 % akordy (?)
 
 \chapter{Reprezentace dat}
 % ABC, MIDI, GUIDO ... viz NOTES.md
+V této části je popsán vstupní formát trénovacích dat.
+
+\section{MIDI soubory}
+MIDI (Musical Instrument Digital Interface) je volně přístupný standard,
+který specifikuje hardware i software pro digitální komunikaci hudebních nástrojů,
+sequencerů, počítačů, mixérů, a dokonce i jevištní techniky, jako jsou reflektory a lasery.
+\cite{MIDI_tutorials}
+\par
+
+Standartní MIDI soubor (zkráceně SFM) je formát binárních souborů 
+určených pro uložení a přenos hudebních dat mezi zařízeními.
+Soubory v tomto formátu lze rozeznat pomocí \emph{.mid} přípony.
+Oproti ostatním formátům pro uložení zvuku SFM neukládají digitalizovaný zvuk,
+ale parametry použitých nástrojů, informace o tempu, kanálech, 
+jednotlivé noty uložené jako kombinace (čas, hodnota, rychlost) a další MIDI události.
+Data z těchto souborů jsou načteny do nějakého přehrávače 
+a výsledný zvuk je vytvořen připojeným sound-enginem.
+\cite{MIDI_tutorials,Neznamy_aboutMIDIFiles}
+\par
+Data v SFM jsou uložena v blocích.
+Každý z těchto bloků začíná čtyřbajtovým textovým označením a čtyřbajtovou délkou bloku.
+Ihned po délce začíná datová část bloku o počtu bajtů zadaném v hlavičce.
+Za datovou částí začíná buď další blok, nebo konec souboru.
+\cite{MIDI_tutorials,Back_SMF_Specif}
+\par
+
+
+
 
 \chapter{Přehled přístupů automatické harmonizace}
 Pojem automatická harmonizace melodie označuje disciplínu, která se zabývá tvorbou modelu, 
