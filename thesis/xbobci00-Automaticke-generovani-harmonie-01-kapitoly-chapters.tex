@@ -12,6 +12,7 @@ Nabytí těchto znalostí je jedna věc,
 avšak jejich uvedení do praxe může být pro laika, 
 nebo hudebníka bez dostatečných zkušeností velmi obtížné.
 \par
+
 Tématem této práce je vytvořit nástroj, 
 který k známé melodii doplní vhodný harmonický doprovod.
 Tento nástroj pak může být užitečný právě pro hudební začátečníky,
@@ -23,6 +24,7 @@ Skládání hudby, tedy i harmonie, je umění a vyžaduje hudební cit,
 proto podobné systémy bývají zatíženy určitou chybou, 
 popřípadě může být jejich výtvor poněkud nudný oproti profesionálnímu složení.
 \par
+
 Cílem práce je seznámit se s problematikou automatické harmonizace na základě znalosti melodie,
 s principem a využitím strojového učení v této úloze, a to zejména s neuronovými sítěmi.
 Dalším bodem je navržení systému, který automatické generování harmonie umožní.
@@ -48,6 +50,7 @@ Další přístup je založen na skrytých markovových modelech,
 které odhadují nejpravděpodobnější posloupnost akordů k dané melodii.
 Některé z těchto přístupů slouží jako inspirace této práce.
 \par
+
 Následuje teoretická rešerše strojového učení,
 tedy disciplíny na níž stojí správnost automatizace.
 Nejprve je představeno strojové učení jako takové,
@@ -56,6 +59,7 @@ které jsou v této práci využity.
 Postupně jsou rozebrány neuronové sítě a neurony,
 rekurentní neuronové sítě a jejich LSTM architektura.
 \par
+
 Třetí kapitola se věnuje návrhu systému,
 který umožňuje automatické generování harmonie na základě vstupní melodie.
 \todo{DOPSAT podle diplomky}
@@ -75,7 +79,8 @@ přízvučných a nepřízvučných tónů.
 Nejen pro harmonizaci melodie je potřeba znát hudební nauku. 
 V této kapitole budou nastíněny základy a pojmy hudební nauky, 
 tedy co to jsou tóny, noty, jejich vlastnosti a stupnice. 
-Dále bude rozdělena melodie a harmonie a popsány akordy a tóniny. \par 
+Dále bude rozdělena melodie a harmonie a popsány akordy a tóniny. 
+\par 
 
 \section{Tóny}
 Chvěním těles, které rozechvívají okolní vzduch, vzniká zvuk, 
@@ -83,7 +88,8 @@ tedy to co slyšíme.
 Nepravidelným chvěním vznikají hluky. 
 Naopak zvuky vznikající pravidelným kmitáním tělesa nazýváme tóny. 
 V hudbě jsou především využívány právě tóny. 
-Ty mají čtyři základní vlastnosti. \par
+Ty mají čtyři základní vlastnosti. 
+\par
 
 Podle různé doby chvění pružného tělesa rozlišujeme délku tónu. 
 Další vlastností je síla, která je dána vzdáleností krajních bodů,
@@ -98,7 +104,9 @@ Pro představu, lze rozeznat, zda zní klavír, housle, trumpeta, či mužský n
 navzdory tomu, že všechny mají stejnou výšku. 
 Rozmanitou barvitost mají především velké orchestry.
 Výšku tónu určujeme podle frekvence chvění, čili počtu kmitů za vteřinu. 
-Čím vyšší frekvence, tím vyšší tón, a čím nižší frekvence, tím hlubší tón.\cite{zenkl,cmiral} \par
+Čím vyšší frekvence, tím vyšší tón, a čím nižší frekvence, tím hlubší tón.
+\cite{zenkl,cmiral} 
+\par
 
 \section{Soustava a jména tónů}
 Tónová soustava je přehledné uspořádání všech tónů užívaných v hudbě.
@@ -107,7 +115,9 @@ Současnou tónovou soustavu tvoří sedm základních tónů, které
 byly v minulosti označeny písmeny obyčejné abecedy: a, b, c, d, e, f, g.
 Později se jako počátek hudební abecedy určilo písmeno c 
 a písmeno b se nahradilo písmenem h.
-Tím vzniká nynější hudební abeceda c, d, e, f, g, a, h.\par
+Tím vzniká nynější hudební abeceda c, d, e, f, g, a, h.
+\par
+
 Těchto sedm tónů se pravidelně opakují ve vyšších a nižších polohách.
 Při postupu od výchozího c k nejbližšímu následujícímu, respektive předchozímu, c nacházíme osm stupňů 
 (včetně obou c).
@@ -118,7 +128,9 @@ jsou tyto oktávy dále pojmenovány.
 Díky tomu má každý jednotlivý tón nejen svůj vlastní název,
 ale také ustálené označení (viz tabulka \ref{tabulkaOktav}).
 Například tón e v dvoučárkové oktávě se nazývá dvoučárkové e
-a značí se buď $e^2$, nebo{ e''}.\cite{zenkl,cmiral}\par
+a značí se buď $e^2$, nebo{ e''}.
+\cite{zenkl,cmiral}
+\par
 
 \begin{table}[]
     \begin{tabular}{ l l l l l l l | l }
@@ -136,7 +148,9 @@ a značí se buď $e^2$, nebo{ e''}.\cite{zenkl,cmiral}\par
 \end{table}
 
 Kromě označení tónů písmeny se lze také setkat se solmizačními slabikami do, re, mi, fa, sol, la, si,
-které v 10. století zavedl italský mnich Guido z Arezza\cite{cmiral}.\par    
+které v 10. století zavedl italský mnich Guido z Arezza.
+\cite{cmiral}
+\par    
 
 \section{Alterace}
 Každý ze základních tónů tónové soustavy můžeme jednou nebo dvakrát snížit nebo zvýšit.
@@ -146,7 +160,9 @@ Zvýšení tónu značíme příponou -is v jeho názvu.
 Naopak snížení označujeme příponou -es.
 Existují ovšem různé výjimky.
 Například snížením tónů~e~a~a získáme es, respektive as.
-Pro snížené h se, místo hes, používá název~b.\cite{zenkl}\par
+Pro snížené h se, místo hes, používá název~b.
+\cite{zenkl}
+\par
 
 Alterace posunuje tón vždy právě o půltón, 
 což je nejmenší vzdálenost mezi dvěma tóny užívaná v naší hudbě.
@@ -154,7 +170,9 @@ Celý tón je pak tvořen dvěma půltóny.
 V rozmezí oktávy se nachází dva půltóny ({e-f, h-c}), a pět celých tónů.
 Dohromady oktáva sestává z dvanácti půltónů.
 Přehledné uspořádání tónů a půltónů v oktávě lze vidět na klaviaturách klávesových nástrojů (viz obrázek \ref{obrazekRozlozeniKlaviatury}).
-Základní tóny leží na bílých klávesách, jejich alterace pak na černých.\cite{zenkl,cmiral}\par
+Základní tóny leží na bílých klávesách, jejich alterace pak na černých.
+\cite{zenkl,cmiral}
+\par
 
 Můžeme si všimnout tónů, které mají stejnou výšku, ale různá jména.
 Těmto tónům říkáme enharmonické, enharmonická záměna je pak nahrazení tónu tónem stejné výšky, ale jiného jména.\cite{zenkl}
@@ -176,21 +194,27 @@ Tyto tvoří rytmický útvar a opakování rytmických útvarů udává rytmus.
 Rytmus je patrný především v hudbě určené pro tanec.
 Mezi oblíbené tance s nápadnými rytmy patří například česká polka,
 valčík a moderní tango. 
-Některé tance a rytmy jsou spíše regionálního charakteru, mezi ně řadíme polské tance polonéza a mazurka, maďarský čardáš, či španělské bolero.
+Některé tance a rytmy jsou spíše regionálního charakteru, 
+mezi ně řadíme polské tance polonéza a mazurka, maďarský čardáš, či španělské bolero.
 Složitými rytmy pak vynikají písně moravské a slovenské.
-Rytmus je podle některých\footnote{\"Na počátku byl rytmus\" -- Hans Bülow} nejpodstatnější složkou hudby.
+Rytmus je podle některých
+\footnote{\"Na počátku byl rytmus\" -- Hans Bülow} 
+nejpodstatnější složkou hudby.
 To je patrné především v hudbě národů na nízkém stupni kultury,
 kde rytmy určené bicími nástroji, doplněné tleskáním a podupáváním,
-zaujímají přední postavení tamní hudby.\cite{cmiral}
+zaujímají přední postavení tamní hudby.
+\cite{cmiral}
 
 \section{Stupnice a tónina}
 
 Stupnice je postupná řada tónů v rozsahu jedné oktávy.
-Při poslechu je zřejmé, že jednotlivé stupně mezi sebou nemají konstantní vzdálenost.\cite{kofron}
+Při poslechu je zřejmé, že jednotlivé stupně mezi sebou nemají konstantní vzdálenost.
+\cite{kofron}
 Některé dvojice dělí půltón, čili malá sekunda, 
 jiné větší krok, celý tón, velká sekunda.
 Ta je rovna vzdálenosti dvou půltónů.
-Vzdálenosti jednotlivých stupňů jsou dány pravidly.\cite{cmiral}
+Vzdálenosti jednotlivých stupňů jsou dány pravidly.
+\cite{cmiral}
 Stupnice je možné rozdělit podle vzdáleností do několika kategorií.
 
 \begin{enumerate}
@@ -214,17 +238,21 @@ Stupnice je možné rozdělit podle vzdáleností do několika kategorií.
 
 V diatonických stupnicích jsou od sebe stupně vzdáleny jak o celé tóny, tak o půltóny.
 V chromatických pak většinou pouze o půltóny.
-Exotické stupnice se od předchozích liší zvláštním uspořádáním stupňů.\cite{kofron}
+Exotické stupnice se od předchozích liší zvláštním uspořádáním stupňů.
+\cite{kofron}
 \par
+
 Stupnici lze vytvořit od libovoného tónu.
 V praxi se však používají jen ty, 
 v nichž se uplatňují odvozené tóny nanejvýš dvakrát zvýšené, nebo snížené.
 Výchozí tón stupnice je jejím základním tónem, a podle něj se stupnice jmenuje.
 Například stupnice G dur začíná tónem g, fis moll tónem fis.
-Rozdělení dur nebo moll se určuje podle vzdáleností mezi jednotlivými stupni.\cite{zenkl}
+Rozdělení dur nebo moll se určuje podle vzdáleností mezi jednotlivými stupni.
+\cite{zenkl}
 Durové stupnice označujeme velkým písmenem, mollové malým.
 Jednotlivé stupně stupnice se značí římskými číslicemi.
-Mimo to má každý stupeň svůj funkční název:\cite{kofron}
+Mimo to má každý stupeň svůj funkční název:
+\cite{kofron}
 
 \begin{enumerate} [label=\Roman*]
     \item tónika
@@ -235,8 +263,8 @@ Mimo to má každý stupeň svůj funkční název:\cite{kofron}
     \item spodní medianta
     \item citlivý tón - tíhne k půltónovému pokračování k tónice
 \end{enumerate}
-
 \par
+
 Tóniny a stupnice mají stejné základní tóny, a od toho také jména.
 Opět, například pokud je tónina G dur, pak jejím základním tónem, tónikou je tón g.
 Tónina je volné pořadí tónů stupnice tvořící hudbu.
@@ -246,7 +274,8 @@ Tónika se určuje sluchem pomocí tonálnícho cítění.
 Velmi často melodie tónikou začíná, nebo se k ní vrací.
 V závěru melodie bývá tónika uplatňována nejčastěji.
 V takovém případě působí melodie přesvědčivě uzavřena 
-a posluchač necítí potřebu dalšího pokračování.\cite{zenkl}
+a posluchač necítí potřebu dalšího pokračování.
+\cite{zenkl}
 \par
 
 \subsection{Durové stupnice}
@@ -301,15 +330,19 @@ V hudbě se používají tyto základní noty:
 %    \item \thirtysecondNote \thirtysecondNoteDown dvaatřicetinová
 %\end{itemize}
 
-Podle názvů not je zřejmé, že nota celá má délku dvou půlových not, čtyř čtvrtinových osmi osminových a tak dále.
-Nejbližší nižší nota má délku poloviční a nejbližší vyšší dvojnásobnou.\par
+Podle názvů not je zřejmé, že nota celá má délku dvou půlových not, 
+čtyř čtvrtinových osmi osminových a tak dále.
+Nejbližší nižší nota má délku poloviční a nejbližší vyšší dvojnásobnou.
+\par
 
 \subsection*{Klíče}
-Jména (výšky) not v osnově jsou určeny takzvaným klíčem, který se píše vždy na začátek každého řádku.
+Jména (výšky) not v osnově jsou určeny takzvaným klíčem, 
+který se píše vždy na začátek každého řádku.
 Klíčem se označuje pozici a jméno jedné notě a od ní se pojmenují ostatní v pořadí, 
 přičemž pojmenování se řídí hudební abecedou.
 Tvary klíčů se vyvinuli z písmen not, jejichž linku označují.
-V současné dob se používají čtyři klíče(viz obrázek \ref{obrazek4Klice}), a to G-klíč (houslový), F-klíč (basový) a dva C-klíče (altový a tenorový).
+V současné dob se používají čtyři klíče(viz obrázek \ref{obrazek4Klice}), 
+a to G-klíč (houslový), F-klíč (basový) a dva C-klíče (altový a tenorový).
 
 \todo{obrazek 4 Klice}
 
@@ -319,13 +352,16 @@ Basový klíč je nejvhodnější pro notaci hlubokých tónů a houslový k not
 Tyto dva klíče se používají nejčastěji. 
 Pro orientaci v těchto klíčích je dobré vědět, že
 tón $c^1$ se v houslovém klíči nachází na první spodní pomocné lince, 
-a v basovém se nachází na první horní pomocné lince.\cite{cmiral,zenkl}\par
+a v basovém se nachází na první horní pomocné lince.
+\cite{cmiral,zenkl}
+\par
 
 \subsection*{Pomlky}
 Kromě značení tónů je v hudbě potřeba zaznačit také odmlky, tedy místa kdy má být ticho.
 Ticho se značí zvláštními značkami, pomlkami v notovém zápise a mají stejné hodnoty jako noty.
 Délka pomlky je opět, jako u not, dána tvarem (viz obrázek \ref{obrazekPomlky}).
-Celá pomlka značí pomlku na jakýkoliv celý takt.\cite{cmiral,zenkl}
+Celá pomlka značí pomlku na jakýkoliv celý takt.
+\cite{cmiral,zenkl}
 
 \todo{obrazek Pomlky}
 
@@ -336,7 +372,8 @@ Je-li před notou béčko ($\flat $), pak nota značí tón snížený.
 Posuvky lze psát puď přímo před notu, kterou chceme alterovat, nebo na začátek každého řádku, pak předznamenává tóninu.
 Platnost posuvky před notou je do konce taktu.
 Je možné ukončit účinnost dříve, odrážkou ($\natural $).
-Zde ovšem platí, že pokud byla posuvka na začátku řádku, odrážka platí do konce taktu.\cite{cmiral,zenkl}
+Zde ovšem platí, že pokud byla posuvka na začátku řádku, odrážka platí do konce taktu.
+\cite{cmiral,zenkl}
 
 \subsection*{Takty}
 Noty a pomlky se řadí do krátkých úseků, ze kterých se skládá celá hudební skladba.
@@ -359,7 +396,7 @@ To, jaký má skladba takt, zjistíme na začátku skladby, kde je zapsán zlome
 Čitatel uvádí počet dob, a jmenovatel hodnotu počítané doby.
 V průběhu skladby může dojít ke změně taktu.
 Tuto změnu značíme taktovým označením hned za taktovou čáru, kde změna začíná.
-Čtyřčtvrťový takt se většinou nazývá celý, a místo zlomku je značen velkým písmenem C
+Čtyřčtvrťový takt se většinou nazývá celý, a místo zlomku je značen velkým písmenem C.
 \cite{cmiral,zenkl}
 
 % melodie / harmonie
@@ -387,24 +424,73 @@ a výsledný zvuk je vytvořen připojeným sound-enginem.
 \cite{MIDI_tutorials,Neznamy_aboutMIDIFiles}
 \par
 Data v SFM jsou uložena v blocích.
-Každý z těchto bloků začíná čtyřbajtovým textovým označením a čtyřbajtovou délkou bloku.
-Ihned po délce začíná datová část bloku o počtu bajtů zadaném v hlavičce.
+Každý z těchto bloků začíná čtyřbajtovým textovým označením 
+a čtyřbajtovou délkou datového bloku udávající počet bajtů.
+Ihned po délce začíná datová část o délce zadané v hlavičce.
 Za datovou částí začíná buď další blok, nebo konec souboru.
 \cite{MIDI_tutorials,Back_SMF_Specif}
 \par
+Soubory MIDI mají dva druhy bloků. 
+Hlavičkový blok poskytuje informace vztahující se k celému souboru.
+Bloky stopy obsahují proudy MIDI dat až šestnácti MIDI kanálů.
+MIDI soubor vždy začíná hlavičkovým blokem 
+a je následován jedním, nebo více bloky stop.\cite{Back_SMF_Specif}
 
+\begin{itemize} [label={}]
+    \item MThd <délka hlavičky>
+    \item <data hlavičky>
+    \item MTrk <délka stopy>
+    \item <data stopy>
+    \item MTrk <délka stopy>
+    \item <data stopy>
+    \item \dots
+\end{itemize}
+
+\subsection{Hlavička}
+Blokem hlavičky začíná každý MIDI soubor a obsahuje jeho kladní popis.
+Je uvozen typem bloku, čtyřmi ASCII znaky \"MThd\" 
+a 32bitovou reprezentací čísla 6 (délka bloku). 
+Začátek SMF je tedy pevně daný, 
+a lze jej na první pohled rozeznat začínající sekvencí \emph{0x4D 54 68 64 00 00 00 06}. 
+Datovou část tvoří tři 16bitové slova.
+První z nich specifikuje formát, celkovou organizaci souboru.
+Tím je myšleno uspořádání uložených stop.
+Jsou zde tři možnosti:
+
+\begin{enumerate}\addtocounter{enumi}{-1}
+    \item soubor obsahuje jedinou více-kanálovou stopu
+    \item několik souběžných stop
+    \item několik nezávislých stop
+\end{enumerate}
+
+Formát 0 je nejrozšířenější a je podporován i nejjednoduššími programy a hardware.
+\cite{Back_SMF_Specif}
+Formát 1 obsahuje jednu nebo více vertikálně synchronních stop.
+Jinými slovy, při přehrávání takového souboru začnou všechny stopy ve stejný čas 
+a mohou reprezentovat různé části písničky.
+V posledním, asynchronním formátu nemusí stopy nutně začínat ve stejnou dobu
+\cite{Neznamy_aboutMIDIFiles}.
+Tento formát je nejméně používaný
+\cite{MIDI_tutorials}.
+\par
+
+Dalším slovem hlavičky je počet stop.
+Ten je u nultého formátu vždy roven jedné.
+Poslední část definuje kódování času.
 
 
 
 \chapter{Přehled přístupů automatické harmonizace}
 Pojem automatická harmonizace melodie označuje disciplínu, která se zabývá tvorbou modelu, 
 který dokáže vygenerovat harmonický doprovod k dané melodii.
-Samotná harmonizace je složitý úkol, protože tu samou melodii můžeme harmonizovat mnoha různými způsoby.
+Samotná harmonizace je složitý úkol, 
+protože tu samou melodii můžeme harmonizovat mnoha různými způsoby.
 Správná harmonie závisí na subjektivním pocitu, hudebním žánru a dalších faktorech.
 V hudbě se ustálilo mnoho pouček a zákonů o tom, které akordy k sobě patří,
 a jak na sebe navazují.
 Často určují jemné nuance, či jsou podmíněny kulturním vlivem, 
-což je pro stroj velmi obtížné zachytit.\cite{YinCheng_comparativeStudy}
+což je pro stroj velmi obtížné zachytit.
+\cite{YinCheng_comparativeStudy}
 \par
 V této kapitole bude představeno několik přístupů právě k automatické harmonizaci.
 
@@ -412,9 +498,11 @@ V této kapitole bude představeno několik přístupů právě k automatické h
 \label{shodaSablon}
 Tento model nejdříve rozdělí všechny melodie z trénovací sady po polovinách taktů, 
 a pro každý, takto vytvořený segment vytvoří profil výšky tónů 
-(dále jen PCP\footnote{z anglického Pitch Class Profile}).\cite{YinCheng_comparativeStudy}
+(dále jen PCP\footnote{z anglického Pitch Class Profile}).
+\cite{YinCheng_comparativeStudy}
 PCP je dvanácti-dimenzionální binární vektor, 
-kde každá složka reprezentuje přítomnost každého z dvanácti možných půltónů v daném půl-taktu.\cite{fujishima}
+kde každá složka reprezentuje přítomnost každého z dvanácti možných půltónů v daném půl-taktu.
+\cite{fujishima}
 PCP nového segmentu se porovná s těmi z trénovací sady
 a spočítá se podobnostní skóre.
 Nový segment je pak označen takovým akordem,
@@ -424,16 +512,20 @@ je výsledný akord vybrán náhodně s rovnoměrným rozložením pravděpodobn
 Označení akordu je opět ve formě PCP, a to tak,
 že všechny tóny náležící akordu jsou nastaveny do 1.
 \par
+
 Nevýhodou tohoto modelu je, že určuje jednotlivé segmenty nezávisle bez toho,
-aby bral v úvahu sousední akordy, nebo postup akordů ve skladbě.\cite{YinCheng_comparativeStudy}
+aby bral v úvahu sousední akordy, nebo postup akordů ve skladbě.
+\cite{YinCheng_comparativeStudy}
 
 \section{Skryté Markovovy modely}
 Jednou z nejpoužívanějších metod generování akordů a harmonizace melodie, 
-před současným rozšířením hlubokého učení, byly skryté Markovovy modely (dále HMM \footnote{z anglického Hidden Markov Model}).
+před současným rozšířením hlubokého učení, byly skryté Markovovy modely 
+(dále HMM \footnote{z anglického Hidden Markov Model}).
 HMM jsou pravděpodobnostní nástroj s jehož pomocí lze modelovat sekvence se skrytými proměnnými.
 Označení akordů je považováno právě za skrytou proměnnou a 
 HMM se snaží odhadnout nejpravděpodobnější sekvenci akordů na k daným notám melodie.
-Na rozdíl od předchozího přístupu tento model bere v úvahu předcházející akordy.\cite{YinCheng_comparativeStudy}
+Na rozdíl od předchozího přístupu tento model bere v úvahu předcházející akordy.
+\cite{YinCheng_comparativeStudy}
 
 \chapter{Strojové učení}
 % rešerše strojového učení, jak funguje
@@ -444,7 +536,8 @@ Avšak pro člověka intuitivní \"problémy\" lze jen s těží formálně pops
 Strojové učení umožňuje počítači naučit se ze zkušeností
 a porozumět světu v souvislostech.
 Získáváním zkušeností je odbourán proces formálního zápisu veškerých vědomostí,
-které jsou k řešení problému potřeba.\cite{Goodfellow-et-al-2016}
+které jsou k řešení problému potřeba.
+\cite{Goodfellow-et-al-2016}
 Harmonizace melodie je někde na půl cesty mezi těmito extrémy.
 Na jednu stranu popsána pravidly hudební nauky,
 na stranu druhou nejsou pravidla zcela striktní 
@@ -460,7 +553,8 @@ na základě trénovací sady příkladů vstupů a výstupů.
 Trénovací výstupy může být obtížné získat automaticky,
 a proto musí být dodány člověkem, učitelem.
 Mezi algoritmy učící se s učitelem patří například Support Vector Machines,
-k-nejbližších sousedů, nebo rozhodovací stromy.\cite{Goodfellow-et-al-2016}
+k-nejbližších sousedů, nebo rozhodovací stromy.
+\cite{Goodfellow-et-al-2016}
 \par
 
 Algoritmy bez učitele se učí pouze na základě vlastností objektů 
@@ -480,7 +574,8 @@ Neuronové sítě jsou množina algoritmů určených k rozpoznávání vzorů.
 Vzory rozumíme jakékoliv data, čísla, obrázky, zvuk, text a další.
 Ty musí být převedeny na vektory čísel, 
 které jsou následně použity jako vstup.
-Tyto sítě se také nazývají dopředné (Feedforward Neural Networks)\cite{Nicholson_NeuralNets}
+Tyto sítě se také nazývají dopředné (Feedforward Neural Networks).
+\cite{Nicholson_NeuralNets}
 \par
 
 Neuronové sítě mají většinou několik propojených vrstev.
@@ -497,25 +592,29 @@ a velikost vektoru jeho šířku.
     \label{obrazekSchemaNeuronoveSite}
 \end{figure*}
 
-
 Úkolem neuronové sítě je aproximovat neznámou funkci $ y=f'(x)$
 funkcí $ y=f(x;\theta )$, kde \emph{x} a \emph{y} značí vstup, respektive výstup.
 K hodnotě $\theta$ dojde neuronová síť tak,
 aby výsledný model nejlépe aproximoval původní funkci.
-Samotná funkce \emph{f} se skládá z několika zřetězených funkcí $f(x)=f^{(3)}(f^{(2)}(f^{(1)}(x)))$,
+Samotná funkce \emph{f} se skládá z několika zřetězených funkcí 
+$f(x)=f^{(3)}(f^{(2)}(f^{(1)}(x)))$,
 kde $f^{(n)}$ označuje vrstvy sítě, jejichž vstupem je vektor z předchozí vrstvy 
-a výstupem je opět vektor.\cite{Goodfellow-et-al-2016}
+a výstupem je opět vektor.
+\cite{Goodfellow-et-al-2016}
 
 \subsection*{Neurony}
 Mnohem obvykleji jsou vrstvy reprezentovány množinou uzlů, které nazýváme neurony.
 Vstupem každého neuronu je celý vektor předchozí vrstvy 
 a výstupem je skalární hodnota, prvek výstupního vektoru jeho vrstvy.
-Paralelním výpočtem všech neuronů vrstvy je získán její výsledek.\cite{Goodfellow-et-al-2016}
+Paralelním výpočtem všech neuronů vrstvy je získán její výsledek.
+\cite{Goodfellow-et-al-2016}
 \par
+
 Každému vstupu neuronu je přiřazena váha, která jej buď posílí nebo utlumí.
 Suma všech váhovaných vstupů poté prochází takzvanou aktivační funkcí,
 která určuje jestli, a jak moc může signál pokračovat skrz síť.
-Pokud signál projde, pak o neuronu můžeme říct, že byl aktivován.\cite{Nicholson_NeuralNets}
+Pokud signál projde, pak o neuronu můžeme říct, že byl aktivován.
+\cite{Nicholson_NeuralNets}
 
 \begin{figure*}[h]\centering
     \centering
@@ -531,7 +630,8 @@ Samotné neuronové sítě jsou pro některé typy problémů pořád příliš 
 Jejich vstupem je vektor pevně dané velikosti, 
 výpočet probíhá v předem známém počtu kroků a na jeho konci je opět vektor pevné délky.
 Taková omezení neberou v úvahu proudová data, tedy sekvence na sobě závislých vektorů.
-Rekurentní sítě umožňují mít takovou sekvenci jako vstup, jako výstup, nebo jako obojí.\cite{Karpathy_RNNs}.
+Rekurentní sítě umožňují mít takovou sekvenci jako vstup, jako výstup, nebo jako obojí.
+\cite{Karpathy_RNNs}.
 
 \begin{figure*}[h]\centering
     \centering
@@ -547,7 +647,6 @@ Jsou schopny se naučit i dlouhodobější závislosti v sekvencích dat.
 S touto vlastností byly primárně navrženy.\cite{colah_lstm}
 \par
 Narozdíl od RNN mají LSTM čtyři vrstvy v jednom opakujícím se modulu.
-
 
 % frameworky ... viz NOTES.md
 
@@ -587,8 +686,6 @@ Počet vnitřních vrstev bude empiricky vybrán na základě experimentů.
 Při učení modelu bude potřeba vyhodnotit jak moc se mýlil.
 Toho dosáhneme tak, že výslednou sekvenci porovnáme s
 testovací a porovnáme, v kolika případech se model spletl.
-
-
 
 \section{Výstup}
 Výstupem modelu bude stejný vektor jako na vstupu.
@@ -634,4 +731,3 @@ další se popisovala různé přístupy k automatické harmonizaci. Některé p
 Na základě tohoto návrhu bude poté, ve výsledné diplomové práci, implementován systém a jeho neuronová síť s využitím frameworku PyTorch.
 Toto řešení bude, na základě testovacích dat, vyhodnoceno.
 V závěru budou diskutovány výsledky a možné pokračování této práce.
-
