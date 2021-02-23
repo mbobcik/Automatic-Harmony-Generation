@@ -242,7 +242,7 @@ Exotické stupnice se od předchozích liší zvláštním uspořádáním stup�
 \cite{kofron}
 \par
 
-Stupnici lze vytvořit od libovoného tónu.
+Stupnici lze vytvořit od libovolného tónu.
 V praxi se však používají jen ty, 
 v nichž se uplatňují odvozené tóny nanejvýš dvakrát zvýšené, nebo snížené.
 Výchozí tón stupnice je jejím základním tónem, a podle něj se stupnice jmenuje.
@@ -270,7 +270,7 @@ Opět, například pokud je tónina G dur, pak jejím základním tónem, tónik
 Tónina je volné pořadí tónů stupnice tvořící hudbu.
 Není nutné aby byly použity všechny tóny stupnice, 
 ale jejich uspořádání musí dát vyniknout tónice.
-Tónika se určuje sluchem pomocí tonálnícho cítění.
+Tónika se určuje sluchem pomocí tonálního cítění.
 Velmi často melodie tónikou začíná, nebo se k ní vrací.
 V závěru melodie bývá tónika uplatňována nejčastěji.
 V takovém případě působí melodie přesvědčivě uzavřena 
@@ -409,11 +409,11 @@ V této části je popsán vstupní formát trénovacích dat.
 \section{MIDI soubory}
 MIDI (Musical Instrument Digital Interface) je volně přístupný standard,
 který specifikuje hardware i software pro digitální komunikaci hudebních nástrojů,
-sequencerů, počítačů, mixérů, a dokonce i jevištní techniky, jako jsou reflektory a lasery.
+sekvencerů, počítačů, mixérů, a dokonce i jevištní techniky, jako jsou reflektory a lasery.
 \cite{MIDI_tutorials}
 \par
 
-Standartní MIDI soubor (zkráceně SFM) je formát binárních souborů 
+Standardní MIDI soubor (zkráceně SFM) je formát binárních souborů 
 určených pro uložení a přenos hudebních dat mezi zařízeními.
 Soubory v tomto formátu lze rozeznat pomocí \emph{.mid} přípony.
 Oproti ostatním formátům pro uložení zvuku SFM neukládají digitalizovaný zvuk,
@@ -448,7 +448,7 @@ a je následován jedním, nebo více bloky stop.\cite{Back_SMF_Specif}
 
 \subsection{Hlavička}
 Blokem hlavičky začíná každý MIDI soubor a obsahuje jeho kladní popis.
-Je uvozen typem bloku, čtyřmi ASCII znaky \"MThd\" 
+Je uvozen typem bloku, čtyřmi ASCII znaky "MThd" 
 a 32bitovou reprezentací čísla 6 (délka bloku). 
 Začátek SMF je tedy pevně daný, 
 a lze jej na první pohled rozeznat začínající sekvencí \emph{0x4D 54 68 64 00 00 00 06}. 
@@ -476,7 +476,12 @@ Tento formát je nejméně používaný
 
 Dalším slovem hlavičky je počet stop.
 Ten je u nultého formátu vždy roven jedné.
-Poslední část definuje kódování času.
+Poslední část definuje kódování času, 
+které může být zadáno dvěma způsoby.
+Ty jsou dány prvním bitem slova.
+Pokud je bit nulový, pak zbývající bity reprezentují počet "tiků", 
+které se vlezou do jedné čtvrťové noty.
+
 
 
 
