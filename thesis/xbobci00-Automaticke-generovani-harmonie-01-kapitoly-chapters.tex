@@ -493,7 +493,7 @@ Každý snímek je tedy dále možné rozdělit na "sub-snímky".
 Bity 14 až 8 časového kódování udávají počet SMPTE snímků za vteřinu 
 a zbývající část je rozlišení jednoho snímku.
 Pro představu, při časování událostí na milisekundy je potřeba nastavit 25 SMPTE snímků,
-a rozlišení 40, neboť $ 40 * 25 = 1000 $ "subsnímků" za vteřinu, stejně jako milisekund. 
+a rozlišení 40, neboť $ 40 * 25 = 1000 $ "sub-snímků" za vteřinu, stejně jako milisekund. 
 \cite{Back_SMF_Specif}
 \par
 
@@ -505,18 +505,29 @@ Za identifikátorem bloku "MTrk" a jeho délkou následuje posloupnost MIDI udá
 ve tvaru časový přírustek, stavový bajt, datové bajty.
 \cite{Back_SMF_Specif}
 \par
-Časový přírustek (deltatime) značí počet "tiků" od předchozí události.
+Časový přírůstek (deltatime) značí počet "tiků" od předchozí události.
 Tato hodnota má proměnnou délku.
 Tento formát umožňuje velkým číslům využít tolik bajtů, kolik potřebují bez toho,
-aby malá čísla plývala místem a plnila jej nulami.
+aby malá čísla plýtvala místem a plnila jej nulami.
 Hodnoty jsou kódovány do 7-bitových bajtů 
 a osmý, nejvýznamnější bit je nastaven na jedničku.
 Pokud je bajt poslední v posloupnosti, pak na nulu.
 Celý deltatime by však ideálně neměl přesáhnout 4 bajty.
 \cite{Neznamy_aboutMIDIFiles}
-První událost stopy, nebo dvě současné události mají časový přírustek roven nule.
+První událost stopy, nebo dvě současné události mají časový přírůstek roven nule.
 \cite{Back_SMF_Specif}
 \par
+
+Za časem následuje MIDI zpráva tvořená stavovým bajtem a až dvěma datovými bajty.
+Stavový bajt má vždy nejvýznamnější bit jedničku.
+Pokud je stav vynechán a za deltatime následují datové bajty, 
+pak jdou poznat nulovým nejvyšším bitem.
+Je několik druhů stavů a je možné je rozdělit na kanálové zprávy (Channel Messages) 
+a systémové zprávy (System Messages).
+Kanálové zprávy se vztahují k specifickému kanálu.
+Jeho číslo je zapsáno ve spodním půlbajtu stavu zprávy.
+
+\cite{Back_SMF_Specif}
 
 
 
