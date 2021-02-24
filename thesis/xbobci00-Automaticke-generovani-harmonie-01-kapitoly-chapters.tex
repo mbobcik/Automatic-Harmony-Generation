@@ -483,12 +483,12 @@ Ty jsou dány prvním bitem slova.
 Pokud je bit nulový, pak zbývající bity reprezentují počet "tiků" generátoru hodin, 
 které se vlezou do jedné čtvrťové noty.
 Pokud je bit nastaven na 1, pak je čas vyjádřen jako rozdělení vteřin podle SMPTE standardu
-a MIDI Time Codeu.
+a MIDI Time Codu.
 \cite{Back_SMF_Specif}
-Filmovým průmyslem vytvořený SMPTE, mimo jiné, udává čtyři různé snímkovací frekvence.
-Podle něj je možné vteřinu rozdělit na 24, 25, 29 nebo 30 snímků.
-Pro hudební účely je však potřeba jemnější rozlišení.
-Každý snímek je tedy dále rozdělen na "sub-snímky".
+Filmovým průmyslem vytvořený SMPTE, mimo jiné, definuje čtyři různé snímkovací frekvence.
+Je podle něj možné rozdělit vteřinu na 24, 25, 29 nebo 30 snímků.
+Pro hudební účely je však potřeba ještě jemnější rozlišení.
+Každý snímek je tedy dále možné rozdělit na "sub-snímky".
 \cite{Neznamy_aboutMIDIFiles}
 Bity 14 až 8 časového kódování udávají počet SMPTE snímků za vteřinu 
 a zbývající část je rozlišení jednoho snímku.
@@ -498,6 +498,25 @@ a rozlišení 40, neboť $ 40 * 25 = 1000 $ "subsnímků" za vteřinu, stejně j
 \par
 
 \subsection{Stopy}
+Každý MIDI soubor obsahuje nejméně jeden blok stopy.
+Ten obsahuje parametry použitých nástrojů, jednotlivé noty skladby, 
+ale také různé textové informace jako název skladby nebo její text.
+Za identifikátorem bloku "MTrk" a jeho délkou následuje posloupnost MIDI událostí
+ve tvaru časový přírustek, stavový bajt, datové bajty.
+\cite{Back_SMF_Specif}
+\par
+Časový přírustek (deltatime) značí počet "tiků" od předchozí události.
+Tato hodnota má proměnnou délku.
+Tento formát umožňuje velkým číslům využít tolik bajtů, kolik potřebují bez toho,
+aby malá čísla plývala místem a plnila jej nulami.
+Hodnoty jsou kódovány do 7-bitových bajtů 
+a osmý, nejvýznamnější bit je nastaven na jedničku.
+Pokud je bajt poslední v posloupnosti, pak na nulu.
+Celý deltatime by však ideálně neměl přesáhnout 4 bajty.
+\cite{Neznamy_aboutMIDIFiles}
+První událost stopy, nebo dvě současné události mají časový přírustek roven nule.
+\cite{Back_SMF_Specif}
+\par
 
 
 
