@@ -447,11 +447,12 @@ a je následován jedním, nebo více bloky stop.\cite{Back_SMF_Specif}
 \end{itemize}
 
 \subsection{Hlavička}
-Blokem hlavičky začíná každý MIDI soubor a obsahuje jeho kladní popis.
+Blokem hlavičky začíná každý MIDI soubor a obsahuje jeho základní popis.
 Je uvozen typem bloku, čtyřmi ASCII znaky "MThd" 
 a 32bitovou reprezentací čísla 6 (délka bloku). 
 Začátek SMF je tedy pevně daný, 
-a lze jej na první pohled rozeznat začínající sekvencí \emph{0x4D 54 68 64 00 00 00 06}. 
+a takový soubor lze na první pohled rozeznat začínající sekvencí 
+\emph{0x4D 54 68 64 00 00 00 06}. 
 Datovou část tvoří tři 16bitové slova.
 První z nich specifikuje formát, celkovou organizaci souboru.
 Tím je myšleno uspořádání uložených stop.
@@ -479,9 +480,24 @@ Ten je u nultého formátu vždy roven jedné.
 Poslední část definuje kódování času, 
 které může být zadáno dvěma způsoby.
 Ty jsou dány prvním bitem slova.
-Pokud je bit nulový, pak zbývající bity reprezentují počet "tiků", 
+Pokud je bit nulový, pak zbývající bity reprezentují počet "tiků" generátoru hodin, 
 které se vlezou do jedné čtvrťové noty.
+Pokud je bit nastaven na 1, pak je čas vyjádřen jako rozdělení vteřin podle SMPTE standardu
+a MIDI Time Codeu.
+\cite{Back_SMF_Specif}
+Filmovým průmyslem vytvořený SMPTE, mimo jiné, udává čtyři různé snímkovací frekvence.
+Podle něj je možné vteřinu rozdělit na 24, 25, 29 nebo 30 snímků.
+Pro hudební účely je však potřeba jemnější rozlišení.
+Každý snímek je tedy dále rozdělen na "sub-snímky".
+\cite{Neznamy_aboutMIDIFiles}
+Bity 14 až 8 časového kódování udávají počet SMPTE snímků za vteřinu 
+a zbývající část je rozlišení jednoho snímku.
+Pro představu, při časování událostí na milisekundy je potřeba nastavit 25 SMPTE snímků,
+a rozlišení 40, neboť $ 40 * 25 = 1000 $ "subsnímků" za vteřinu, stejně jako milisekund. 
+\cite{Back_SMF_Specif}
+\par
 
+\subsection{Stopy}
 
 
 
