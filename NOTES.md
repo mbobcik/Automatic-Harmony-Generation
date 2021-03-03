@@ -46,3 +46,6 @@ https://towardsdatascience.com/pytorch-vs-tensorflow-spotting-the-difference-25c
 * pitch class profile x chromagram??
 
 * Popsat aktivační funkce, vložit několik grafů viz https://www.vutbr.cz/www_base/zav_prace_soubor_verejne.php?file_id=180895
+
+*  For example, to sound a note in MIDI you send a "Note On" message, and then assign that note a "velocity", which determines how loud it plays relative to other notes.
+    --MIDI tutorials

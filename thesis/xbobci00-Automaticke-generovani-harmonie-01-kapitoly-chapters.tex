@@ -338,10 +338,10 @@ Nejbližší nižší nota má délku poloviční a nejbližší vyšší dvojn�
 \subsection*{Klíče}
 Jména (výšky) not v osnově jsou určeny takzvaným klíčem, 
 který se píše vždy na začátek každého řádku.
-Klíčem se označuje pozici a jméno jedné notě a od ní se pojmenují ostatní v pořadí, 
+Klíčem se označuje pozice a jméno jedné noty a od ní se pojmenují ostatní v pořadí, 
 přičemž pojmenování se řídí hudební abecedou.
-Tvary klíčů se vyvinuli z písmen not, jejichž linku označují.
-V současné dob se používají čtyři klíče(viz obrázek \ref{obrazek4Klice}), 
+Tvary klíčů se vyvinuly z písmen not, jejichž linku označují.
+V současné době se používají čtyři klíče(viz obrázek \ref{obrazek4Klice}), 
 a to G-klíč (houslový), F-klíč (basový) a dva C-klíče (altový a tenorový).
 
 \todo{obrazek 4 Klice}
@@ -369,7 +369,7 @@ Celá pomlka značí pomlku na jakýkoliv celý takt.
 Samotné noty značí pouze základní tóny.
 Pokud chceme, aby nota značila zvýšený tón, je potřeba před ni (na její linku, nebo mezeru) napsat křížek ($\sharp $).
 Je-li před notou béčko ($\flat $), pak nota značí tón snížený.
-Posuvky lze psát puď přímo před notu, kterou chceme alterovat, nebo na začátek každého řádku, pak předznamenává tóninu.
+Posuvky lze psát buď přímo před notu, kterou chceme alterovat, nebo na začátek každého řádku, pak předznamenává tóninu.
 Platnost posuvky před notou je do konce taktu.
 Je možné ukončit účinnost dříve, odrážkou ($\natural $).
 Zde ovšem platí, že pokud byla posuvka na začátku řádku, odrážka platí do konce taktu.
@@ -389,14 +389,16 @@ Ostatní doby jsou hrány bez přízvuku, pokud nejsou opatřeny zvláštní zna
 Takto popsané jsou takty jednoduché.
 Spojením dvou jednoduchých taktů vzniká takt složený.
 Složené takty mají dva přízvuky.
-Silnější na začátku taktu, a o něco slabší tam, kde by začínal druhý jednoduchý takt.\par
+Silnější na začátku taktu, a o něco slabší tam, kde by začínal druhý jednoduchý takt.
+\par
+
 Součet hodnot not v každém jednom taktu se musí rovnat počtu dob taktu.
 Čili například v jednom  dvoučtvrťovém taktu může být jedna nota půlová (má dvě doby), dvě noty čtvrťové, jedna čtvrťová a dvě osminové, a tak dále.
 To, jaký má skladba takt, zjistíme na začátku skladby, kde je zapsán zlomek.
-Čitatel uvádí počet dob, a jmenovatel hodnotu počítané doby.
+Čitatel uvádí počet dob a jmenovatel hodnotu počítané doby.
 V průběhu skladby může dojít ke změně taktu.
 Tuto změnu značíme taktovým označením hned za taktovou čáru, kde změna začíná.
-Čtyřčtvrťový takt se většinou nazývá celý, a místo zlomku je značen velkým písmenem C.
+Čtyřčtvrťový takt se většinou nazývá celý a místo zlomku je značen velkým písmenem C.
 \cite{cmiral,zenkl}
 
 % melodie / harmonie
@@ -423,6 +425,7 @@ Data z těchto souborů jsou načteny do nějakého přehrávače
 a výsledný zvuk je vytvořen připojeným sound-enginem.
 \cite{MIDI_tutorials,Neznamy_aboutMIDIFiles}
 \par
+
 Data v SFM jsou uložena v blocích.
 Každý z těchto bloků začíná čtyřbajtovým textovým označením 
 a čtyřbajtovou délkou datového bloku udávající počet bajtů.
@@ -430,6 +433,7 @@ Ihned po délce začíná datová část o délce zadané v hlavičce.
 Za datovou částí začíná buď další blok, nebo konec souboru.
 \cite{MIDI_tutorials,Back_SMF_Specif}
 \par
+
 Soubory MIDI mají dva druhy bloků. 
 Hlavičkový blok poskytuje informace vztahující se k celému souboru.
 Bloky stopy obsahují proudy MIDI dat až šestnácti MIDI kanálů.
@@ -505,9 +509,10 @@ Za identifikátorem bloku "MTrk" a jeho délkou následuje posloupnost MIDI udá
 ve tvaru časový přírustek, stavový bajt, datové bajty.
 \cite{Back_SMF_Specif}
 \par
+
 Časový přírůstek (deltatime) značí počet "tiků" od předchozí události.
 Tato hodnota má proměnnou délku.
-Tento formát umožňuje velkým číslům využít tolik bajtů, kolik potřebují bez toho,
+Její formát umožňuje velkým číslům využít tolik bajtů, kolik potřebují bez toho,
 aby malá čísla plýtvala místem a plnila jej nulami.
 Hodnoty jsou kódovány do 7-bitových bajtů 
 a osmý, nejvýznamnější bit je nastaven na jedničku.
@@ -519,17 +524,65 @@ První událost stopy, nebo dvě současné události mají časový přírůste
 \par
 
 Za časem následuje MIDI zpráva tvořená stavovým bajtem a až dvěma datovými bajty.
-Stavový bajt má vždy nejvýznamnější bit jedničku.
+Stavový bajt má vždy nejvýznamnější bit jedničku,
+zatímco datové mají nulu.
 Pokud je stav vynechán a za deltatime následují datové bajty, 
-pak jdou poznat nulovým nejvyšším bitem.
+pak je lze poznat právě nulovým nejvyšším bitem.
 Je několik druhů stavů a je možné je rozdělit na kanálové zprávy (Channel Messages) 
 a systémové zprávy (System Messages).
 Kanálové zprávy se vztahují k specifickému kanálu.
 Jeho číslo je zapsáno ve spodním půlbajtu stavu zprávy.
-
+Tedy například \emph{0x91} představuje změnu stavu na kanále jedna.
+V proudu je možné rozeznat dva druhy kanálových zpráv.
+Channel Voice Message přenáší hudební produkci a tvoří většinu provozu MIDI proudu.
+To jak na tyto zprávy budou přijímající nástroje reagovat je dáno Channel Mode zprávami.
+Systémové zprávy jsou buď určeny všem přijímačům v systému (System Common Message),
+použity pro synchronizaci hodin MIDI komponent (System Real Time Message), 
+nebo použity pro přenos dat mezi komponenty jednoho výrobce (System Exclusive Message). 
 \cite{Back_SMF_Specif}
+\par
+
+Aktivace a vypuštění jedné noty je v MIDI považováno za dvě rozdílné události.
+Jsou to kanálové zprávy \emph{Note on} a \emph{Note off},
+z nichž první rozezní daný tón určitou silou a druhý ji utiší.
+Přijetí \emph{Note On} rozeznáme stavovým bajtem \emph{0x9k}, 
+kde \emph{k} určuje na kolikátém kanále bude nota znít.
+Následuje datový bajt s číslem rozeznívané noty.
+Čísla not jsou odvozena od středního, jednočárkového c, 
+kterému je přiřazena hodnota 60 (viz tabulka \ref{tableMIDINotes}).
+Z toho vyplývá, že subkontra oktáva je nultá a čtyřčárková je sedmá.
 
 
+\begin{table}[]
+    \centering
+    \begin{tabular}{l|llllllllllll}
+        \multirow{2}{*}{\textbf{Oktáva}} & \multicolumn{12}{l}{\textbf{Čísla not}}                                                                                                                             \\
+                                         & \textbf{C} & \textbf{C\#} & \textbf{D} & \textbf{D\#} & \textbf{E} & \textbf{F} & \textbf{F\#} & \textbf{G} & \textbf{G\#} & \textbf{A} & \textbf{A\#} & \textbf{B} \\ \hline
+        \textbf{-1}                      & 0          & 1            & 2          & 3            & 4          & 5          & 6            & 7          & 8            & 9          & 10           & 11         \\
+        \textbf{0}                       & 12         & 13           & 14         & 15           & 16         & 17         & 18           & 19         & 20           & 21         & 22           & 23         \\
+        \textbf{1}                       & 24         & 25           & 26         & 27           & 28         & 29         & 30           & 31         & 32           & 33         & 34           & 35         \\
+        \textbf{2}                       & 36         & 37           & 38         & 39           & 40         & 41         & 42           & 43         & 44           & 45         & 46           & 47         \\
+        \textbf{3}                       & 48         & 49           & 50         & 51           & 52         & 53         & 54           & 55         & 56           & 57         & 58           & 59         \\
+        \textbf{4}                       & 60         & 61           & 62         & 63           & 64         & 65         & 66           & 67         & 68           & 69         & 70           & 71         \\
+        \textbf{5}                       & 72         & 73           & 74         & 75           & 76         & 77         & 78           & 79         & 80           & 81         & 82           & 83         \\
+        \textbf{6}                       & 84         & 85           & 86         & 87           & 88         & 89         & 90           & 91         & 92           & 93         & 94           & 95         \\
+        \textbf{7}                       & 96         & 97           & 98         & 99           & 100        & 101        & 102          & 103        & 104          & 105        & 106          & 107        \\
+        \textbf{8}                       & 108        & 109          & 110        & 111          & 112        & 113        & 114          & 115        & 116          & 117        & 118          & 119        \\
+        \textbf{9}                       & 120        & 121          & 222        & 123          & 124        & 125        & 126          & 127        & \multicolumn{4}{l}{}                                 
+    \end{tabular}
+    \caption{Čísla všech MIDI not po oktávách \cite{Back_SMF_Specif}}
+    \label{tableMIDINotes}
+\end{table}
+
+MIDI bylo původně určené pro klávesové nástroje, 
+druhý datový bajt je tedy pojmenován rychlost (zmáčknutí klapky),
+ale ve výsledku určuje to, jak hlasitě (s jakou amplitudou) bude tón znít oproti ostatním.
+
+Pro ztlumení znící noty slouží zpráva \emph{Note Off} označená bajtem \emph{0x8k}.
+Stejně jako při rozeznění je potřeba vědět, o jakou notu se jedná.
+A také v tomto případě je ve zprávě obsažena rychlost (puštění klapky), 
+která je ale ve většině případech ignorována.
+\cite{MIDI_tutorials}
 
 \chapter{Přehled přístupů automatické harmonizace}
 Pojem automatická harmonizace melodie označuje disciplínu, která se zabývá tvorbou modelu, 
@@ -543,6 +596,7 @@ a jak na sebe navazují.
 což je pro stroj velmi obtížné zachytit.
 \cite{YinCheng_comparativeStudy}
 \par
+
 V této kapitole bude představeno několik přístupů právě k automatické harmonizaci.
 
 \section{Model založený na shodě šablon}
@@ -697,6 +751,7 @@ Long Short-Term Network (dále jen LSTM), jsou speciálním druhem rekurentních
 Jsou schopny se naučit i dlouhodobější závislosti v sekvencích dat.
 S touto vlastností byly primárně navrženy.\cite{colah_lstm}
 \par
+
 Narozdíl od RNN mají LSTM čtyři vrstvy v jednom opakujícím se modulu.
 
 % frameworky ... viz NOTES.md
@@ -734,7 +789,8 @@ vstupní vektor má 12 dimenzí.
 Tolik tedy bude vstupních uzlů.
 Počet vnitřních vrstev bude empiricky vybrán na základě experimentů.
 \par
-Při učení modelu bude potřeba vyhodnotit jak moc se mýlil.
+Při učení modelu bude potřeba vyhodnotit jak
+ moc se mýlil.
 Toho dosáhneme tak, že výslednou sekvenci porovnáme s
 testovací a porovnáme, v kolika případech se model spletl.
 
@@ -747,6 +803,7 @@ pak může mít výstup 48 možných stavů.
 Vezmeme-li v úvahu také možnost, že v daném půltaktu nehraje žádný akord,
 existuje 49 tříd.
 \par
+
 Výsledná sekvence akordů bude přidána k původní melodii
 a vytvoří se nový, harmonizovaný MIDI soubor.
 
@@ -777,6 +834,7 @@ a vytvoří se nový, harmonizovaný MIDI soubor.
 Cílem této práce bylo seznámit se s harmonizací známé melodie a s možností automatizace této činnosti za pomoci neuronových sítí.
 Následně navrhnout systém, který bude automatickou harmonizaci umožňovat.
 \par
+
 Základům hudby byla věnována první kapitola, 
 další se popisovala různé přístupy k automatické harmonizaci. Některé poznatky z těchto prací byly vybrány a použity v návrhu v následující kapitole.
 Na základě tohoto návrhu bude poté, ve výsledné diplomové práci, implementován systém a jeho neuronová síť s využitím frameworku PyTorch.

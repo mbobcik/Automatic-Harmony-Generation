@@ -1153,6 +1153,7 @@ Management}{\@fit@EN}%
 \usepackage{tabularx}
 \usepackage{graphicx}
 \usepackage{url}
+\usepackage{multirow}
 \DeclareUrlCommand\url{\def\UrlLeft{<}\def\UrlRight{>} \urlstyle{tt}}
 \def\UrlBreaks{\do\/\do-}
 
