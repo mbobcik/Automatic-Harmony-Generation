@@ -1,4 +1,4 @@
-# Poznámky
+# Poznámky k teoretické (i guess)
 
 ## Formáty not
 
@@ -49,3 +49,45 @@ https://towardsdatascience.com/pytorch-vs-tensorflow-spotting-the-difference-25c
 
 *  For example, to sound a note in MIDI you send a "Note On" message, and then assign that note a "velocity", which determines how loud it plays relative to other notes.
     --MIDI tutorials
+
+
+# praktická část
+
+## popis dat
+
+df=
+```sql
+    SELECT * FROM parts
+```
+
+* v df jsou atributy
+    * id - id celé skladby
+    * name - jméno skladby
+    * songkey - tónina skladby (asi)
+    * xml - noty v xml ... dále z xml extrahované
+        * xml_tag - jméno kořenového uzlu v xml (většinou "super") 
+        * xml_bpm - bpm skladby
+        * xml_key - opět tónina 
+        * xml_mode - mód skladby
+    * json - ???
+
+___________________________
+
+df_parts = 
+```sql
+    SELECT p.id, 
+           p.partid, 
+           i.youtubeid, 
+           u.url 
+    from id2parts p 
+    JOIN id2youtube i ON i.id=p.id 
+    JOIN url2id u ON u.id=p.id
+```
+
+* v df_parts jsou atributy 
+    * id - id celé skladby (FK do df)
+    * partid - id části (každý song je rozdělen na části (verse, chorus, prechorus apod.))
+    * youtubeid - id pro video se skladbou na youtube (https://www.youtube.com/watch?v=youtubeid)
+    * url - odkaz na skladbu na hooktheory (https://www.hooktheory.com+url)
+
+_____________________________
