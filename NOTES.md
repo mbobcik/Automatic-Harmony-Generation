@@ -41,14 +41,14 @@ https://towardsdatascience.com/pytorch-vs-tensorflow-spotting-the-difference-25c
 
 * Akordy jde hrát "vcelku", nebo rozloženě - jde to vidět v notách na basové lince
 
-* Jak zjistit tóninu melodie? (15) není to tak jednoduché
-
 * pitch class profile x chromagram??
 
 * Popsat aktivační funkce, vložit několik grafů viz https://www.vutbr.cz/www_base/zav_prace_soubor_verejne.php?file_id=180895
 
 *  For example, to sound a note in MIDI you send a "Note On" message, and then assign that note a "velocity", which determines how loud it plays relative to other notes.
     --MIDI tutorials
+
+* pokud je v souboru písnička v a moll, pak má klíč A a mode 6 (minor). tedy není mollové je potřeba převádět na A
 
 
 # praktická část

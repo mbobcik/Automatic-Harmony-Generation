@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import sqlite3
 import zlib
@@ -18,7 +19,7 @@ from utils import *
 from IPython.display import display
 from mido import Message, MidiFile, MidiTrack, second2tick, bpm2tempo
 
-
+outputFolder = "midi"
 con = sqlite3.connect("data-all.db")
 
 #Nacteni dat z DB 
@@ -47,34 +48,48 @@ df['xml_mode'] = df.xml.apply(lambda root: modes[int(root.find('meta/mode').text
 #print(float(df.iloc[0].xml.find('meta/BPM').text))
 #print(ET.tostring( df.iloc[0].xml).decode("UTF-8"))
 
+#ykouska = df[(df.id == 17213)].iloc[0].xml
 
+savedCount=0
+errorCount=0
 
-for idx, row in df_parts.iterrows():
+try:
+    os.mkdir(outputFolder)
+except:
+    pass
+
+for idx, row in df_parts.iterrows(): #For each song part
     sonicxml = SonicXMLLayer()
     ID=row.id
 
-    lay = sonicxml.addSegmentationLayer(name=f'part {ID} harmony')
-    layseg = sonicxml.addRegionsLayer(name=f'part {ID}',color='#dcf1fa')
+    #lay = sonicxml.addSegmentationLayer(name=f'part {ID} harmony')
+    #layseg = sonicxml.addRegionsLayer(name=f'part {ID}',color='#dcf1fa')
     laynotes = sonicxml.addMidiLayer(name=f'part {ID} melody',color='#ff8000')
     laychords = sonicxml.addMidiLayer(name=f'part {ID} harmony',color='#008000')
 
     root = df[(df.id == row.partid) & (df.xml_tag=='theorytab')]
     if not len(root): continue
     root = root.iloc[0].xml
-    bpm = float(root.find('meta/BPM').text)
+    #default tempo
+    bpmTmp = float(root.find('meta/BPM').text)
+    bpm = 120 if bpmTmp <= 0 else bpmTmp  
     meter = int(root.find('meta/beats_in_measure').text)
-    key = root.find('meta/key').text
+    #key = root.find('meta/key').text
     key_mode = int(root.find('meta/mode').text)
+
+    
 
     tot_measures = sum([int(tts.find('numMeasures').text) for tts in root.findall('data/segment')])
     tot_beats = tot_measures * meter
     bscale = 60.0/bpm
 
-    mid = MidiFile(type=0)
+    mid = MidiFile(type=1)
     tpb = mid.ticks_per_beat
-    print('tpb',tpb)
+    #print('tpb',tpb)
     track = MidiTrack()
     mid.tracks.append(track)
+    chordsTrack = MidiTrack()
+    mid.tracks.append(chordsTrack)
 
     sonicxml = SonicXMLLayer()
 
@@ -82,12 +97,17 @@ for idx, row in df_parts.iterrows():
     lasttick = 0
     for tts in root.findall('data/segment'):
         for ttch in tts.findall('melody/voice/notes/note'):
+            #print("NOTE Start-------------------------")
             tba = float(ttch.find('start_beat_abs').text)
+            #print("start_beat_abs = " + str(tba))
             tbd = float(ttch.find('note_length').text)
+            #print("note_length = " + str(tbd))
             lstbea = tba + tbd
             tnotel= float(ttch.find('note_length').text)
             tnoteo = int(ttch.find('octave').text)
+            #print("octave = " + str(tnoteo))
             tnote = ttch.find('scale_degree').text
+            #print("scale_degree = " + str(tnote))
             if ttch.find('isRest').text.strip() != '1' and tnote != 'rest':
                 midiofs = 0
                 if tnote.endswith('s'): 
@@ -97,10 +117,9 @@ for idx, row in df_parts.iterrows():
                     tnote = tnote[:-1]
                     midiofs = -1
                 tnote = int(tnote)
-                midinote, midinoteo = getNotesOfKey(key, key_mode)
-                midinote, midinoteo = midinote[tnote-1], midinoteo[tnote-1]
-                midinote = laynotes.noteToMidiNumber(midinote, tnoteo + midinoteo+ 4) + midiofs
-                
+                midinote = getMidiNote(laynotes, key_mode, tnoteo, tnote, midiofs)
+                #print("midinote = " + str(midinote))
+
                 #Unlike music, tempo in MIDI is not given as 
                 #beats per minute, but rather in microseconds per beat.
 
@@ -115,16 +134,73 @@ for idx, row in df_parts.iterrows():
                                     tempo=bpm2tempo(bpm))
                 t = int(t0) - lasttick 
                 #print((segofs+tba)*bscale, lasttick, t)
+                #if(t<0):
+                #    print(t)
                 track.append(Message('note_on', note=midinote, velocity=127, time=t))
                 t = int(t1) - int(t0) 
+                #if(t<0):
+                #    print(t)
                 #print(t)
                 track.append(Message('note_off', note=midinote, velocity=127, time=t))
+                lasttick = int(t1)
+
+        segofs = 0
+        lasttick = 0
+        for ttch in tts.findall('harmony/chord'):
+            #print("CHORD Start-------------------------")
+            tba = float(ttch.find('start_beat_abs').text)
+            #print("start_beat_abs = " + str(tba))
+            tbd = float(ttch.find('chord_duration').text)
+            #print("chord_duration = " + str(tbd))
+            lstbea = tba + tbd
+            tnotel= float(ttch.find('chord_duration').text)
+            tnoteo = 0
+            #print("octave = " + str(tnoteo))
+            tnote = ttch.find('sd').text
+            #print("scale_degree = " + str(tnote))
+
+            if ttch.find('isRest').text.strip() != '1' and tnote != 'rest':
+                midiofs = 0
+                if tnote.endswith('s'): 
+                    tnote = tnote[:-1]
+                    midiofs = 1
+                elif tnote.endswith('f'): 
+                    tnote = tnote[:-1]
+                    midiofs = -1
+                tnote = int(tnote)
+                midiChord = getMidiChord(laynotes,key_mode,tnoteo-1,tnote,midiofs)
+
+                t0 = second2tick((segofs+tba)*bscale,
+                                    ticks_per_beat=mid.ticks_per_beat,
+                                    tempo=bpm2tempo(bpm))
+                t1 = second2tick((segofs+tba+tbd)*bscale,
+                                    ticks_per_beat=mid.ticks_per_beat,
+                                    tempo=bpm2tempo(bpm))
+                t = int(t0) - lasttick 
+                                                                                     #time since last event 
+                chordsTrack.append(Message('note_on', note=midiChord[0], velocity=127, time=t, channel=0))
+                chordsTrack.append(Message('note_on', note=midiChord[1], velocity=127, time=0, channel=0))
+                chordsTrack.append(Message('note_on', note=midiChord[2], velocity=127, time=0, channel=0))
+                
+                t = int(t1) - int(t0) 
+                chordsTrack.append(Message('note_off', note=midiChord[0], velocity=127, time=t, channel=0))
+                chordsTrack.append(Message('note_off', note=midiChord[1], velocity=127, time=0, channel=0))
+                chordsTrack.append(Message('note_off', note=midiChord[2], velocity=127, time=0, channel=0))
+
                 lasttick = int(t1)
 
         measures = int(tts.find('numMeasures').text)
         segofs += measures * meter
 
-        print(ET.tostring(tts).decode("UTF-8"))
-            
-    
-    mid.save(f'{ID}__part{row.partid}.mid')
+    try:      
+        print("Saving "+ root.find('title/').text + " part " + str(row.partid))
+    except:
+        pass
+    try:
+        mid.save(f'{outputFolder}/{ID}__part{row.partid}.mid')
+        savedCount+=1
+    except Exception as e:  
+        errorCount+=1
+        print(f"ERROR: {ID}__part{row.partid}.mid failed to save. - saved={savedCount} errors={errorCount} - {e}")
+ 
+print(f"Total saved: {savedCount} Total Errors: {errorCount}")

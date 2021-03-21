@@ -6,6 +6,37 @@ MODES = {1:'ionian', #major
          6:'aeolian', #minor
          7:'locrian'}
 
+def getMidiNote(laynotes, key_mode, tnoteo, tnote, midiofs):
+    key = "A" if key_mode == 6 else "C"
+    midinote, midinoteo = getNotesOfKey(key, key_mode)
+    midinote, midinoteo = midinote[tnote-1], midinoteo[tnote-1]
+    midinote = laynotes.noteToMidiNumber(midinote, tnoteo + midinoteo+ 4) + midiofs
+    return midinote
+
+def getMidiChord(laynotes, key_mode, tnoteo, tnote, midiofs):
+    key = "A" if key_mode == 6 else "C"
+
+    first = tnote
+    second = (first + 2) 
+    second = second - 7 if second > 7 else second
+    third = (second + 2) % 8
+    third = third - 7 if third > 7 else third
+
+    midinotesInKey, midiOctaveKey = getNotesOfKey(key, key_mode)
+
+    midinote, midinoteo = midinotesInKey[first-1], midiOctaveKey[first-1]
+    firstRes = laynotes.noteToMidiNumber(midinote, tnoteo + midinoteo+ 4) + midiofs
+
+    midinote, midinoteo = midinotesInKey[second-1], midiOctaveKey[second-1]
+    secondRes= laynotes.noteToMidiNumber(midinote, tnoteo + midinoteo+ 4) + midiofs
+
+    midinote, midinoteo = midinotesInKey[third-1], midiOctaveKey[third-1]
+    thirdRes = laynotes.noteToMidiNumber(midinote, tnoteo + midinoteo+ 4) + midiofs
+
+    return (firstRes,secondRes,thirdRes)
+
+
+
 def getNotesOfKey(key,mode):
     if isinstance(mode, int):
         #modes: ionian,dorian,phyrgian, lydian, mixolydian,aeolian,locrian
