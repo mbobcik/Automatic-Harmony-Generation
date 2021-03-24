@@ -1,4 +1,5 @@
 import os
+from sqlite3.dbapi2 import Error
 import pandas as pd
 import sqlite3
 import zlib
@@ -168,7 +169,7 @@ for idx, row in df_parts.iterrows(): #For each song part
                     tnote = tnote[:-1]
                     midiofs = -1
                 tnote = int(tnote)
-                midiChord = getMidiChord(laynotes,key_mode,tnoteo-1,tnote,midiofs)
+                midiChord = getMidiChord(laynotes,key_mode,-1,tnote,midiofs)
 
                 t0 = second2tick((segofs+tba)*bscale,
                                     ticks_per_beat=mid.ticks_per_beat,
@@ -177,11 +178,11 @@ for idx, row in df_parts.iterrows(): #For each song part
                                     ticks_per_beat=mid.ticks_per_beat,
                                     tempo=bpm2tempo(bpm))
                 t = int(t0) - lasttick 
-                                                                                     #time since last event 
+                                                                                     # time since last event 
                 chordsTrack.append(Message('note_on', note=midiChord[0], velocity=127, time=t, channel=0))
                 chordsTrack.append(Message('note_on', note=midiChord[1], velocity=127, time=0, channel=0))
                 chordsTrack.append(Message('note_on', note=midiChord[2], velocity=127, time=0, channel=0))
-                
+                                                                                     # 0 = starting simultaneously
                 t = int(t1) - int(t0) 
                 chordsTrack.append(Message('note_off', note=midiChord[0], velocity=127, time=t, channel=0))
                 chordsTrack.append(Message('note_off', note=midiChord[1], velocity=127, time=0, channel=0))
@@ -192,14 +193,23 @@ for idx, row in df_parts.iterrows(): #For each song part
         measures = int(tts.find('numMeasures').text)
         segofs += measures * meter
 
-    try:      
-        print("Saving "+ root.find('title/').text + " part " + str(row.partid))
-    except:
-        pass
     try:
-        mid.save(f'{outputFolder}/{ID}__part{row.partid}.mid')
-        savedCount+=1
+        newFilePath=f'{outputFolder}/{ID}__part{row.partid}.mid'
+        
+        assert len(mid.tracks) == 2 and len(mid.tracks[0]) != 0 and len(mid.tracks[1]) != 0, "song dont have melody or harmony"
+        mid.save(newFilePath)
+        try:
+            test=MidiFile(newFilePath)
+            assert len(test.tracks) == 2
+
+            savedCount+=1
+        except:
+            os.remove(newFilePath)
+            raise Error(f"File {newFilePath} could not be opened after creation - was deleted")
+
     except Exception as e:  
+        if os.path.isfile(newFilePath):
+            os.remove(newFilePath)
         errorCount+=1
         print(f"ERROR: {ID}__part{row.partid}.mid failed to save. - saved={savedCount} errors={errorCount} - {e}")
  

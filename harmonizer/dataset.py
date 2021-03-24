@@ -7,7 +7,6 @@ import pretty_midi
 from pretty_midi import PrettyMIDI
 import os
 from stopwatch import Stopwatch
-from prettierMidi import PrettierMidi
 
 class Dataset( torch.utils.data.Dataset):
     def __init__(self, folder, divideSecondBy):
@@ -17,17 +16,10 @@ class Dataset( torch.utils.data.Dataset):
         self.tmpPath = "tmp.mid"
 
     def loadMidiFileAsChroma(self, path):
-        wholeMidi= MidiFile(path)
-        tmpMido = MidiFile()
-        tmpMido.tracks.append(wholeMidi.tracks[0])
-        tmpMido.save(self.tmpPath)
-        melodyPretty=PrettyMIDI(self.tmpPath)
-        melodyChroma=melodyPretty.get_chroma(fs=self.divideSecondBy)
-
-        tmpMido.tracks[0]=wholeMidi.tracks[1]
-        tmpMido.save(self.tmpPath)
-        harmonyPretty=PrettyMIDI(self.tmpPath)
-        harmonyChroma=harmonyPretty.get_chroma(fs=self.divideSecondBy)
+        wholeMidi= PrettyMIDI(path)
+        assert len(wholeMidi.instruments) == 2, f"File {path} dont have two tracks"
+        melodyChroma=wholeMidi.instruments[0].get_chroma(fs=self.divideSecondBy)
+        harmonyChroma=wholeMidi.instruments[1].get_chroma(fs=self.divideSecondBy)
 
         #os.remove(tmpPath)
         return (self.toOnesAndZeroes(melodyChroma), self.toOnesAndZeroes(harmonyChroma))
@@ -39,9 +31,16 @@ class Dataset( torch.utils.data.Dataset):
         sw=Stopwatch()
         sw.start()
         for file in os.scandir(self.folder):
-            melody, harmony = self.loadMidiFileAsChroma(file)
-            resultMelodies.append(melody)
-            resultHarmonies.append(harmony)
+
+            try:
+                melody, harmony = self.loadMidiFileAsChroma(file.path)
+                resultMelodies.append(melody)
+                resultHarmonies.append(harmony)
+            except Exception as e:
+                # asi vsechny prvky pole, pokud 0, pak error, jinak asi pohoda
+                
+                print(f"ERROR: {e}")
+                continue
             counter=counter+1
             if counter%500==0:
                 print(f"File number {counter} is saved in {sw.elapsed} seconds! {file} -  ({(sw.elapsed/counter)*1000}ms file time)")
@@ -52,4 +51,17 @@ class Dataset( torch.utils.data.Dataset):
 if __name__ == "__main__":  
     ds=Dataset("midi", 4)
     #print(ds.loadMidiFileAsChroma("midi/4346__part554176.mid")[1])
-    ds.loadWholeFolder()
+    melodies, harmonies = ds.loadWholeFolder()
+    melodyMaxLen=0
+    harmonyMaxLen=0
+    sw=Stopwatch()
+    sw.start()
+    counter = 0
+    for melody in  melodies:
+      melodyMaxLen = melodyMaxLen if melodyMaxLen > melody.shape[1] else melody.shape[1]
+      counter+=1
+    melodiesTime=sw.elapsed
+    for harmony in  harmonies:
+          harmonyMaxLen = harmonyMaxLen if harmonyMaxLen > harmony.shape[1] else harmony.shape[1]
+    sw.stop()
+    print("melody max len = {} in {}s({}) harmony max len = {} in {}s".format(melodyMaxLen,melodiesTime,counter, harmonyMaxLen, sw.elapsed))

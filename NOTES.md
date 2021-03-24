@@ -50,6 +50,11 @@ https://towardsdatascience.com/pytorch-vs-tensorflow-spotting-the-difference-25c
 
 * pokud je v souboru písnička v a moll, pak má klíč A a mode 6 (minor). tedy není mollové je potřeba převádět na A
 
+* Všechny noty jsou v rozmezí od MidiNote 11 po 92 včetně. takže je vhodné ořezat pianoRoll pomocí [11:93]. Pak při dekodování zpět na midi je potřeba každou notu zvýšit o 10!
+
+* v celé databází je několik záznamů, které mají chybné časování, nebo nemají záznam harmonie/melodie
+ty jsou vyřazeny
+Total saved: 12093 Total Errors: 1540
 
 # praktická část
 
