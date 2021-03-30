@@ -13,12 +13,25 @@ class Dataset( torch.utils.data.Dataset):
         self.folder=folder
         self.divideSecondBy= divideSecondBy
         self.toOnesAndZeroes = lambda x: x/127
-        self.melodiesArr, self.harmoniesArr = self.loadWholeFolder()
-        #print("Converting to numpy arrays")
-        #self.melodiesArr = self.flattenListToArray(self.melodiesList, "Melodies")
-        #self.harmoniesArr = self.flattenListToArray(self.harmoniesList, "Harmonies")
-        assert self.melodiesArr.shape == self.harmoniesArr.shape, "Melodies and harmonies arrays should be the same shape"
-        # todo - concat all melodies from list of matrices to one long matrix 
+        numpyFilez="numpyData.npz"
+        if os.path.exists(numpyFilez):
+            sw=Stopwatch()
+            sw.start()
+
+
+            npzFile= np.load(numpyFilez)
+            self.melodiesArr=npzFile['melodies']
+            self.harmoniesArr=npzFile['harmonies']
+            assert self.melodiesArr.shape == self.harmoniesArr.shape, "Melodies and harmonies arrays should be the same shape"
+            del npzFile
+
+            sw.stop()
+            print(f"Done in {sw.elapsed}s")
+
+        else:
+            self.melodiesArr, self.harmoniesArr = self.loadWholeFolder()
+            assert self.melodiesArr.shape == self.harmoniesArr.shape, "Melodies and harmonies arrays should be the same shape"
+            np.savez(numpyFilez, melodies=self.melodiesArr, harmonies=self.harmoniesArr)
 
     def loadMidiFileAsChroma(self, path):
         wholeMidi= PrettyMIDI(path)
@@ -49,9 +62,7 @@ class Dataset( torch.utils.data.Dataset):
                 resultMelodies = np.append(resultMelodies, melody, axis=1)
                 resultHarmonies = np.append(resultHarmonies, harmony, axis=1)
             except Exception as e:
-                # asi vsechny prvky pole, pokud 0, pak error, jinak asi pohoda
-                
-                print(f"ERROR: {e}")
+                print(f"ERROR with file {file.path}: {e}")
                 continue
             counter=counter+1
             if counter%10==0:
@@ -60,7 +71,7 @@ class Dataset( torch.utils.data.Dataset):
         sw.stop()
         print()
         print(f"Done -  {counter} files in {sw.elapsed}s ({(sw.elapsed/counter)*1000}ms file time)")
-        return (resultMelodies.T, resultHarmonies.T)
+        return (resultMelodies.T[1:], resultHarmonies.T[1:])
 
     def flattenListToArray(self, list, message=""):
         resArray=np.zeros((12,1))
@@ -101,6 +112,6 @@ if __name__ == "__main__":
     #sw.stop()
     #print("melody max len = {} in {}s({}) harmony max len = {} in {}s".format(melodyMaxLen,melodiesTime,counter, harmonyMaxLen, sw.elapsed))
     #print(f"dataset len = {len(ds)}")
-    #a=ds[0]
-    #print(a)
-    #pass
+    a=ds[0]
+    print(a)
+    pass
