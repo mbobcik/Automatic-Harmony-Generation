@@ -1,11 +1,16 @@
 import numpy as np
+from numpy.lib import unique
 import torch
 import pandas as pd
 from collections import Counter
 from pretty_midi import PrettyMIDI
 import os
 from stopwatch import Stopwatch
-from progress import progress
+
+try:
+    from harmonizer.progress import progress
+except:
+    from progress import progress
 
 class Dataset( torch.utils.data.Dataset):
     def __init__(self, sequence_length=4, folder="midi", divideSecondBy=4):
@@ -23,15 +28,41 @@ class Dataset( torch.utils.data.Dataset):
             self.melodiesArr=npzFile['melodies']
             self.harmoniesArr=npzFile['harmonies']
             assert self.melodiesArr.shape == self.harmoniesArr.shape, "Melodies and harmonies arrays should be the same shape"
+            self.harmoniesArrEncoded = npzFile['harmEncoded']
             del npzFile
+            self.uniqueChords = np.unique(self.harmoniesArr, axis=0)
+            self.chordDecoder = {self.chordEncode(ch):ch for i, ch in enumerate(self.uniqueChords)}
 
-            sw.stop()
+            sw.stop()   
             print(f"Done in {sw.elapsed}s")
 
         else:
+            sw=Stopwatch("whole loading")
+            sw.start()
             self.melodiesArr, self.harmoniesArr = self.loadWholeFolder()
             assert self.melodiesArr.shape == self.harmoniesArr.shape, "Melodies and harmonies arrays should be the same shape"
-            np.savez(numpyFilez, melodies=self.melodiesArr, harmonies=self.harmoniesArr)
+            self.uniqueChords = np.unique(self.harmoniesArr, axis=0)
+            self.chordDecoder = {self.chordEncode(ch):ch for i, ch in enumerate(self.uniqueChords)}
+            self.harmoniesArrEncoded = np.apply_along_axis(self.chordEncode, axis=1, arr= self.harmoniesArr)
+            np.savez(numpyFilez, 
+                melodies=self.melodiesArr, 
+                harmonies=self.harmoniesArr, 
+                harmEncoded=self.harmoniesArrEncoded,
+                )
+            sw.stop()
+            print(f"Done in {sw.elapsed}s")      
+        pass    
+
+    def chordEncode(self, arr):
+        #res=0
+        #for i, ch in enumerate(arr):
+        #    res += ch*2**i
+        #return int(res)
+    
+        for i, ch in enumerate(self.uniqueChords):
+            if np.array_equal(ch, arr):
+                return i
+        return 0
 
     def loadMidiFileAsChroma(self, path):
         wholeMidi= PrettyMIDI(path)
@@ -90,7 +121,7 @@ class Dataset( torch.utils.data.Dataset):
     def __getitem__(self, index):
         return (
             torch.tensor(self.melodiesArr[index: index+self.sequence_length]),
-            torch.tensor(self.harmoniesArr[index: index+self.sequence_length])
+            torch.tensor(self.harmoniesArrEncoded[index: index+self.sequence_length])
         )
 
 if __name__ == "__main__": 
