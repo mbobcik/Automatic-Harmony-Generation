@@ -1,6 +1,9 @@
 import torch
 from torch import nn
-from harmonizer.dataset import Dataset
+try:
+    from harmonizer.dataset import Dataset
+except:
+    from dataset import Dataset
 
 class Model(nn.Module):
     def __init__(self, dataset):
@@ -30,5 +33,3 @@ class Model(nn.Module):
         return (torch.zeros(self.LSTMLayersCount,sequence_length,self.lstm_size),
                 torch.zeros(self.LSTMLayersCount,sequence_length,self.lstm_size))
 
-if __name__ == "__main__":  
-    x=Model(1)

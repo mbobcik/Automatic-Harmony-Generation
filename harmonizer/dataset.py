@@ -121,7 +121,7 @@ class Dataset( torch.utils.data.Dataset):
     def __getitem__(self, index):
         return (
             torch.tensor(self.melodiesArr[index: index+self.sequence_length]),
-            torch.tensor(self.harmoniesArrEncoded[index: index+self.sequence_length])
+            torch.tensor(self.harmoniesArr[index: index+self.sequence_length])
         )
 
 if __name__ == "__main__": 
