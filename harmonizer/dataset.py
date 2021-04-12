@@ -19,6 +19,7 @@ class Dataset( torch.utils.data.Dataset):
         self.divideSecondBy= divideSecondBy
         self.toOnesAndZeroes = lambda x: x/127
         numpyFilez="numpyData.npz"
+        print("loading data")
         if os.path.exists(numpyFilez):
             sw=Stopwatch()
             sw.start()
@@ -52,6 +53,7 @@ class Dataset( torch.utils.data.Dataset):
             sw.stop()
             print(f"Done in {sw.elapsed}s")      
         pass    
+        self.chordCount=len(self.uniqueChords)
 
     def chordEncode(self, arr):
         #res=0
@@ -119,9 +121,15 @@ class Dataset( torch.utils.data.Dataset):
         return self.melodiesArr.shape[0] - self.sequence_length
 
     def __getitem__(self, index):
+        oneHotHarmony = self.harmoniesArrEncoded[index: index+self.sequence_length]
+        oneHotHarmony = torch.tensor(oneHotHarmony).long()
+        oneHotHarmony = torch.nn.functional.one_hot(oneHotHarmony, self.chordCount)
         return (
             torch.tensor(self.melodiesArr[index: index+self.sequence_length]),
-            torch.tensor(self.harmoniesArr[index: index+self.sequence_length])
+            #torch.tensor(self.harmoniesArr[index: index+self.sequence_length])
+            oneHotHarmony
+            #torch.tensor(self.harmoniesArrEncoded[index: index+self.sequence_length])
+
         )
 
 if __name__ == "__main__": 
