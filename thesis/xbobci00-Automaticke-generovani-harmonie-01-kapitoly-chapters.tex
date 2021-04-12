@@ -599,9 +599,16 @@ kde změna začíná.
 a místo zlomku je značen velkým písmenem C.
 \cite{cmiral,zenkl}
 
-\chapter{Reprezentace dat}
+\chapter{Data}
 % ABC, MIDI, GUIDO ... viz NOTES.md
-V této části je popsán vstupní formát trénovacích dat.
+V této části jsou popsány vstupní data.
+Zadání specifikuje některý ze standardizovaných formátů.
+Jedním z nich je MIDI.
+Tento formát je popsán v první části této kapitoly.
+Veškerá data pro tuto diplomovou práci pochází z webu \url{https://www.hooktheory.com/}.
+Ten obsahuje takzvanou Theorytab DB, databázi přepisů známých písniček.
+Přepisy obsahují melodii, harmonii ve formě harmonické funkce a odkaz na písničku na \url{www.youtube.com}
+Jejich podobu a převedení do MIDI popisuje druhá část.
 
 \section{MIDI soubory}
 MIDI (Musical Instrument Digital Interface) je volně přístupný standard,
@@ -798,6 +805,57 @@ Stejně jako při rozeznění je potřeba vědět, o jakou notu se jedná.
 A také v tomto případě je ve zprávě obsažena rychlost (puštění klapky), 
 která je ale ve většině případech ignorována.
 \cite{MIDI_tutorials}
+
+\section{Databáze Hooktheory}
+Data k projektu byla získána ve formě SQLite\footnotetext{\url{https://sqlite.org/index.html}} databáze.
+Tato databáze obsahuje záznamy o písničkách extrahovaných z webu \url{https://www.hooktheory.com/}.
+
+Databáze se skládá z několika tabulek.
+Základní tabulkou je \emph{url2id}, 
+která mapuje webový odkaz písničky na identifikátor (dále jen id) písničky v databázi.
+Odkazy v databázi jsou zkrácené, a neobsahují doménové jméno webu.
+Pokud je na webu písnička dohledatelná například pod odkazem \emph{https://www.hooktheory.com/theorytab/view/the-beatles/hey-jude},
+pak v databázi je pouze část \emph{/theorytab/view/the-beatles/hey-jude}.
+\par
+
+Kvůli autorským právům nelze přepsat celou písničku.
+Místo toho uživatelé Hooktheory přepisují pouze její unikátní části, 
+ne delší než 30 vteřin.
+Jména úseků jsou například úvod (Intro), sloka (Verse), nebo refrén (Chorus).
+\cite{ht_guide}
+Další tabulka v databázi spojuje písničky s jejími částmi.
+Její jméno je \emph{id2parts} a mapuje id částí na id jejich písniček.
+Tabulka \emph{parts} obsahuje informace o těchto částech.
+Jejími sloupci jsou:
+
+\begin{itemize}
+    \item id - identifikátor části
+    \item name - jméno příslušné písničky
+    \item songkey - tónina části
+    \item xml - BLOB\footnotetext{Binary Large Object} obsahující XML soubor s dalšími informacemi
+    \item json - nic neobsahující sloupec
+\end{itemize}
+
+Kořenový uzel XML souboru z databáze obsahuje dva potomky -- meta a sections.
+Meta obsahuje základní informace popisující část písničky.
+Jedná se o jméno autora písničky, jednoznačné jméno části (například Hey Jude Chorus),
+počet dob v taktu, počet dob za minutu (BPM), opět tónina, mód části,
+odkaz na Youtube a časy začátku a konce dané části v Youtube videu.
+\par
+Sections obsahuje uzel pojmenovaný podle názvu části písničky 
+(Intro, Verse, Chorus\dots).
+Části písniček jsou rozděleny na segmenty.
+Uvnitř segmentů jsou kategorie, 
+které dále obsahují samotné noty (uzel notes) a akordy (uzel chords). 
+Každá nota má několik vlastností.
+První čtyři se týkají času
+\par
+
+
+
+Pro účely práce je nutné jednotlivé záznamy databáze
+konvertovat na množinu MIDI souborů.
+
 
 \chapter{Přehled přístupů automatické harmonizace}
 Pojem automatická harmonizace melodie označuje disciplínu, která se zabývá tvorbou modelu, 
