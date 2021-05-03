@@ -807,14 +807,16 @@ která je ale ve většině případech ignorována.
 \cite{MIDI_tutorials}
 
 \section{Databáze Hooktheory}
-Data k projektu byla získána ve formě SQLite\footnotetext{\url{https://sqlite.org/index.html}} databáze.
+Data k projektu byla získána ve formě SQLite
+\footnotetext{\url{https://sqlite.org/index.html}} databáze.
 Tato databáze obsahuje záznamy o písničkách extrahovaných z webu \url{https://www.hooktheory.com/}.
 
 Databáze se skládá z několika tabulek.
 Základní tabulkou je \emph{url2id}, 
 která mapuje webový odkaz písničky na identifikátor (dále jen id) písničky v databázi.
 Odkazy v databázi jsou zkrácené, a neobsahují doménové jméno webu.
-Pokud je na webu písnička dohledatelná například pod odkazem \emph{https://www.hooktheory.com/theorytab/view/the-beatles/hey-jude},
+Pokud je na webu písnička dohledatelná 
+například pod odkazem \emph{https://www.hooktheory.com/theorytab/view/the-beatles/hey-jude},
 pak v databázi je pouze část \emph{/theorytab/view/the-beatles/hey-jude}.
 \par
 
@@ -824,7 +826,7 @@ ne delší než 30 vteřin.
 Jména úseků jsou například úvod (Intro), sloka (Verse), nebo refrén (Chorus).
 \cite{ht_guide}
 Další tabulka v databázi spojuje písničky s jejími částmi.
-Její jméno je \emph{id2parts} a mapuje id částí na id jejich písniček.
+Její jméno je \emph{id2parts} a mapuje id písniček na id všech jejích částí.
 Tabulka \emph{parts} obsahuje informace o těchto částech.
 Jejími sloupci jsou:
 
@@ -839,7 +841,8 @@ Jejími sloupci jsou:
 Kořenový uzel XML souboru z databáze obsahuje dva potomky -- meta a sections.
 Meta obsahuje základní informace popisující část písničky.
 Jedná se o jméno autora písničky, jednoznačné jméno části (například Hey Jude Chorus),
-počet dob v taktu, počet dob za minutu (BPM), opět tónina, mód části,
+počet dob v taktu, počet dob za minutu (BPM\footnotetext{z anglického Beats per minute}),
+opět tónina, mód části,
 odkaz na Youtube a časy začátku a konce dané části v Youtube videu.
 \par
 Sections obsahuje uzel pojmenovaný podle názvu části písničky 
@@ -848,9 +851,52 @@ Sections obsahuje uzel pojmenovaný podle názvu části písničky
 Uvnitř segmentů jsou kategorie, 
 které dále obsahují samotné noty (uzel notes) a akordy (uzel chords). 
 Každá nota má několik vlastností.
-První čtyři se týkají času
+První čtyři se týkají času.
+Pro orientaci uvnitř taktu slouží \emph{start\_beat}, 
+jenž značí, v kolikáté době taktu nota začíná.
+Tento čas je počítán od jedničky.
+Takže například nota začínající znít v první době taktu
+má \emph{start\_beat} nastaven na 1.
+Takt, ve kterém je nota aktivní označuje \emph{start\_measure}.
+Obě tyto vlastnosti dává dohromady vlastnost \emph{start\_beat\_abs},
+která udává absolutní počet dob od začátku písničky, 
+po začátek noty.
+Délku noty v dobách je zapsána v \emph{note\_length}.
+Následují dvě vlastnosti týkající se výšky tónu.
+\emph{Scale\_degree} nabývá hodnot 1 až 7 podle použitého stupně tóniny,
+popřípadě \emph{rest}, pokud je místo noty použita pomlka.
+Oktávu noty udává \emph{octave} jako počet oktáv, 
+které je nutno přičíst k oktávě s notou C60 (viz tabulka \ref{tableMIDINotes})
+Například \emph{octave} noty C60 je nula, 
+noty C48 minus jedna a noty C72 plus jedna.
+Poslední xml vlastností noty je redundantní \emph{isRest},
+pravdivostní hodnota s jedničkou, pokud se jedná o pomlku. 
 \par
-
+Akordy jsou v xml popsány podobně jako noty.
+Vlastnosti \emph{start\_beat}, \emph{start\_measure}, \emph{start\_beat\_abs}
+a \emph{isRest} mají stejný význam.
+Délku trvání akordu značí \emph{chord\_duration} stejně jako u not v počtu dob.
+Zbývající vlastnosti popisují akord jako takový.
+První tón akordu, a tedy i jeho název, 
+je ukryt v uzlu se zkratkou \emph{sd},
+nejspíš s anglického scale degree.
+Stejně jako u not má tato vlastnost rozsah 1 až 7 podle stupně tóniny 
+popřípadě \emph{rest}.
+Vlastnost a zkratka \emph{fb} je z anglického figural bass, 
+tedy číslovaný bas. 
+Číslo ve vlastnosti značí, 
+na kterém stupni se nachází základní tón akordu\cite{kofron}.
+Zkratka \emph{sec} mění základní tóninu,
+od které se počítá stupeň akordu (\emph{sd}).
+Akord, ve kterém je vyměněna tercie za kvartu, případně sekundu,
+se jmenuje suspended akord.
+Pokud se jedná o tento akord, 
+pak vlastnost \emph{sus} obsahuje řetězec \emph{sus4} v případě kvarty,
+\emph{sus2} v případě sekundy, nebo \emph{sus42} v případě obou\cite{SimplifyingSuspended}.
+Akord lze také vyměnit za akord z jiného modu.
+Toto "vypůjčení" je zaznamenáno v uzlu \emph{borrowed}.
+Složka \emph{alternate} značí akordy alterované, 
+tedy akordy s jedním nebo více tóny alterovanými\cite{SzkanderaAlterovane}.
 
 
 Pro účely práce je nutné jednotlivé záznamy databáze
