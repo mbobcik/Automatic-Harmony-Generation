@@ -199,7 +199,7 @@ Některé tance a rytmy jsou spíše regionálního charakteru,
 mezi ně řadíme polské tance polonéza a mazurka, maďarský čardáš, či španělské bolero.
 Složitými rytmy pak vynikají písně moravské a slovenské.
 Rytmus je podle některých
-\footnote{\"Na počátku byl rytmus\" -- Hans Bülow} 
+\footnote{\uv{Na počátku byl rytmus} -- Hans Bülow} 
 nejpodstatnější složkou hudby.
 To je patrné především v hudbě národů na nízkém stupni kultury,
 kde rytmy určené bicími nástroji, doplněné tleskáním a podupáváním,
@@ -808,14 +808,14 @@ která je ale ve většině případech ignorována.
 
 \section{Databáze Hooktheory}
 Data k projektu byla získána ve formě SQLite
-\footnotetext{\url{https://sqlite.org/index.html}} databáze.
+\footnote{\url{https://sqlite.org/index.html}} databáze.
 Tato databáze obsahuje záznamy o písničkách extrahovaných z webu \url{https://www.hooktheory.com/}.
 
 Databáze se skládá z několika tabulek.
 Základní tabulkou je \emph{url2id}, 
 která mapuje webový odkaz písničky na identifikátor (dále jen id) písničky v databázi.
 Odkazy v databázi jsou zkrácené, a neobsahují doménové jméno webu.
-Pokud je na webu písnička dohledatelná 
+Pokud je písnička na webu 
 například pod odkazem \emph{https://www.hooktheory.com/theorytab/view/the-beatles/hey-jude},
 pak v databázi je pouze část \emph{/theorytab/view/the-beatles/hey-jude}.
 \par
@@ -834,14 +834,15 @@ Jejími sloupci jsou:
     \item id - identifikátor části
     \item name - jméno příslušné písničky
     \item songkey - tónina části
-    \item xml - BLOB\footnotetext{Binary Large Object} obsahující XML soubor s dalšími informacemi
+    \item xml - BLOB\footnote{Binary Large Object} obsahující komprimovaný XML soubor s dalšími informacemi
     \item json - nic neobsahující sloupec
 \end{itemize}
+
 
 Kořenový uzel XML souboru z databáze obsahuje dva potomky -- meta a sections.
 Meta obsahuje základní informace popisující část písničky.
 Jedná se o jméno autora písničky, jednoznačné jméno části (například Hey Jude Chorus),
-počet dob v taktu, počet dob za minutu (BPM\footnotetext{z anglického Beats per minute}),
+počet dob v taktu, počet dob za minutu (BPM\footnote{z anglického Beats per minute}),
 opět tónina, mód části,
 odkaz na Youtube a časy začátku a konce dané části v Youtube videu.
 \par
@@ -898,10 +899,35 @@ Toto "vypůjčení" je zaznamenáno v uzlu \emph{borrowed}.
 Složka \emph{alternate} značí akordy alterované, 
 tedy akordy s jedním nebo více tóny alterovanými\cite{SzkanderaAlterovane}.
 
-
+\subsection{Převedení databáze na MIDI soubory}
 Pro účely práce je nutné jednotlivé záznamy databáze
 konvertovat na množinu MIDI souborů.
-
+Proto jsem vytvořil skript \emph{dbToMIDI.py} v jazyce Python,
+který sekvenčně dotazuje jednotlivé části písniček v databázi,
+a pro každou vytvoří samostatný MIDI soubor.
+Tyto soubory uloží do složky 
+a pojmenuje ve formátu {<id písničky>\_\_part<id části>.mid}.
+Cestu k databázi a jméno výstupní složky 
+je nutno zadat jako vstupní parametry složky v tomto pořadí.
+Pro práci s databází skript využívá knihovnu \emph{sqlite3}\footnote{https://docs.python.org/3/library/sqlite3.html}.
+Data jako noty a akordy jsou v xml souboru, 
+který je uložený v jednom ze sloupců.
+Soubor xml je dekomprimován metodou \emph{decompress()} z knihovny \emph{zlib}\footnote{https://docs.python.org/3/library/zlib.html},
+Pro extrakci těchto dat je využita knihovna \emph{lxml.etree}\footnote{https://lxml.de/}.
+Manipulace s MIDI soubory je prováděna pomocí knihovny Mido\footnote{https://github.com/mido/mido}.
+Každý záznam části písničky v databázi má, mimo jiné, 
+xml uzel s notami a uzel s akordy.
+Skript postupně projde nejprve všechny noty, a poté akordy,
+a na základě poskytnutých dat vypočítá výšky tónů, čas začátku a čas konce.
+S pomocí výsledných parametrů jsou vytvořeny \emph{mido.Message} objekty,
+které abstrahují MIDI zprávy.
+Tyto objekty jsou poté vloženy do dvou objektů \emph{mido.MidiTrack}.
+Jeden slouží pro ukládání melodických not, a druhý pro harmonické akordy.
+Z těchto stop je vytvořen \emph{mido.MidiFile} objekt, který zaštiťuje práci s MIDI souborem.
+Některé záznamy písniček obsahují pouze akordy, nebo pouze noty, tedy melodii bez harmonie.
+Soubor je na tento neduh otestován, a pokud obsahuje obě složky, pak je uložen.
+Ty, kterým jedna z částí chybí uloženy nejsou.
+Z celkového počtu $13 633$ je tímto způsobem odstraněno zhruba $1500$ částí písniček.
 
 \chapter{Přehled přístupů automatické harmonizace}
 Pojem automatická harmonizace melodie označuje disciplínu, která se zabývá tvorbou modelu, 
