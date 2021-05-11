@@ -720,7 +720,7 @@ Ten obsahuje parametry použitých nástrojů, jednotlivé noty skladby,
 ale také různé textové informace jako název skladby nebo její text.
 Za identifikátorem bloku "MTrk" a jeho délkou 
 následuje posloupnost MIDI událostí
-ve tvaru časový přírustek, stavový bajt, datové bajty.
+ve tvaru časový přírůstek, stavový bajt, datové bajty.
 \cite{Back_SMF_Specif}
 \par
 
@@ -838,7 +838,6 @@ Jejími sloupci jsou:
     \item json - nic neobsahující sloupec
 \end{itemize}
 
-
 Kořenový uzel XML souboru z databáze obsahuje dva potomky -- meta a sections.
 Meta obsahuje základní informace popisující část písničky.
 Jedná se o jméno autora písničky, jednoznačné jméno části (například Hey Jude Chorus),
@@ -873,6 +872,7 @@ noty C48 minus jedna a noty C72 plus jedna.
 Poslední xml vlastností noty je redundantní \emph{isRest},
 pravdivostní hodnota s jedničkou, pokud se jedná o pomlku. 
 \par
+
 Akordy jsou v xml popsány podobně jako noty.
 Vlastnosti \emph{start\_beat}, \emph{start\_measure}, \emph{start\_beat\_abs}
 a \emph{isRest} mají stejný význam.
@@ -980,6 +980,69 @@ k daným notám melodie.
 Na rozdíl od předchozího přístupu 
 tento model bere v úvahu předcházející akordy.
 \cite{YinCheng_comparativeStudy}
+
+\section{Google Magenta}
+Magenta je open-source výzkumný projekt založený Google Brain týmem.
+Jedná se o soubor nástrojů a modelů hlubokého i posilovaného učení.
+Zaměřuje se především na využití strojového učení jako nástroje
+v kreativním procesu.
+Projekt je distribuován pro Python a JavaScript.
+Magenta.js je pouze API pro používání předtrénovaných modelů v prohlížečích.
+Magenta pro Python je celá knihovna, která zahrnuje kromě předtrénovaných modelů
+také nástroje pro manipulaci dat, trénování vlastních modelů a generování
+nových výtvorů na jejich základě.
+\cite{google_magentaHome} 
+Vytvořené modely se zabývají generováním a modifikací hudebních 
+a obrazových uměleckých dat.
+Obrazové modely jsou například image\_stylization\footnote{https://github.com/magenta/magenta/tree/master/magenta/models/image\_stylization},
+který vytvoří nový obraz na základě obsahu jednoho a stylu druhého\cite{dumoulin2017learned},
+nebo sketch-rnn\footnote{https://github.com/magenta/magenta/tree/master/magenta/models/sketch\_rnn},
+tedy rekurentní neuronovou síť, která se pokouší domalovat člověkem vytvořený náčrt,
+popřípadě načrtnout obrázek dle zadané třídy\cite{ha2017neural}.
+\par
+
+Z hudebních modelů Magenta obsahuje Coconet, 
+který doplňuje zadanou melodii o kontrapunkt, 
+tedy o protihlas více melodií\cite{kofron, huang2017counterpoint}.
+Rozdílem oproti klasickým algoritmům doplňující kontrapunkt
+je odproštění od chronologického postupu od začátku skladby ke konci.
+Naopak noty jsou generovány v jakémkoliv pořadí tak, 
+že model opakovaně přepisuje a maže svou vlastní práci.
+Při trénování model přijímá čtyřhlasou harmonii s náhodně odstraněnými notami,
+a snaží se tento vstup rekonstruovat.
+Na nižší úrovni je vstup tří dimenzionální pole, 
+kde jedna z dimenzí vymezuje čtyřhlas, další číslo MIDI noty a poslední čas
+\footnote{V literatuře se pole s dimenzemi (MIDI nota, čas) nazývají pianoroll}.
+Tento objekt je vstupem konvoluční neuronové sítě.  
+Výstupem je objekt o stejné velikosti, 
+nyní obsahující pravděpodobnosti not ve smazaných částech.
+\cite{huang2017counterpoint}
+Tento natrénovaný model lze vyzkoušet jako Google Doodle na \url{https://www.google.com/doodles/celebrating-johann-sebastian-bach}
+\par
+Jedním z dalších Magenta modelů, které se zabývá hudbou je Polyphony RNN. 
+Ten aplikuje jazykové modely ke generování polyfonní hudby za použití LSTM neuronových sítí.
+Narozdíl od modelu Melody RNN, který také využívá jazykových modelů, 
+Polyphony RNN dokáže pracovat s více souběžnýmí notami.
+Tento model tedy pracuje také s vícehlasem.
+Více-hlasý vstup je zde modelován jako jeden proud notových událostí se speciálními řídícími symboly.
+Skladba se rozdělena na stejné časové úseky (stepy), 
+a každý z úseků obsahuje seznam aktivních not.
+Noty jsou v každém úseku seřazeny podle výšky (v MIDI formátu) 
+a je popsán jejich vztah v závislosti k předchozímu stavu tónu(viz níže akord C trvající dva úseky).
+\cite{google_git_polyphony}
+\begin{verbatim}
+START
+NEW_NOTE, 67
+NEW_NOTE, 64
+NEW_NOTE, 60
+STEP_END
+CONTINUED_NOTE, 67
+CONTINUED_NOTE, 64
+CONTINUED_NOTE, 60
+STEP_END
+END
+\end{verbatim}
+
 
 \chapter{Strojové učení}
 % rešerše strojového učení, jak funguje
