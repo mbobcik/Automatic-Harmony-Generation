@@ -930,6 +930,7 @@ Ty, kterým jedna z částí chybí uloženy nejsou.
 Z celkového počtu $13 633$ je tímto způsobem odstraněno zhruba $1500$ částí písniček.
 
 \chapter{Přehled přístupů automatické harmonizace}
+\label{prehledPristupus}
 Pojem automatická harmonizace melodie označuje disciplínu, která se zabývá tvorbou modelu, 
 který dokáže vygenerovat harmonický doprovod k dané melodii.
 Samotná harmonizace je složitý úkol, 
@@ -1005,14 +1006,13 @@ Z hudebních modelů Magenta obsahuje Coconet,
 který doplňuje zadanou melodii o kontrapunkt, 
 tedy o protihlas více melodií\cite{kofron, huang2017counterpoint}.
 Rozdílem oproti klasickým algoritmům doplňující kontrapunkt
-je odproštění od chronologického postupu od začátku skladby ke konci.
+je oproštění od chronologického postupu od začátku skladby ke konci.
 Naopak noty jsou generovány v jakémkoliv pořadí tak, 
 že model opakovaně přepisuje a maže svou vlastní práci.
 Při trénování model přijímá čtyřhlasou harmonii s náhodně odstraněnými notami,
 a snaží se tento vstup rekonstruovat.
 Na nižší úrovni je vstup tří dimenzionální pole, 
-kde jedna z dimenzí vymezuje čtyřhlas, další číslo MIDI noty a poslední čas
-\footnote{V literatuře se pole s dimenzemi (MIDI nota, čas) nazývají pianoroll}.
+kde jedna z dimenzí vymezuje čtyřhlas, další číslo MIDI noty a poslední čas\footnote{V literatuře se pole s dimenzemi (MIDI nota, čas) nazývají pianoroll}.
 Tento objekt je vstupem konvoluční neuronové sítě.  
 Výstupem je objekt o stejné velikosti, 
 nyní obsahující pravděpodobnosti not ve smazaných částech.
@@ -1021,11 +1021,11 @@ Tento natrénovaný model lze vyzkoušet jako Google Doodle na \url{https://www.
 \par
 Jedním z dalších Magenta modelů, které se zabývá hudbou je Polyphony RNN. 
 Ten aplikuje jazykové modely ke generování polyfonní hudby za použití LSTM neuronových sítí.
-Narozdíl od modelu Melody RNN, který také využívá jazykových modelů, 
-Polyphony RNN dokáže pracovat s více souběžnýmí notami.
+Na rozdíl od modelu Melody RNN, který také využívá jazykových modelů, 
+Polyphony RNN dokáže pracovat s více souběžnými notami.
 Tento model tedy pracuje také s vícehlasem.
 Více-hlasý vstup je zde modelován jako jeden proud notových událostí se speciálními řídícími symboly.
-Skladba se rozdělena na stejné časové úseky (stepy), 
+Skladba je rozdělena na stejné časové úseky (stepy), 
 a každý z úseků obsahuje seznam aktivních not.
 Noty jsou v každém úseku seřazeny podle výšky (v MIDI formátu) 
 a je popsán jejich vztah v závislosti k předchozímu stavu tónu(viz níže akord C trvající dva úseky).
@@ -1185,20 +1185,36 @@ který umožní automatické generování harmonie na základě známé melodie.
 Jak bylo napsáno, harmonie je souzvuk více zvuků najednou.
 Aby systém dokázal generovat tóny, které spolu opravdu souzní,
 musí obsahovat správně naučený model.
-Ten bude pro každý půltakt generovat akord,
-který s ním ladí.
+Z modelů představených v kapitole \ref{prehledPristupus} byl vybrán 
+Polyphony RNN z projektu Magenta.
+Z ostatních přístupů je nejnovější a využívá framework TensorFlow\cite{YinCheng_comparativeStudy,google_git_polyphony}.
 
 \section{Vstup}
 Vstupem celého systému je MIDI soubor, obsahující melodii,
 pro kterou chceme vygenerovat harmonický doprovod.
 Neuronové sítě si ale s takovými soubory neumí moc poradit,
 a tak je soubor potřeba převést na vhodnější reprezentaci.
-Tou jsou vektory.
-Jak melodii převést na vektor bylo nastíněno v části \ref{shodaSablon}.
-Vstup bude tedy rozdělen po polovinách taktů, 
-a pro každý se spočítá jeho PCP -- dvanácti-dimenzionální vektor,
-který obsahuje jaké tóny a jak dlouho v daném půltaktu zní.
-Výsledná posloupnost vektorů bude vstupem modelu.
+Podle \cite{google_git_polyphony} jsou touto reprezentací protocol buffers,
+rychlejší a efektivnější datový formát než MIDI.
+Protocol buffers je mechanismus firmy Google pro serializaci strukturovaných dat,
+který je rozšiřitelný a nezávislý na jazyce a platformě, podobně jako například XML.
+Veškeré protocol buffers zprávy jsou uložené v jednom .tfrecord souboru.
+Definici zpráv určují takzvané .proto soubory.\cite{google_ProtocolBuffers}
+V projektu Magenta se pro serializaci not používá jednotná definice zvaná NoteSequences.\cite{google_musicColab}
+\par
+Pro trénování je vhodné samostatné serializované noty dále převést na SequenceExamples.\cite{google_git_polyphony}
+To je TensorFlow definice protocol bufferů určená k práci se sekvenčními daty.
+Definice obsahuje dvě části -- context a feature\_lists.
+Context obsahuje nesekvenční vlastnosti (features) jako například tempo a 
+feature\_lists obsahuje sekvenční vlastnosti, jednotlivé noty.
+Výhodou SequenceExamples je možnost distribuce trénování, 
+kdy je možné rozdělit jeden .tfrecord soubor na více.
+Další výhodou je znovupoužitelnost modelu, který SequenceExamples využívá.
+Nevýhodou je velikost výsledných .tfrecord souborů s touto definicí oproti původním datům. \cite{britz_undocumentedFeatures}
+Podle \cite{britz_undocumentedFeatures} může tento formát zvýšit velikost datové sady desetinásobně,
+avšak při převedení MIDI souborů je výsledná velikost $9.409e^3$krát větší (viz výpočet níže).
+$$ velikost .tfrecord Souboru / velikost VsechMIDI Souboru =$$
+$$94454904591B / 10038169B = 9.409575e^3$$
 
 \section{Model}
 Základem modelu strojového učení bude LSTM rekurentní neuronová síť.
