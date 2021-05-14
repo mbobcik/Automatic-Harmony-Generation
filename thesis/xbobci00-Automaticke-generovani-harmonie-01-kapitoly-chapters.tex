@@ -807,6 +807,7 @@ která je ale ve většině případech ignorována.
 \cite{MIDI_tutorials}
 
 \section{Databáze Hooktheory}
+\label{hooktheoryDB}
 Data k projektu byla získána ve formě SQLite
 \footnote{\url{https://sqlite.org/index.html}} databáze.
 Tato databáze obsahuje záznamy o písničkách extrahovaných z webu \url{https://www.hooktheory.com/}.
@@ -1020,7 +1021,8 @@ nyní obsahující pravděpodobnosti not ve smazaných částech.
 Tento natrénovaný model lze vyzkoušet jako Google Doodle na \url{https://www.google.com/doodles/celebrating-johann-sebastian-bach}
 \par
 Jedním z dalších Magenta modelů, které se zabývá hudbou je Polyphony RNN. 
-Ten aplikuje jazykové modely ke generování polyfonní hudby za použití LSTM neuronových sítí.
+Ten aplikuje jazykové modely ke generování polyfonní hudby za použití LSTM neuronových sítí
+a je založen na projektu BachBot, který je popsán v \cite{Liang_AutomaticComposition}.
 Na rozdíl od modelu Melody RNN, který také využívá jazykových modelů, 
 Polyphony RNN dokáže pracovat s více souběžnými notami.
 Tento model tedy pracuje také s vícehlasem.
@@ -1042,7 +1044,16 @@ CONTINUED_NOTE, 60
 STEP_END
 END
 \end{verbatim}
-
+Pro generování nové skladby potřebuje model tzv. primer, tedy pár not, 
+použitých jako počátek skladby. 
+Primer lze vložit ve třemi způsoby, a to jako počáteční akord,
+počáteční melodie, nebo MIDI soubor.
+Tento vstup lze vložit do modelu před generováním,
+tedy ve vygenerované sekvenci vstup nebude, ale bude jím oblivněn.
+Toto se hodí například pro ustanovení tóniny generované skladby.
+Dále je možné použít vstup jako součást generované sekvence,
+což je vhodné při harmonizaci již existující melodie.
+\cite{google_git_polyphony}
 
 \chapter{Strojové učení}
 % rešerše strojového učení, jak funguje
@@ -1184,10 +1195,7 @@ V této kapitole je představen návrh systému,
 který umožní automatické generování harmonie na základě známé melodie.
 Jak bylo napsáno, harmonie je souzvuk více zvuků najednou.
 Aby systém dokázal generovat tóny, které spolu opravdu souzní,
-musí obsahovat správně naučený model.
-Z modelů představených v kapitole \ref{prehledPristupus} byl vybrán 
-Polyphony RNN z projektu Magenta.
-Z ostatních přístupů je nejnovější a využívá framework TensorFlow\cite{YinCheng_comparativeStudy,google_git_polyphony}.
+musí obsahovat správně naučený model se správnými vstupy a výstupy.
 
 \section{Vstup}
 Vstupem celého systému je MIDI soubor, obsahující melodii,
@@ -1200,9 +1208,12 @@ Protocol buffers je mechanismus firmy Google pro serializaci strukturovaných da
 který je rozšiřitelný a nezávislý na jazyce a platformě, podobně jako například XML.
 Veškeré protocol buffers zprávy jsou uložené v jednom .tfrecord souboru.
 Definici zpráv určují takzvané .proto soubory.\cite{google_ProtocolBuffers}
-V projektu Magenta se pro serializaci not používá jednotná definice zvaná NoteSequences.\cite{google_musicColab}
+V projektu Magenta se pro serializaci not používá jednotná definice zvaná NoteSequence.
+\cite{google_musicColab}
 \par
-Pro trénování je vhodné samostatné serializované noty dále převést na SequenceExamples.\cite{google_git_polyphony}
+
+Pro trénování je vhodné samostatné serializované noty dále převést na SequenceExamples.
+\cite{google_git_polyphony}
 To je TensorFlow definice protocol bufferů určená k práci se sekvenčními daty.
 Definice obsahuje dvě části -- context a feature\_lists.
 Context obsahuje nesekvenční vlastnosti (features) jako například tempo a 
@@ -1210,48 +1221,41 @@ feature\_lists obsahuje sekvenční vlastnosti, jednotlivé noty.
 Výhodou SequenceExamples je možnost distribuce trénování, 
 kdy je možné rozdělit jeden .tfrecord soubor na více.
 Další výhodou je znovupoužitelnost modelu, který SequenceExamples využívá.
-Nevýhodou je velikost výsledných .tfrecord souborů s touto definicí oproti původním datům. \cite{britz_undocumentedFeatures}
+Nevýhodou je velikost výsledných .tfrecord souborů s touto definicí oproti původním datům. 
+\cite{britz_undocumentedFeatures}
 Podle \cite{britz_undocumentedFeatures} může tento formát zvýšit velikost datové sady desetinásobně,
-avšak při převedení MIDI souborů je výsledná velikost $9.409e^3$krát větší (viz výpočet níže).
+avšak při převedení všech MIDI souborů (viz kapitola \ref{hooktheoryDB}) 
+je výsledná velikost $9.409e^3$krát vyšší (viz výpočet podle měření níže).
+
 $$ velikost .tfrecord Souboru / velikost VsechMIDI Souboru =$$
 $$94454904591B / 10038169B = 9.409575e^3$$
 
 \section{Model}
-Základem modelu strojového učení bude LSTM rekurentní neuronová síť.
-Díky nim se bude model učit nejenom na základě aktuálního vstupu,
-ale také bude brát v úvahu parametry předchozích stavů.
-Samotná rekurentní neuronová síť však tyto parametry nedrží dostatečně dlouho.
-Proto budou využity LSTM vrstvy, 
-které tuto limitaci vylepší.
-Jak již bylo naznačeno, 
-vstupní vektor má 12 dimenzí.
-Tolik tedy bude vstupních uzlů.
-Počet vnitřních vrstev bude empiricky vybrán na základě experimentů.
+Z modelů představených v kapitole \ref{prehledPristupus} byl vybrán 
+Polyphony RNN z projektu Magenta.
+V porovnání s ostatními přístupy je nejnovější a využívá framework TensorFlow
+\cite{YinCheng_comparativeStudy,google_git_polyphony}.
+Magenta poskytuje model\footnote{dostupný z \url{http://download.magenta.tensorflow.org/models/polyphony_rnn.mag}} 
+již natrénovaný na chorálech, které složil Johann Sebastian Bach
+(\footnote{dostupné z \url{https://web.archive.org/web/20150503021418/http://www.jsbchorales.net/xml.shtml}, 
+popřípadě z \url{https://github.com/cuthbertLab/music21/tree/master/music21/corpus/bach}}).
+Kromě toho lze model natrénovat s pomocí vlastních dat,
+kdy je také možné nastavit hyperparametry sítě jako například počet a velikost RNN vrstev.
+\cite{google_git_polyphony}
 \par
-Při učení modelu bude potřeba vyhodnotit jak
- moc se mýlil.
-Toho dosáhneme tak, že výslednou sekvenci porovnáme s
-testovací a porovnáme, v kolika případech se model spletl.
+
+Primer modelu bude MIDI soubor se samotnou melodií, 
+konvertovaný podle předchozí části na NoteSequence.
+Úkolem systému je harmonizace této melodie, 
+proto bude použita jako součást výstupu.
+\cite{google_git_polyphony}
 
 \section{Výstup}
-Výstupem modelu bude stejný vektor jako na vstupu.
-Nyní ale bude PCP obsahovat jen tóny akordu, 
-který má znít v daném půltaktu.
-Pokud budeme brát v úvahu pouze kvintakordy (dur, moll, zvětšený, zmenšený),
-pak může mít výstup 48 možných stavů.
-Vezmeme-li v úvahu také možnost, že v daném půltaktu nehraje žádný akord,
-existuje 49 tříd.
-\par
-
-Výsledná sekvence akordů bude přidána k původní melodii
-a vytvoří se nový, harmonizovaný MIDI soubor.
-
-
-% popis systému, který bude výstupem práce
-
-% vstupy
-% způsob práce
-% výstup
+Výstupem samotného modelu je protocol buffer s definicí NoteSequence, 
+stejně jako na vstupu.
+Tato NoteSequence je interně převedena na výsledný MIDI soubor, 
+který obsahuje původní melodii, která je následována její harmonizovanou podobou.
+\cite{google_git_polyphony}
 
 \chapter{Implementace}
 % popis implementace
@@ -1270,12 +1274,15 @@ a vytvoří se nový, harmonizovaný MIDI soubor.
 % shrnutí práce
 % možný budoucí vývoj práce
 % celkový přínos
-Cílem této práce bylo seznámit se s harmonizací známé melodie a s možností automatizace této činnosti za pomoci neuronových sítí.
+Cílem této práce bylo seznámit se s harmonizací známé melodie a 
+s možností automatizace této činnosti za pomoci neuronových sítí.
 Následně navrhnout systém, který bude automatickou harmonizaci umožňovat.
 \par
 
 Základům hudby byla věnována první kapitola, 
-další se popisovala různé přístupy k automatické harmonizaci. Některé poznatky z těchto prací byly vybrány a použity v návrhu v následující kapitole.
-Na základě tohoto návrhu bude poté, ve výsledné diplomové práci, implementován systém a jeho neuronová síť s využitím frameworku PyTorch.
+další se popisovala různé přístupy k automatické harmonizaci. 
+Některé poznatky z těchto prací byly vybrány a použity v návrhu v následující kapitole.
+Na základě tohoto návrhu bude poté, ve výsledné diplomové práci, 
+implementován systém a jeho neuronová síť s využitím frameworku PyTorch.
 Toto řešení bude, na základě testovacích dat, vyhodnoceno.
 V závěru budou diskutovány výsledky a možné pokračování této práce.
