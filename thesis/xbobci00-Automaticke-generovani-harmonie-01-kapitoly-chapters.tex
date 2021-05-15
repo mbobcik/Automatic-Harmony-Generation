@@ -1286,7 +1286,7 @@ a s 8Gb operační paměti.
 Pro instalaci knihovny na použitý operační systém je poskytnut instalační skript.
 
 \begin{verbatim}
-URL=https://raw.githubusercontent.com/tensorflow/ \\
+URL=https://raw.githubusercontent.com/tensorflow/ \
     magenta/master/magenta/tools/magenta-install.sh
 curl $(URL) > /tmp/magenta-install.sh
 bash /tmp/magenta-install.sh    
@@ -1325,9 +1325,9 @@ Pro rekurzivní procházení adresářů je nutno nastavit parametr \emph{recurs
 Použití  pak vypadá následovně:
 
 \begin{verbatim}
-convert\_dir\_to\_note\_sequences \
-    --input\_dir=./midi \
-    --output\_file=./tmp/notesequences.tfrecord \
+convert_dir_to_note_sequences \
+    --input_dir=./midi \
+    --output_file=./tmp/notesequences.tfrecord \
     --recursive
 \end{verbatim} 
 
@@ -1351,10 +1351,10 @@ a kolik jako datová sada k trénování modelu.
 Příkaz se správnými argumenty je
 
 \begin{verbatim}
-polyphony\_rnn\_create\_dataset \
-    --input=.\/tmp/notesequences.tfrecord \
-    --output_dir=.\tmp/polyphony\_rnn/sequence\_examples \
-    --eval\_ratio=0.10
+polyphony_rnn_create_dataset \
+    --input=./tmp/notesequences.tfrecord \
+    --output_dir=./tmp/polyphony_rnn/sequence_examples \
+    --eval_ratio=0.10
 \end{verbatim}
 
 Generování trénovacích dat trvá zhruba čtyři až šest hodin.
