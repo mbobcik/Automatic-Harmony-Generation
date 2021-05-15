@@ -811,6 +811,7 @@ která je ale ve většině případech ignorována.
 Data k projektu byla získána ve formě SQLite
 \footnote{\url{https://sqlite.org/index.html}} databáze.
 Tato databáze obsahuje záznamy o písničkách extrahovaných z webu \url{https://www.hooktheory.com/}.
+Velikost databáze je $32.7$MB ($34 334 720$B)
 
 Databáze se skládá z několika tabulek.
 Základní tabulkou je \emph{url2id}, 
@@ -898,7 +899,14 @@ pak vlastnost \emph{sus} obsahuje řetězec \emph{sus4} v případě kvarty,
 Akord lze také vyměnit za akord z jiného modu.
 Toto "vypůjčení" je zaznamenáno v uzlu \emph{borrowed}.
 Složka \emph{alternate} značí akordy alterované, 
-tedy akordy s jedním nebo více tóny alterovanými\cite{SzkanderaAlterovane}.
+tedy akordy s jedním nebo více tóny alterovanými.
+\cite{SzkanderaAlterovane}.
+\par
+Kromě těchto popsaných tabulek obsahuje databáze také další,
+které popisují žánr písničky, 
+nebo její metriky zavedené a vypočítané webem hooktheory.com.
+Tato data ale nejsou vzata v úvahu, 
+neboť s nimi nelze počítat ve standardních MIDI souborech.
 
 \subsection{Převedení databáze na MIDI soubory}
 Pro účely práce je nutné jednotlivé záznamy databáze
@@ -913,7 +921,8 @@ je nutno zadat jako vstupní parametry složky v tomto pořadí.
 Pro práci s databází skript využívá knihovnu \emph{sqlite3}\footnote{https://docs.python.org/3/library/sqlite3.html}.
 Data jako noty a akordy jsou v xml souboru, 
 který je uložený v jednom ze sloupců.
-Soubor xml je dekomprimován metodou \emph{decompress()} z knihovny \emph{zlib}\footnote{https://docs.python.org/3/library/zlib.html},
+Soubor xml je dekomprimován metodou \emph{decompress()} z knihovny 
+\emph{zlib}\footnote{https://docs.python.org/3/library/zlib.html},
 Pro extrakci těchto dat je využita knihovna \emph{lxml.etree}\footnote{https://lxml.de/}.
 Manipulace s MIDI soubory je prováděna pomocí knihovny Mido\footnote{https://github.com/mido/mido}.
 Každý záznam části písničky v databázi má, mimo jiné, 
@@ -929,6 +938,7 @@ Některé záznamy písniček obsahují pouze akordy, nebo pouze noty, tedy melo
 Soubor je na tento neduh otestován, a pokud obsahuje obě složky, pak je uložen.
 Ty, kterým jedna z částí chybí uloženy nejsou.
 Z celkového počtu $13 633$ je tímto způsobem odstraněno zhruba $1500$ částí písniček.
+Celková velikost všech souborů je $9.57$MB ($10 042 700$B)
 
 \chapter{Přehled přístupů automatické harmonizace}
 \label{prehledPristupus}
@@ -984,6 +994,7 @@ tento model bere v úvahu předcházející akordy.
 \cite{YinCheng_comparativeStudy}
 
 \section{Google Magenta}
+\label{magenta}
 Magenta je open-source výzkumný projekt založený Google Brain týmem.
 Jedná se o soubor nástrojů a modelů hlubokého i posilovaného učení.
 Zaměřuje se především na využití strojového učení jako nástroje
@@ -1191,6 +1202,7 @@ Narozdíl od RNN mají LSTM čtyři vrstvy v jednom opakujícím se modulu.
 % frameworky ... viz NOTES.md
 
 \chapter{Návrh systému}
+\label{navrhSystemu}
 V této kapitole je představen návrh systému,
 který umožní automatické generování harmonie na základě známé melodie.
 Jak bylo napsáno, harmonie je souzvuk více zvuků najednou.
@@ -1227,8 +1239,10 @@ Podle \cite{britz_undocumentedFeatures} může tento formát zvýšit velikost d
 avšak při převedení všech MIDI souborů (viz kapitola \ref{hooktheoryDB}) 
 je výsledná velikost $9.409e^3$krát vyšší (viz výpočet podle měření níže).
 
-$$ velikost .tfrecord Souboru / velikost VsechMIDI Souboru =$$
-$$94454904591B / 10038169B = 9.409575e^3$$
+$$ tf / m = 94454904591B / 10038169B = 9.409575e^3$$
+
+kde \emph{tf} je velikost všech výsledných .tfrecord souborů 
+a \emph{m} je velikost všech vstupních MIDI souborů.
 
 \section{Model}
 Z modelů představených v kapitole \ref{prehledPristupus} byl vybrán 
@@ -1257,8 +1271,133 @@ Tato NoteSequence je interně převedena na výsledný MIDI soubor,
 který obsahuje původní melodii, která je následována její harmonizovanou podobou.
 \cite{google_git_polyphony}
 
-\chapter{Implementace}
+\chapter{Trénování systému}
 % popis implementace
+V této kapitole je představen postup zprovoznění systému a jeho trénování.
+Vstupní data a postup jejich vytvoření je popsán v kapitole \ref{hooktheoryDB}.
+Využitý systém je představen v části \ref{magenta} 
+a podrobnější návrh potom v \ref{navrhSystemu}.
+\par
+
+Před začátkem trénování je nutné nainstalovat Magentu.
+Jako testovací prostředí byl zvolen operační systém Ubuntu 20.04 LTS (Focal Fossa)
+nainstalovaný na počítači s procesorem Intel Core i7-4720HQ s frekvencí 2.6GHz
+a s 8Gb operační paměti. 
+Pro instalaci knihovny na použitý operační systém je poskytnut instalační skript.
+
+\begin{verbatim}
+URL=https://raw.githubusercontent.com/tensorflow/ \\
+    magenta/master/magenta/tools/magenta-install.sh
+curl $(URL) > /tmp/magenta-install.sh
+bash /tmp/magenta-install.sh    
+\end{verbatim}
+
+Instalační skript nainstaluje Python distribuci Anaconda\footnote{\url{https://www.anaconda.com/}}
+a s pomocí systému pro správu balíků \emph{conda} vytvoří nové virtuální prostředí \emph{magenta}.
+Do tohoto prostředí dále nainstaluje potřebné balíky.
+Mimo jiné například TensorFlow, magenta, scipy a numpy.
+Pro prohlížení průběhu trénování je také nainstalován vizualizační nástroj TensorBoard.
+Po dokončení instalace je potřeba restartovat okno s terminálem,
+aby se načetly nové, změněné proměnné prostředí.
+Nové, virtuální prostředí, které obsahuje korektní instalaci knihovny Magenta,
+se aktivuje příkazem
+
+\begin{verbatim}
+source activate magenta
+\end{verbatim}
+
+Nyní jsou knihovna Magenta a všechny její závislosti 
+připraveny k použití v Pythonu a v Jupyter sešitech.
+Mimo to jsou Magenta skripty zavedeny v proměnné \emph{PATH}.
+\cite{google_git_polyphony}
+\par
+
+Dalším krokem je převedení sady trénovacích MIDI souborů na protocol buffer soubor
+s definicí NoteSequence.
+K tomuto účelu existuje skript \emph{convert\_dir\_to\_note\_sequences}, 
+který sekvenčně načte složku obsahující MIDI (případně MusicXML, nebo ABC) soubory,
+zkonvertuje je na NoteSequence a výsledek uloží do .tfrecord souboru.
+Jeho chování lze ovlivnit argumenty.
+Vstupní složka a výsledný soubor jsou jediné dva povinné parametry.
+Parametry pro nastavení jsou \emph{input\_dir}, respektive \emph{output\_file}.
+Pro rekurzivní procházení adresářů je nutno nastavit parametr \emph{recursive}.
+\cite{google_git_polyphony}
+Použití  pak vypadá následovně:
+
+\begin{verbatim}
+convert\_dir\_to\_note\_sequences \
+    --input\_dir=./midi \
+    --output\_file=./tmp/notesequences.tfrecord \
+    --recursive
+\end{verbatim} 
+
+Konverze souborů ze složky \emph{./midi} netrvá dlouho
+a výsledný soubor \emph{./tmp/notesequences.tfrecord}
+má velikost $29.7$MB ($31 244 793$B)
+\par
+
+Nyní je nutné vytvořit SequenceExample soubory,
+s jejichž pomocí bude model trénován a vyhodnocován.
+Každá SequenceExample zpráva obsahuje sekvenci vstupů a
+sekvenci příslušných označení, 
+která reprezentuje polyfonní, harmonizovanou sekvenci.
+Toho lze dosáhnout voláním příkazu \emph{polyphony\_rnn\_create\_dataset}.
+Pomocí povinných parametrů \emph{input} a \emph{output\_dir} 
+je nastaven vstupní soubor a složka pro uložení výsledků.
+Parametrem \emph{eval\_ratio} se nastavuje, kolik procent dat 
+bude použito jako datová sada určená k vyhodnocení modelu,
+a kolik jako datová sada k trénování modelu.
+\cite{google_git_polyphony}
+Příkaz se správnými argumenty je
+
+\begin{verbatim}
+polyphony\_rnn\_create\_dataset \
+    --input=.\/tmp/notesequences.tfrecord \
+    --output_dir=.\tmp/polyphony\_rnn/sequence\_examples \
+    --eval\_ratio=0.10
+\end{verbatim}
+
+Generování trénovacích dat trvá zhruba čtyři až šest hodin.
+Ve složce \emph{./tmp/polyphony\_rnn/sequence\_examples} budou po dokončení
+dva soubory. 
+Jeden s trénovacími daty, \emph{training\_poly\_tracks.tfrecord},
+který obsahuje 90\% dat,
+a druhý, \emph{eval\_poly\_tracks.tfrecord} s daty pro vyhodnocení modelu.
+Tento obsahuje zbývajících 10\% dat.
+Velikost obou souborů dohromady je $8.39GB + 79.5GB = 87.9GB$ ($94 454 904 591$B).
+\par
+
+Nyní je vše připraveno k trénování modelu.
+Příslušný příkaz lze ovlivnit několika parametry.
+S pomocí \emph{run\_dir} je určena cesta k adresáři,
+který je určen k ukládání průběžných výsledků trénování (checkpoints), 
+a k ukládání souhrných dat pro TensorBoard.
+Uvnitř tohoto adresáře jsou dva podadresáře,
+do nichž jsou uložena zvlášť data z trénování a z vyhodnocení modelu.
+Souhrnná data se ukládají každý desátý krok.
+Pro změnu kroku existuje parametr \emph{summary\_frequency}.
+Průběžné výsledky trénování nejsou ukládány všechny, 
+nýbrž pouze posledních deset.
+Toto číslo lze opět změnit parametrem \emph{num\_checkpoints}.
+Při jeho nastavení na nulu jsou uloženy všechny a žádný se nemaže.
+Cesta k trénovacím, případně vyhodnocovacím datům, 
+je dána parametrem \emph{sequence\_example\_file}.
+Nepovinný parametr \emph{num\_training\_steps} určuje,
+kolik trénovacích cyklů model prodělá, než se trénování ukončí.
+Pokud tento není zadán, trénování pokračuje nepřetržitě, 
+dokud není manuálně ukončeno.
+Vyhodnocení modelu se aktivuje parametrem \emph{eval}.
+Při jeho nastavení nejsou aktualizovány váhy modelu.
+Posledním důležitým, ale nepovinným parametrem je \emph{hparams}.
+Tímto lze změnit základní nastavení hyperparametrů modelu.
+Jedná se o seznam dvojic klíč-hodnota oddělených čárkami,
+kde klíč je jméno měněného hyperparametru a hodnota je nová hodnota, 
+na kterou bude tento změněn.
+Takto zadané hyperparametry jsou sloučeny s původními.
+Jména hyperparametrů jsou batch\_size a rnn\_layer\_sizes.
+
+
+
 
 \chapter{Experimenty}
 % experimentování s implementovaným systémem
