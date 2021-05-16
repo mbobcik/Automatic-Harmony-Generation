@@ -1250,9 +1250,9 @@ Polyphony RNN z projektu Magenta.
 V porovnání s ostatními přístupy je nejnovější a využívá framework TensorFlow
 \cite{YinCheng_comparativeStudy,google_git_polyphony}.
 Magenta poskytuje model\footnote{dostupný z \url{http://download.magenta.tensorflow.org/models/polyphony_rnn.mag}} 
-již natrénovaný na chorálech, které složil Johann Sebastian Bach
-(\footnote{dostupné z \url{https://web.archive.org/web/20150503021418/http://www.jsbchorales.net/xml.shtml}, 
-popřípadě z \url{https://github.com/cuthbertLab/music21/tree/master/music21/corpus/bach}}).
+již natrénovaný na chorálech, které složil Johann Sebastian Bach\footnote{
+dostupné z \url{https://web.archive.org/web/20150503021418/http://www.jsbchorales.net/xml.shtml}, 
+popřípadě z \url{https://github.com/cuthbertLab/music21/tree/master/music21/corpus/bach}}.
 Kromě toho lze model natrénovat s pomocí vlastních dat,
 kdy je také možné nastavit hyperparametry sítě jako například počet a velikost RNN vrstev.
 \cite{google_git_polyphony}
@@ -1277,6 +1277,7 @@ V této kapitole je představen postup zprovoznění systému a jeho trénován�
 Vstupní data a postup jejich vytvoření je popsán v kapitole \ref{hooktheoryDB}.
 Využitý systém je představen v části \ref{magenta} 
 a podrobnější návrh potom v \ref{navrhSystemu}.
+Postup harmonizace melodie modelem a provedené experimenty jsou popsány v kapitole následující.
 \par
 
 Před začátkem trénování je nutné nainstalovat Magentu.
@@ -1395,9 +1396,56 @@ kde klíč je jméno měněného hyperparametru a hodnota je nová hodnota,
 na kterou bude tento změněn.
 Takto zadané hyperparametry jsou sloučeny s původními.
 Jména hyperparametrů jsou batch\_size a rnn\_layer\_sizes.
+Prvním se nastavuje počet SequenceExample zpráv, trénovacích dat,
+které jsou použity na jeden průchod sítí, po kterém se provede aktualizace vah.
+Základní nastavení je 128 zpráv.
+Druhým se nastavuje velikost sítě.
+Jedná se o pole čísel, kde každý prvek pole značí jednu RNN vrstvu,
+a hodnota prvku udává počet neuronů dané vrstvy.
+Výchozí hodnoty vytvoří síť se třemi vrstvami, 
+každá o 256 neuronech. 
+\cite{google_git_polyphony}
+Pro zkrácení doby učení a snížení paměťové náročnosti budou použity jiné, nižší hyperparametry.
+Příkaz pro trénování Polyphony RNN na vlastní datové sadě tak bude vypadat následovně:
 
+\begin{verbatim}
+polyphony_rnn_train \
+    --run_dir=./tmp/polyphony_rnn/logdir/run1 \
+    --sequence_example_file=./tmp/polyphony_rnn/sequence_examples/training_poly_tracks.tfrecord \
+    --hparams="batch_size=64,rnn_layer_sizes=[64,64]" \
+    --num_training_steps=20000
+\end{verbatim}
 
+S tímto nastavení trvá trénování na testovacím počítači přibližně 25 hodin.
+Skript průběžně zapisuje statistiky o právě probíhajícím cyklu, 
+včetně průměrného počtu cyklů za vteřinu.
+Pomocí této hodnoty lze odhadnout dobu trvání trénování při jiných hyperparametrech.
 
+        \todo{Dopsat podle odhadnuté hodnoty}
+
+\par
+
+Volitelně je možné paralelně spustit stejný skript s přidaným parametrem \emph{eval},
+což spustí vyhodnocovací úlohu.
+V tomto případě bude po každém trénovacím cyklu proveden vyhodnocovací cyklus.
+Vyhodnocení se provede vždy po dokončení cyklu učení, 
+a není tedy možné tento příkaz spustit po dokončení trénování
+
+\begin{verbatim}
+polyphony_rnn_train \
+    --run_dir=./tmp/polyphony_rnn/logdir/run1 \
+    --sequence_example_file=./tmp/polyphony_rnn/sequence_examples/training_poly_tracks.tfrecord \
+    --hparams="batch_size=64,rnn_layer_sizes=[64,64]" \
+    --num_training_steps=20000 \
+    --eval
+\end{verbatim}  
+
+\par
+
+Po dokončení učení modelu je možné s ním experimentovat, 
+a nechat jej harmonizovat melodie uložené v MIDI souborech.
+Případně je možné používat model, který nedokončil všechny cykly určené v parametrech.
+V tom případě se použijí váhy z posledního dokončeného cyklu
 
 \chapter{Experimenty}
 % experimentování s implementovaným systémem
