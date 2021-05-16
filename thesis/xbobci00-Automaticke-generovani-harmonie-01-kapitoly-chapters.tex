@@ -9,7 +9,7 @@ Použitím harmonie získáme bohatší a barevnější hudbu.
 Rozšiřování melodií o akordy, souzvuky, je umělecký proces,
 a po muzikantovi či skladateli vyžaduje znalost přechodů akordů a harmonie tónů.
 Nabytí těchto znalostí je jedna věc, 
-avšak jejich uvedení do praxe může být pro laika, 
+avšak jejich uvedení do praxe může být pro laika 
 nebo hudebníka bez dostatečných zkušeností velmi obtížné.
 \par
 
@@ -18,7 +18,7 @@ který k známé melodii doplní vhodný harmonický doprovod.
 Tento nástroj pak může být užitečný právě pro hudební začátečníky,
 kteří si nejsou svými schopnostmi jistí. 
 Dále může být využit v procesu skládání plnohodnotné hudby počítačem.
-V takovém případě by navrhovaný systém následoval za generátorem melodie,
+V takovém případě by navrhovaný systém následoval za generátorem melodie
 a jeho výsledek doplňoval.
 Skládání hudby, tedy i harmonie, je umění a vyžaduje hudební cit,
 proto podobné systémy bývají zatíženy určitou chybou, 
@@ -38,22 +38,22 @@ Na závěr budou diskutovány výsledky testování a možné pokračování té
 %úvod do problému
 \section{Struktura práce}
 %popis struktury práce
-V první kapitole této práce nalezneme přehled hudební teorie.
+V první kapitole této práce se nachází přehled hudební teorie.
 Jsou představeny základní kameny hudby -- tóny, jejich soustavy a alterace.
 Následuje část věnovaná notopisu,
 tedy přesnému zápisu hudby speciálními znaky.
 \todo{Hudební teorie je tolik, protože nejsme hudební škola\dots}
 \par
-Druhá kapitola obsahuje popis jiných, předchozích přístupů jiných autorů k této problematice.
+Druhá kapitola obsahuje popis předchozích přístupů jiných autorů k této problematice.
 Mezi nimi nalezneme například model založený na shodě šablon, 
-jenž porovnává části vstupní melodie s těmi které zná.
+jenž porovnává části vstupní melodie s těmi, které zná.
 Další přístup je založen na skrytých markovových modelech, 
 které odhadují nejpravděpodobnější posloupnost akordů k dané melodii.
 Některé z těchto přístupů slouží jako inspirace této práce.
 \par
 
 Následuje teoretická rešerše strojového učení,
-tedy disciplíny na níž stojí správnost automatizace.
+tedy disciplíny, na níž stojí správnost automatizace.
 Nejprve je představeno strojové učení jako takové,
 potom je popis zaměřen na ty oblasti, 
 které jsou v této práci využity.
@@ -70,7 +70,7 @@ který umožňuje automatické generování harmonie na základě vstupní melod
 Hudební dílo tvoří několik částí, 
 přičemž různé hudební žánry kladou důraz na jiný prvek.
 Prvním z nich je melodie, uspořádaná sekvence jednotlivých tónů tak,
-aby šly zahrát, nebo zazpívat. 
+aby šla zahrát, nebo zazpívat. 
 Melodie vyjadřuje hlavní hudební myšlenku skladby. 
 Přidáním více souznějících tónů dostáváme harmonii -- vertikální složku hudby.
 Rytmus dodává hudbě dynamiku střídáním dlouhých a krátkých,
@@ -85,7 +85,7 @@ Dále bude rozdělena melodie a harmonie a popsány akordy a tóniny.
 
 \section{Tóny}
 Chvěním těles, které rozechvívají okolní vzduch, vzniká zvuk, 
-tedy to co slyšíme. 
+tedy to, co slyšíme. 
 Nepravidelným chvěním vznikají hluky. 
 Naopak zvuky vznikající pravidelným kmitáním tělesa nazýváme tóny. 
 V hudbě jsou především využívány právě tóny. 
@@ -101,11 +101,11 @@ Podle původu rozlišujeme barvu, někdy také témbr tónu.
 Barva závisí na počtu znějících alikvotních tónů,
 které se rozezní současně s hlavním hraným tónem. 
 To je závislé na materiálu chvějícího se tělesa.
-Pro představu, lze rozeznat, zda zní klavír, housle, trumpeta, či mužský nebo ženský hlas, 
+Pro představu, lze rozeznat, zda zní klavír, housle, trumpeta či mužský nebo ženský hlas, 
 navzdory tomu, že všechny mají stejnou výšku. 
 Rozmanitou barvitost mají především velké orchestry.
-Výšku tónu určujeme podle frekvence chvění, čili počtu kmitů za vteřinu. 
-Čím vyšší frekvence, tím vyšší tón, a čím nižší frekvence, tím hlubší tón.
+Výšku tónu určujeme podle frekvence chvění čili počtu kmitů za vteřinu. 
+Čím vyšší frekvence, tím vyšší tón a čím nižší frekvence, tím hlubší tón.
 \cite{zenkl,cmiral} 
 \par
 
@@ -113,22 +113,22 @@ Výšku tónu určujeme podle frekvence chvění, čili počtu kmitů za vteřin
 Tónová soustava je přehledné uspořádání všech tónů užívaných v hudbě.
 Z vlastností tónů, vyjmenovaných výše, tónová soustava bere v úvahu pouze výšky tónu. 
 Současnou tónovou soustavu tvoří sedm základních tónů, které
-byly v minulosti označeny písmeny obyčejné abecedy: a, b, c, d, e, f, g.
-Později se jako počátek hudební abecedy určilo písmeno c 
-a písmeno b se nahradilo písmenem h.
-Tím vzniká nynější hudební abeceda c, d, e, f, g, a, h.
+byly v minulosti označeny písmeny obyčejné abecedy: \emph{a, b, c, d, e, f, g}.
+Později se jako počátek hudební abecedy určilo písmeno \emph{c} 
+a písmeno \emph{b} se nahradilo písmenem \emph{h}.
+Tím vzniká nynější hudební abeceda \emph{c, d, e, f, g, a, h}.
 \par
 
-Těchto sedm tónů se pravidelně opakují ve vyšších a nižších polohách.
-Při postupu od výchozího c k nejbližšímu následujícímu, respektive předchozímu, c nacházíme osm stupňů 
-(včetně obou c).
+Těchto sedm tónů se pravidelně opakuje ve vyšších a nižších polohách.
+Při postupu od výchozího \emph{c} k nejbližšímu následujícímu, respektive předchozímu, \emph{c} nacházíme osm stupňů 
+(včetně obou \emph{c}).
 Vzdálenost mezi dvěma tóny stejného jména se proto nazývá oktáva (z latinského octo - osm).
 Tónová soustava má oktáv devět.
 Jelikož se základní tóny opakují stejnými jmény v různé výši,
 jsou tyto oktávy dále pojmenovány.
 Díky tomu má každý jednotlivý tón nejen svůj vlastní název,
 ale také ustálené označení (viz tabulka \ref{tabulkaOktav}).
-Například tón e v dvoučárkové oktávě se nazývá dvoučárkové e
+Například tón \emph{e} v dvoučárkové oktávě se nazývá dvoučárkové \emph{e}
 a značí se buď $e^2$, nebo{ e''}.
 \cite{zenkl,cmiral}
 \par
@@ -160,8 +160,8 @@ Alterace je pak shrnující název pro zvyšování a snižování tónů.
 Zvýšení tónu značíme příponou -is v jeho názvu.
 Naopak snížení označujeme příponou -es.
 Existují ovšem různé výjimky.
-Například snížením tónů~e~a~a získáme es, respektive as.
-Pro snížené h se, místo hes, používá název~b.
+Například snížením tónů\emph{~e}~a\emph{~a} získáme es, respektive as.
+Pro snížené \emph{h} se, místo hes, používá název~b.
 \cite{zenkl}
 \par
 
@@ -175,8 +175,8 @@ Základní tóny leží na bílých klávesách, jejich alterace pak na černýc
 \cite{zenkl,cmiral}
 \par
 
-Můžeme si všimnout tónů, které mají stejnou výšku, ale různá jména.
-Těmto tónům říkáme enharmonické, enharmonická záměna je pak nahrazení tónu tónem stejné výšky, ale jiného jména.\cite{zenkl}
+Lze si všimnout tónů, které mají stejnou výšku, ale různá jména.
+Těmto tónům říkáme enharmonické. Enharmonická záměna je pak nahrazení tónu tónem stejné výšky, ale jiného jména.\cite{zenkl}
 
 \begin{figure*}[h]\centering
     \centering
@@ -186,7 +186,7 @@ Těmto tónům říkáme enharmonické, enharmonická záměna je pak nahrazení
 \end{figure*}
 
 \section{Rytmus}
-Melodii hudebních skladeb se málokdy vyskytují tóny a noty pouze jediného druhu.
+V melodii hudebních skladeb se málokdy vyskytují tóny a noty pouze jediného druhu.
 Zpravidla se střídají dlouhé a krátké tóny, přízvučné a nepřízvučné.
 Kolem přízvučného (silněji hraného) tónu se vyskytuje skupina delších a kratších tónů.
 Tyto tvoří rytmický útvar a opakování rytmických útvarů udává rytmus.
@@ -212,8 +212,8 @@ zaujímají přední postavení tamní hudby.
 Stupnice je postupná řada tónů v rozsahu jedné oktávy.
 Při poslechu je zřejmé, že jednotlivé stupně mezi sebou nemají konstantní vzdálenost.
 \cite{kofron}
-Některé dvojice dělí půltón, čili malá sekunda, 
-jiné větší krok, celý tón, velká sekunda.
+Některé dvojice dělí půltón čili malá sekunda, 
+jiné větší krok (celý tón), velká sekunda.
 Ta je rovna vzdálenosti dvou půltónů.
 Vzdálenosti jednotlivých stupňů jsou dány pravidly.
 \cite{cmiral}
@@ -246,9 +246,9 @@ Exotické stupnice se od předchozích liší zvláštním uspořádáním stup�
 
 Stupnici lze vytvořit od libovolného tónu.
 V praxi se však používají jen ty, 
-v nichž se uplatňují odvozené tóny nanejvýš dvakrát zvýšené, nebo snížené.
-Výchozí tón stupnice je jejím základním tónem, a podle něj se stupnice jmenuje.
-Například stupnice G dur začíná tónem g, fis moll tónem fis.
+v nichž se uplatňují odvozené tóny nanejvýš dvakrát zvýšené nebo snížené.
+Výchozí tón stupnice je jejím základním tónem a podle něj se stupnice jmenuje.
+Například stupnice G dur začíná tónem \emph{g}, fis moll tónem \emph{fis}.
 Rozdělení dur nebo moll se určuje podle vzdáleností mezi jednotlivými stupni.
 \cite{zenkl}
 Durové stupnice označujeme velkým písmenem, mollové malým.
@@ -267,13 +267,13 @@ Mimo to má každý stupeň svůj funkční název:
 \end{enumerate}
 \par
 
-Tóniny a stupnice mají stejné základní tóny, a od toho také jména.
-Opět, například pokud je tónina G dur, pak jejím základním tónem, tónikou je tón g.
+Tóniny a stupnice mají stejné základní tóny a od toho také jména.
+Opět, například pokud je tónina G dur, pak jejím základním tónem, tónikou je tón \emph{g}.
 Tónina je volné pořadí tónů stupnice tvořící hudbu.
-Není nutné aby byly použity všechny tóny stupnice, 
+Není nutné, aby byly použity všechny tóny stupnice, 
 ale jejich uspořádání musí dát vyniknout tónice.
 Tónika se určuje sluchem pomocí tonálního cítění.
-Velmi často melodie tónikou začíná, nebo se k ní vrací.
+Velmi často melodie tónikou začíná nebo se k ní vrací.
 V závěru melodie bývá tónika uplatňována nejčastěji.
 V takovém případě působí melodie přesvědčivě uzavřena 
 a posluchač necítí potřebu dalšího pokračování.
@@ -289,7 +289,7 @@ Vzdálenost mezi jednotlivými stupni durové stupnice jsou dva celé tóny,
 půltón, tři celé tóny, půltón.
 $$ 1 - 1 - 1/2 - 1 - 1 - 1 - 1/2 $$
 Půltóny jsou tedy mezi III.--IV. a VII.--VIII. stupněm.
-Pro stupnice začínající od jiného základního tónu než c 
+Pro stupnice začínající od jiného základního tónu než \emph{c} 
 je potřeba pomocí posuvek (viz část \ref{kapitolaPosuvky}:Posuvky) 
 upravit vzdálenosti mezi jednotlivými stupni tak,
 aby byly intervaly uspořádány jako ve stupnici C dur.
@@ -315,11 +315,11 @@ Tento způsob tvoření stupnic se nazývá \emph{postup v kvintovém kruhu}.
 Durové stupnice s béčky se vytvářejí podobně.
 Opět se začíná od C dur, ale nyní se nová, 
 následující stupnice (s $n$ béčky) opíše od čtvrtého stupně předchozí (s $n-1$ béčky)
-a v nové stupnici s sníží jedním béčkem čtvrtý tón.
+a v nové stupnici se sníží jedním béčkem čtvrtý tón.
 Tímto způsobem vznikají stupnice:
-F dur (jedno bé), B dur, Es dur, As dur, Des dur, Ges dur, Ces dur(sedm bé).
+F dur (jedno bé), B dur, Es dur, As dur, Des dur, Ges dur, Ces dur (sedm bé).
 Béčka v předznamenání jsou v tomto pořadí:
-b, es, as, des ,ges, ces, fes.
+b, es, as, des, ges, ces, fes.
 Způsob tvoření stupnic s béčky se nazývá \emph{postup v kvartovém kruhu}.
 \cite{kofron}
 \par
@@ -329,12 +329,12 @@ Každá durová stupnice má svou paralelní mollovou, měkkou stupnici.
 Ty mají při poslechu poněkud smutnější, tesklivější ráz.
 Mollové stupnice se tvoří od VI. stupně durové stupnice.
 Intervaly mezi stupni zůstávají nezměněny.
-Například od stupnice C dur je odvozena základní mollová stupnice a moll.
+Například od stupnice C dur je odvozena základní mollová stupnice \emph{a} moll.
 Vzdálenosti mezi stupni jsou $1 - 1/2 - 1 - 1 - 1/2 - 1 - 1$.
 Stejně jako u durových stupnic lze odvozovat jiné, 
 následující stupnice s křížky a béčky.
 Následující stupnice s křížkem začíná na V. stupni a zvyšuje se II. stupeň.
-Takto vzniknou stupnice e moll (jeden křížek), h moll, fis, moll, cis moll, gis moll, dis moll a ais moll (sedm křížků).
+Takto vzniknou stupnice e moll (jeden křížek), h moll, fis moll, cis moll, gis moll, dis moll a ais moll (sedm křížků).
 Nová stupnice s bé začíná na IV. stupni a sníží se VI. stupeň.
 Postupně vzniknou stupnice d moll (jedno bé), g moll, c moll, f moll, b moll, es moll, as moll (sedm bé).
 \cite{kofron}
@@ -345,8 +345,8 @@ Akord je souzvuk alespoň tří různých tónů.
 Pro tóny akordů platí určitá pravidla.
 Pokud současně zní jiné tóny, pak spolu neladí.
 Vztahem jednotlivých souzvuků se zabývá harmonie.
-Při souznění všech tónů akordu najednou mluvíme o harmonickém akordu,
-pokud jsou tóny zahrány po sobě, pak se jedná o melodický rozklad akordu.
+Při souznění všech tónů akordu najednou se jedná o harmonický akord.
+Pokud jsou tóny zahrány po sobě, pak jde o melodický rozklad akordu.
 Akordy lze třídit podle různých hledisek.
 \cite{zenkl}
 
@@ -375,20 +375,20 @@ vznikne obrat akordu.
 \cite{zenkl}
 \par
 
-Kvintakordy se tedy tvoří z durových, nebo mollových stupnic.
+Kvintakordy se tedy tvoří z durových nebo mollových stupnic.
 Jakost tercií v akordu dává jeho druh.
 Durový akord se skládá ze spodní velké tercie a z horní malé.
 Mollový ze spodní malé a horní velké.
 Dále je možné použití dvou stejně velkých tercií.
-Tak vzniká zvětšený, nebo zmenšený kvintakord 
+Tak vzniká zvětšený nebo zmenšený kvintakord 
 složený ze dvou velkých, respektive malých tercií.
 \cite{kofron}
-Pro akordy se vžily stejná pravidla jako pro stupnice, respektive tóniny.
+Pro akordy se vžila stejná pravidla jako pro stupnice, respektive tóniny.
 Durové se zapisují velkým písmenem, mollové malým.
 Tak jako stupnice, také durové akordy znějí vesele.
-Mollové pak smutně, snížené až stísněně a zvětšené ostře jasně.
+Mollové pak smutně, snížené až stísněně a zvětšené ostře, jasně.
 \cite{cmiral}
-Příkladem může být akord C dur složený z tónů \emph{c-e-g}, 
+Příkladem může být akord C dur složený z tónů \emph{c-e-g} 
 nebo a moll z tónů \emph{a-c-e}.
 \par
 
@@ -399,21 +399,21 @@ a je zvykem je dále rozvést (pokračovat) jiným, konsonantním akordem.
 \cite{cmiral}
 
 \subsection{Funkce akordů}
-Harmonie se, kromě stavby akordů, zabývá také jejich uplatnění v hudbě.
+Harmonie se, kromě stavby akordů, zabývá také jejich uplatněním v hudbě.
 Základním pojmem je harmonická funkce akordu.
 Tedy význam akordu ve skladbě ve vztahu k její hlavní tónině.
 Harmonie úzce souvisí s tóninou.
 V durových i mollových tóninách existují tři základní harmonické funkce: 
 tónika, dominanta, subdominanta.
 Tónika je kvintakord postavený na I. stupni, dominanta na V. a subdominanta na IV. stupni.
-Za povšimnutí stojí, že mají stejné názvy, jako některé stupně  
+Za povšimnutí stojí, že mají stejné názvy jako některé stupně  
 (viz část \ref{stupnice}).
 Na každém stupni durové, popřípadě mollové stupnice je totiž možné postavit kvintakord.
 Každá stupnice je tak vybavena sedmi kvintakordy 
 (osmý je stejný jako první).
 Akordy na vedlejších stupních (II., III., VI., VII.)
 vyjadřují také tyto harmonické funkce, ale jiným způsobem.
-Pomocí nich je možné akordy hlavních stupňů zastupovat,
+Pomocí nich je možné akordy hlavních stupňů zastupovat
 a tímto způsobem obohatit harmonický doprovod písně.
 \cite{kofron,zenkl}
 \par
@@ -432,7 +432,7 @@ vyjadřují smysl a celkový význam akordu.
 Například, pokud po přehrání stupnice C dur zazní její tónický kvintakord,
 pak má posluchač dojem klidu.
 Ovšem při zaznění dominantního kvintakordu je cítit snaha po dalším postupu.
-Člověk má dojem, jakoby tóny dominanty chtěly stoupat vzhůru.
+Člověk má dojem, jako by tóny dominanty chtěly stoupat vzhůru.
 Pro uklidnění je po dominantě potřeba zahrát tóniku.
 Ta je akordem klidu, harmonickým centrem tóniny.
 \cite{kofron}
@@ -449,10 +449,10 @@ nyní ale klesající.
 Tyto tři hlavní kvintakordy velmi často stačí 
 k harmonizaci jednoduchých a krátkých skladeb.
 \cite{kofron}
-Harmonizace moderních, či více uměleckých skladeb využívá mimo jiné
+Harmonizace moderních či více uměleckých skladeb využívá mimo jiné
 také kvartové akordy, nepravidelné souzvuky,
-akordy zhuštěné sekundami (interval mezi I. a II. stupněm), nebo
-kombinace tonálně uvolněných případně až atonálních akordů.
+akordy zhuštěné sekundami (interval mezi I. a II. stupněm) nebo
+kombinace tonálně uvolněných akordů, případně až atonálních.
 Chvilková disharmonie skladby také nemusí být na škodu,
 jedná-li se o umělecký záměr skladatele.
 \cite{zenkl}
@@ -460,15 +460,15 @@ jedná-li se o umělecký záměr skladatele.
 
 \section{Notopis}
 Alfabetické znaky nejsou pro značení tónů dostatečné, protože popisují pouze výšku tónu.
-Pro hru na hudební nástroj, nebo skládání hudby je potřeba specifikovat také zbývající vlastnosti.
+Pro hru na hudební nástroj nebo skládání hudby je potřeba specifikovat také zbývající vlastnosti.
 Po staletí trvajícím vývoji se ustálil a používá se notopis.\par
 
 \subsection{Notová osnova}
 Základem jsou noty a notová osnova, kterou tvoří pět linek a čtyři mezery.
 Noty se zapisují na linky i do mezer.
 Takto lze zapsat pouze devět not.
-Notovou osnovu však můžeme rozšířit pomocnými linkami nad, popřípadě pod notovou osnovou. 
-Pomocné linky zapisujeme pouze tak dlouhé, jak je nezbytně nutné.
+Notovou osnovu lze však rozšířit pomocnými linkami nad, popřípadě pod notovou osnovou. 
+Pomocné linky se zapisují pouze tak dlouhé, jak je nezbytně nutné.
 Pro snadnou orientaci v osnově se v praxi počítají linky a mezery směrem nahoru (s výjimkou pomocných linek pod osnovou). 
 Linky a mezery se počítají zvlášť. 
 První mezera je mezi první a druhou linkou.\par
