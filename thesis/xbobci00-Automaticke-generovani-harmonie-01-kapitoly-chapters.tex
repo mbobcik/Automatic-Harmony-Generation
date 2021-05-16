@@ -1272,6 +1272,7 @@ který obsahuje původní melodii, která je následována její harmonizovanou 
 \cite{google_git_polyphony}
 
 \chapter{Trénování systému}
+\label{trenovaniModelu}
 % popis implementace
 V této kapitole je představen postup zprovoznění systému a jeho trénování.
 Vstupní data a postup jejich vytvoření je popsán v kapitole \ref{hooktheoryDB}.
@@ -1429,7 +1430,7 @@ Volitelně je možné paralelně spustit stejný skript s přidaným parametrem 
 což spustí vyhodnocovací úlohu.
 V tomto případě bude po každém trénovacím cyklu proveden vyhodnocovací cyklus.
 Vyhodnocení se provede vždy po dokončení cyklu učení, 
-a není tedy možné tento příkaz spustit po dokončení trénování
+a není tedy možné tento příkaz spustit po dokončení trénování.
 
 \begin{verbatim}
 polyphony_rnn_train \
@@ -1445,11 +1446,56 @@ polyphony_rnn_train \
 Po dokončení učení modelu je možné s ním experimentovat, 
 a nechat jej harmonizovat melodie uložené v MIDI souborech.
 Případně je možné používat model, který nedokončil všechny cykly určené v parametrech.
-V tom případě se použijí váhy z posledního dokončeného cyklu
+V tom případě se použijí váhy z posledního dokončeného cyklu.
+\par
+Naučený model ve formě posledních $n$ checkpointů lze transformovat
+na více kompaktní, zabalený soubor.
+Ten, kromě posledních checkpointů, obsahuje také graf a některá metadata modelu.
+Příkaz \emph{polyphony\_rnn\_generate} s příznakem \emph{save\_generator\_bundle}
+načte model ze složky uvedené v parametru \emph{run\_dir}.
+Pro správnou funkci je nutné dodat stejný popis hyperparametrů v parametru \emph{hparams}, 
+jaký byl použit při trénování.
+Cesta k výslednému .mag souboru je určena v \emph{bundle\_file}.
+Jedná se opět o zabalený protocol buffer, nyní však s definicí GeneratorBundle.
+Zabalení modelu do jednoho souboru je vhodné při sdílení předtrénovaného modelu.
 
 \chapter{Experimenty}
 % experimentování s implementovaným systémem
 % představení výsledků
+Tato kapitola popisuje možnosti natrénovaného modelu 
+a jak s jeho pomocí harmonizovat melodii.
+Dále jsou představeny experimenty na tomto modelu provedené.
+Model jako takový je popsán v kapitolách \ref{magenta} a \ref{navrhSystemu},
+postup jeho zprovoznění a trénování pak v kapitole \ref{trenovaniModelu}.
+Model, na kterém byly experimenty prováděny, 
+byl natrénován s hyperparametry, které byly představeny v minulé kapitole.
+Tedy:
+\begin{itemize}
+    \item velikost dávky = 64
+    \item počet RNN vrstev = 2
+    \item neuronů v každé vrstvě = 64
+    \item trénovacích cyklů = 20 000
+\end{itemize}
+Použitá trénovací sada je popsána v kapitole \ref{hooktheoryDB}.
+\par
+
+\section{Použití modelu}
+Generovat polyfonní a harmonizované skladby s použitým modelem
+lze téměř od samého začátku.
+Je ale vhodné jej nechat trénovat dostatečně dlouho.
+Kromě toho lze použít také model zabalený v .mag souboru.
+Chování generátoru upravuje několik parametrů.
+Výběr modelu specifikují parametry \emph{run\_dir} a \emph{bundle\_file},
+kdy první určuje cestu ke složce s trénovaným modelem (přesněji s uloženými checkpointy)
+a druhý určuje cestu k .mag souboru s již natrénovaným modelem.
+Při zadání obou má prioritu druhý popisovaný parametr.
+Při použití parametru \emph{run\_dir} je nutné uvést
+také parametr \emph{hparams} tak, jak byl použit při trénování 
+(některé z uvedených hyperparametrů budou ignorovány, například batch\_size).
+Složku pro uložení vygenerovaných MIDI souborů vymezuje parametr \emph{output\_dir}.
+Počet nových souborů pak parametr \emph{num\_outputs}.
+Délka výsledné skladby je dána parametrem \emph{num\_steps} 
+
 
 \chapter{Diskuse}
 % diskuse výsledků
