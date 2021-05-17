@@ -1280,6 +1280,7 @@ a podrobnější návrh potom v \ref{navrhSystemu}.
 Postup harmonizace melodie modelem a provedené experimenty jsou popsány v kapitole následující.
 \par
 
+\section{Instalace}
 Před začátkem trénování je nutné nainstalovat Magentu.
 Jako testovací prostředí byl zvolen operační systém Ubuntu 20.04 LTS (Focal Fossa)
 nainstalovaný na počítači s procesorem Intel Core i7-4720HQ s frekvencí 2.6GHz
@@ -1313,6 +1314,7 @@ Mimo to jsou Magenta skripty zavedeny v proměnné \emph{PATH}.
 \cite{google_git_polyphony}
 \par
 
+\section{Příprava dat}
 Dalším krokem je převedení sady trénovacích MIDI souborů na protocol buffer soubor
 s definicí NoteSequence.
 K tomuto účelu existuje skript \emph{convert\_dir\_to\_note\_sequences}, 
@@ -1368,6 +1370,7 @@ Tento obsahuje zbývajících 10\% dat.
 Velikost obou souborů dohromady je $8.39GB + 79.5GB = 87.9GB$ ($94 454 904 591$B).
 \par
 
+\section{Trénování}
 Nyní je vše připraveno k trénování modelu.
 Příslušný příkaz lze ovlivnit několika parametry.
 S pomocí \emph{run\_dir} je určena cesta k adresáři,
@@ -1477,26 +1480,6 @@ polyphony_rnn_generate \
     --save_generator_bundle
 \end{verbatim}
 
-\chapter{Experimenty}
-% experimentování s implementovaným systémem
-% představení výsledků
-Tato kapitola popisuje možnosti natrénovaného modelu 
-a jak s jeho pomocí harmonizovat melodii.
-Dále jsou představeny experimenty na tomto modelu provedené.
-Model jako takový je popsán v kapitolách \ref{magenta} a \ref{navrhSystemu},
-postup jeho zprovoznění a trénování pak v kapitole \ref{trenovaniModelu}.
-Model, na kterém byly experimenty prováděny, 
-byl natrénován s hyperparametry, které byly představeny v minulé kapitole.
-Tedy:
-\begin{itemize}
-    \item velikost dávky = 64
-    \item počet RNN vrstev = 2
-    \item neuronů v každé vrstvě = 64
-    \item trénovacích cyklů = 20 000
-\end{itemize}
-Použitá trénovací sada je popsána v kapitole \ref{hooktheoryDB}.
-\par
-
 \section{Použití modelu}
 Generovat polyfonní a harmonizované skladby s použitým modelem
 lze téměř od samého začátku.
@@ -1599,7 +1582,7 @@ uložené v MIDI souboru vypadá následovně:
 
 \begin{verbatim}
 polyphony_rnn_generate \
-    --bundle_file=./mnt/d/tmp/polyphony_rnn.mag \
+    --bundle_file=./tmp/polyphony_rnn.mag \
     --output_dir=./generated \
     --num_outputs=10 \
     --num_steps=268 \
@@ -1607,6 +1590,126 @@ polyphony_rnn_generate \
     --condition_on_primer=false \
     --inject_primer_during_generation=true    
 \end{verbatim}
+
+\chapter{Experimenty}
+% experimentování s implementovaným systémem
+% představení výsledků
+Tato kapitola popisuje možnosti natrénovaného modelu 
+a jsou představeny provedené experimenty.
+Model jako takový je popsán v kapitolách \ref{magenta} a \ref{navrhSystemu},
+postup jeho zprovoznění, trénování a použití pak v kapitole \ref{trenovaniModelu}.
+Použitá trénovací sada je popsána v kapitole \ref{hooktheoryDB}.
+Model, na kterém byly experimenty prováděny, 
+byl natrénován s hyperparametry, které byly představeny v minulé kapitole.
+Tedy:
+\begin{itemize}
+    \item velikost dávky = 64
+    \item počet RNN vrstev = 2
+    \item neuronů v každé vrstvě = 64
+    \item trénovacích cyklů = 20 000
+\end{itemize}
+\par
+Parametry použité při generování, pokud není stanoveno jinak, jsou:
+\begin{itemize}
+    \item condition_on_primer=false
+    \item inject_primer_during_generation=true
+    \item bundle_file=./mnt/d/tmp/polyphony_rnn.mag
+    \item num_outputs=10 
+    \item temperature=1.0
+\end{itemize}
+
+\section{Harmonizace krátké melodie}
+Prvním experimentem nechť je harmonizace skladby o pouhých dvou taktech,
+která se nacházela v trénovací datové sadě 
+(viz noty na obrázku \ref{obrazekNotyKratkeZname},
+případně pianoroll MIDI souboru na obrázku \ref{obrazekPianoRollKratkeZname}).
+Modelu známá melodie by měla vyústit ve harmonii velmi podobnou té původní.
+Naproti tomu je melodie velmi krátká.
+Pro extrakci samotné melodie z MIDI souboru obsahující tuto skladbu 
+byl vytvořen krátký Python skript \emph{harmonizer/melodyFromMidi.py}, 
+který jako první parametr přijímá cestu k tomuto souboru.
+
+\begin{figure*}[h]\centering
+    \centering
+    \includegraphics[width=0.8\linewidth]{obrazky/KratkaSkladbaKHarmonizaciNoty.png}\\[1pt]  
+    \caption{Notový zápis použité skladby. Horní osnova je melodie, spodní harmonie.}    
+    \label{obrazekNotyKratkeZname}
+\end{figure*}
+\begin{figure*}[h]\centering
+    \centering
+    \includegraphics[width=0.8\linewidth]{obrazky/KratkaSkladbaKHarmonizaciPianoRoll.png}\\[1pt]  
+    \caption{Pianoroll použité skladby. Modré obdélníky jsou melodie, zelené harmonie.
+    Vertikální osa jsou MIDI výšky tónů, zatímco horizontální je čas. 
+    Čísla nahoře značí první a druhý takt skladby.}    
+    \label{obrazekPianoRollKratkeZname}
+\end{figure*}
+
+Harmonizace byla provedena čtyřikrát 
+s různou hodnotou parametru temperature.
+Nejprve byly generovány soubory s výchozí hodnotou ($1.0$),
+poté s nižší ($0.7$) a nakonec dvakrát s vyššími hodnotami ($1.3$, respektive $2.0$).
+Při každém běhu bylo vytvořeno 10 souborů,
+které byly ručně analyzovány a poslechnuty.
+\par
+
+Skladby generované s nízkou hodnotou temperature vykazovaly,
+jak předpovídala dokumentace, vyšší náhodnost vytvořených tónů.
+Model většinou používá mnoho krátkých akordů, 
+ne vždy ale začínají ve správný čas, akordy nedoplňují melodii 
+a celkově je poslech těchto skladeb ne příliš příjemný.
+Existují ovšem výjimky, viz notový zápis na obrázku 
+\ref{obrazekKratkaSkladbaHarmonizovanaLowNoty},
+kde doplněné noty původní melodii rozvádí přechody mezi jednotlivými akordy.
+
+\begin{figure*}[h]\centering
+    \centering
+    \includegraphics[width=0.8\linewidth]{obrazky/KratkaSkladbaHarmonizovanaLowNoty.png}\\[1pt]  
+    \caption{Notový zápis vygenerované skladby}    
+    \label{obrazekKratkaSkladbaHarmonizovanaLowNoty}
+\end{figure*}
+\par
+
+Harmonizace prováděná s výchozí hodnotou temperature 
+byly obecně příjemnější k poslechu než předchozí přístup.
+Akordy začínaly zároveň s tóny původní melodie a byly delší.
+U některých výsledků se však vyskytoval jistý nešvar, 
+totiž tóny akordů trvající velmi dlouho, někdy i déle než jeden takt.
+Poslech tak ovlivňuje i nastavený hudební nástroj při syntéze MIDI souboru,
+neboť některé se rozezní pouze na začátku MIDI události, ale brzy dozní
+a po zbytek události je tón neslyšitelný.
+Pro správný poslech je tak nutné nastavit MIDI nástroj, který zní celou dobu
+(například \emph{16-Varhany}, nebo \emph{40-Housle}).
+Toto chování lze připsat použité datové sadě,
+kdy se na serveru www.hooktheory.com vkládají většinou pouze harmonizační funkce akordů,
+které trvají i více taktů a nemění se tak často.
+\par
+V některých případech také model těsně před koncem skladby vygeneruje změnu akordu,
+který má tendenci v melodii pokračovat (viz obrázek \ref{obrazekKratkaSkladbaHarmonizovanaDefNoty}).
+
+\begin{figure*}[h]\centering
+    \centering
+    \includegraphics[width=0.8\linewidth]{obrazky/KratkaSkladbaHarmonizovanaDefNoty-1.png}\\[1pt]  
+    \caption{Notový zápis vygenerované skladby s výchozím parametrem temperature. 
+    Červené noty znázorňují náhlou změnu na konci skladby.}    
+    \label{obrazekKratkaSkladbaHarmonizovanaDefNoty}
+\end{figure*}
+\par
+
+Dva běhy harmonizace s parametrem temperature vyšším než původním
+dále prodlužovaly použité akordy.
+Harmonie byla také více předvídatelná a tolik se neměnily použité akordy.
+Pokusy o pokračování skladby se objevovaly spíše zřídka.
+Zdařilá harmonizace s tímto nastavením je na obrázku 
+\ref{obrazekKratkaSkladbaHarmonizovanaHighNoty}.
+
+\begin{figure*}[h]\centering
+    \centering
+    \includegraphics[width=0.8\linewidth]{obrazky/KratkaSkladbaHarmonizovanaHighNoty-1.png}\\[1pt]  
+    \caption{Notový zápis vygenerované skladby s vyšším parametrem temperature. 
+    Tóny harmonie trvají několik dob.}    
+    \label{obrazekKratkaSkladbaHarmonizovanaHighNoty}
+\end{figure*}
+\par
 
 \chapter{Diskuse}
 % diskuse výsledků
