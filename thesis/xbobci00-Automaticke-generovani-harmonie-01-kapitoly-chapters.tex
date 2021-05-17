@@ -1031,7 +1031,7 @@ nyní obsahující pravděpodobnosti not ve smazaných částech.
 \cite{huang2017counterpoint}
 Tento natrénovaný model lze vyzkoušet jako Google Doodle na \url{https://www.google.com/doodles/celebrating-johann-sebastian-bach}
 \par
-Jedním z dalších Magenta modelů, které se zabývá hudbou je Polyphony RNN. 
+Jedním z dalších Magenta modelů, které se zabývá hudbou je méně propagovaný Polyphony RNN. 
 Ten aplikuje jazykové modely ke generování polyfonní hudby za použití LSTM neuronových sítí
 a je založen na projektu BachBot, který je popsán v \cite{Liang_AutomaticComposition}.
 Na rozdíl od modelu Melody RNN, který také využívá jazykových modelů, 
@@ -1260,15 +1260,14 @@ kdy je také možné nastavit hyperparametry sítě jako například počet a ve
 
 Primer modelu bude MIDI soubor se samotnou melodií, 
 konvertovaný podle předchozí části na NoteSequence.
-Úkolem systému je harmonizace této melodie, 
-proto bude použita jako součást výstupu.
-\cite{google_git_polyphony}
+Úkolem systému je doplnění této melodie o složku harmonie, 
+melodie proto bude použita jako součást výstupu.
 
 \section{Výstup}
 Výstupem samotného modelu je protocol buffer s definicí NoteSequence, 
 stejně jako na vstupu.
 Tato NoteSequence je interně převedena na výsledný MIDI soubor, 
-který obsahuje původní melodii, která je následována její harmonizovanou podobou.
+který obsahuje původní melodii(primer), která je následována její harmonizovanou podobou.
 \cite{google_git_polyphony}
 
 \chapter{Trénování systému}
@@ -1431,6 +1430,8 @@ což spustí vyhodnocovací úlohu.
 V tomto případě bude po každém trénovacím cyklu proveden vyhodnocovací cyklus.
 Vyhodnocení se provede vždy po dokončení cyklu učení, 
 a není tedy možné tento příkaz spustit po dokončení trénování.
+\cite{google_git_polyphony}
+
 
 \begin{verbatim}
 polyphony_rnn_train \
@@ -1440,7 +1441,14 @@ polyphony_rnn_train \
     --num_training_steps=20000 \
     --eval
 \end{verbatim}  
+\par
 
+Průběh trénovacího a vyhodnocovacího procesu lze sledovat na adrese
+\url{http://localhost:6006} po spuštění TensorBoard nástroje příkazem
+
+\begin{verbatim}
+tensorboard --logdir=./tmp/polyphony_rnn/logdir   
+\end{verbatim}
 \par
 
 Po dokončení učení modelu je možné s ním experimentovat, 
@@ -1458,6 +1466,16 @@ jaký byl použit při trénování.
 Cesta k výslednému .mag souboru je určena v \emph{bundle\_file}.
 Jedná se opět o zabalený protocol buffer, nyní však s definicí GeneratorBundle.
 Zabalení modelu do jednoho souboru je vhodné při sdílení předtrénovaného modelu.
+\cite{google_git_polyphony}
+
+
+\begin{verbatim}
+polyphony_rnn_generate \
+    --run_dir=./tmp/polyphony_rnn/logdir/run1 \
+    --hparams="batch_size=64,rnn_layer_sizes=[64,64]" \
+    --bundle_file=./tmp/polyphony_rnn.mag \
+    --save_generator_bundle
+\end{verbatim}
 
 \chapter{Experimenty}
 % experimentování s implementovaným systémem
@@ -1494,8 +1512,101 @@ také parametr \emph{hparams} tak, jak byl použit při trénování
 (některé z uvedených hyperparametrů budou ignorovány, například batch\_size).
 Složku pro uložení vygenerovaných MIDI souborů vymezuje parametr \emph{output\_dir}.
 Počet nových souborů pak parametr \emph{num\_outputs}.
-Délka výsledné skladby je dána parametrem \emph{num\_steps} 
+Každý generovaný soubor je rozdílný, liší se provedením harmonizace.
+Je vhodné výsledky poslechnout a zjistit jejich kvalitu.
+\par
 
+Délka výsledné skladby je dána parametrem \emph{num\_steps} 
+Jednotka délky kroku je v tomto případě šestnáctinová nota,
+jinými slovy -- do vygenerované melodie se vleze právě \emph{num\_steps} šestnáctinových not.
+Délka jednoho taktu je šestnáct kroků.
+Problém tohoto modelu je, že do generované skladby nejdříve vloží melodii samotnou, 
+jako primer popsaný v kapitole \ref{navrhSystemu}.
+Je tedy nutné délku původní melodie násobit dvěma,
+aby se do výsledného souboru dostala jak původní melodie,
+tak její rozšířená část.
+\cite{google_git_polyphony}
+
+\par
+
+Základ generátoru (primer ) lze specifikovat třemi způsoby.
+Jelikož je model původně určený pro generování polyfonních skladeb,
+je možné začít pouze jedním akordem.
+Ten se vkládá parametrem \emph{primer\_pitches},
+který obsahuje řetězec reprezentující Python pole.
+Jednotlivé prvky tohoto pole jsou MIDI výšky tónů,
+z nichž je tento akord složen.
+Například celý parametr určující akord C dur vypadá následovně:
+
+\begin{verbatim}
+--primer_pitches="[67, 64, 60]"
+\end{verbatim}
+
+Ve vygenerované skladbě trvá základ, 
+vložený tímto způsobem, první dobu (délka čtvrťové noty).
+\par
+
+Další možností je vložení počáteční melodie.
+Ta je vložena ve formě Python pole, stejně jako v předchozím případě.
+Noty ve formě MIDI výšek jsou doplněny o dvě řídící hodnoty.
+Žádnou událost značí číslo $-2$ a 
+deaktivace znějící noty (note-off) je reprezentována číslem $-1$.
+Parametr pro tuto možnost je \emph{primer\_melody}.
+
+\begin{verbatim}
+--primer_melody="[60, -2, 60, -2, 67, -2, 67, -2 ]"  
+\end{verbatim}
+
+Poslední možností je načtení základní stopy z MIDI souboru,
+jehož cesta je v parametru \emph{primer\_midi}.
+\begin{verbatim}
+--primer_midi=./primer.mid 
+\end{verbatim}
+
+Při použítí více než jednoho parametru pro vložení základu
+mají parametry následující prioritu:
+\begin{enumerate}
+    \item primer\_pitches
+    \item primer\_melody
+    \item primer\_midi
+\end{enumerate}
+\par
+
+Další parametry upravují použití základu generátorem.
+Pokud je argument \emph{condition\_on\_primer} nastaven na true, 
+pak je primer načten modelem ještě před začátkem generování nové sekvence.
+Tento argument se používá dohromady s \emph{primer\_pitches} 
+ke stanovení tóniny generované stopy jejím akordem.
+Nastavením parametru \emph{inject_primer_during_generation} na true
+bude poskytnutý základ použit jako součást generované skladby.
+Toto chování se hodí právě pokud je úkolem harmonizace existující melodie.
+V takovém případě by se neměl používat předchozí parametr \emph{condition\_on\_primer},
+protože model nejdříve uvidí monofonní melodii 
+a má generovat polyfonní.
+\cite{google_git_polyphony}
+
+% experiment s harmonizací melodie s akordama se zaplým condition
+\par
+Posledním pro experimenty zajímavým parametrem je \emph{temperature},
+který ovlivňuje náhodnost generovaných stop.
+Číslo větší než jedna znamená více náhodný výsledek,
+naopak číslo menší než jedna vede k menší náhodnosti.
+Výchozí hodnota je pochopitelně $1.0$.
+\par
+
+Celý příkaz pro vygenerování harmonie k melodii
+uložené v MIDI souboru vypadá následovně:
+
+\begin{verbatim}
+polyphony_rnn_generate \
+    --bundle_file=./mnt/d/tmp/polyphony_rnn.mag \
+    --output_dir=./generated \
+    --num_outputs=10 \
+    --num_steps=268 \
+    --primer_midi=./melody.mid \
+    --condition_on_primer=false \
+    --inject_primer_during_generation=true    
+\end{verbatim}
 
 \chapter{Diskuse}
 % diskuse výsledků
