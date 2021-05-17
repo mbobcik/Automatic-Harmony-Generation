@@ -737,7 +737,7 @@ mají časový přírůstek roven nule.
 \cite{Back_SMF_Specif}
 \par
 
-Za časem následuje MIDI zpráva tvořená stavovým bajtem 
+Za časovým údajem následuje MIDI zpráva tvořená stavovým bajtem 
 a až dvěma datovými bajty.
 Stavový bajt má vždy nejvýznamnější bit jedničku,
 zatímco datové mají nulu.
@@ -1419,10 +1419,14 @@ polyphony_rnn_train \
 S tímto nastavení trvá trénování na testovacím počítači přibližně 25 hodin.
 Skript průběžně zapisuje statistiky o právě probíhajícím cyklu, 
 včetně průměrného počtu cyklů za vteřinu.
-Pomocí této hodnoty lze odhadnout dobu trvání trénování při jiných hyperparametrech.
+Pomocí této hodnoty lze odhadnout dobu trvání trénování při jiných hyperparametrech,
+například těch výchozích.
+Ovšem ani po uplynutí osmi hodin od začátku trénování s těmito hodnotami
+se nedokončil jediný trénovací cyklus.
+Odhadem by tak trénování na tomto stroji trvalo doslova desítky let
+(viz odhad níže, kde $t$ je odhadnutý čas jednoho cyklu).
 
-        \todo{Dopsat podle odhadnuté hodnoty}
-
+$$t * num_training_steps = 8h * 20 000 \approx 18let $$
 \par
 
 Volitelně je možné paralelně spustit stejný skript s přidaným parametrem \emph{eval},
@@ -1431,7 +1435,6 @@ V tomto případě bude po každém trénovacím cyklu proveden vyhodnocovací c
 Vyhodnocení se provede vždy po dokončení cyklu učení 
 a není tedy možné tento příkaz spustit po dokončení trénování.
 \cite{google_git_polyphony}
-
 
 \begin{verbatim}
 polyphony_rnn_train \
@@ -1467,7 +1470,6 @@ Cesta k výslednému .mag souboru je určena v \emph{bundle\_file}.
 Jedná se opět o zabalený protocol buffer, nyní však s definicí GeneratorBundle.
 Zabalení modelu do jednoho souboru je vhodné při sdílení předtrénovaného modelu.
 \cite{google_git_polyphony}
-
 
 \begin{verbatim}
 polyphony_rnn_generate \
@@ -1506,7 +1508,6 @@ Je tedy nutné délku původní melodie násobit dvěma,
 aby se do výsledného souboru dostala jak původní melodie,
 tak její rozšířená část.
 \cite{google_git_polyphony}
-
 \par
 
 Základ generátoru (primer) lze specifikovat třemi způsoby.
@@ -1608,14 +1609,14 @@ Tedy:
 \par
 Parametry použité při generování, pokud není stanoveno jinak, jsou:
 \begin{itemize}
-    \item condition\_on\_primer=false
-    \item inject\_primer\_during\_generation=true
-    \item bundle\_file=./mnt/d/tmp/polyphony\_rnn.mag
-    \item num\_outputs=10 
-    \item temperature=1.0
+    \item condition\_on\_primer = false
+    \item inject\_primer\_during\_generation = true
+    \item bundle\_file = ./tmp/polyphony\_rnn.mag
+    \item num\_outputs = 10 
+    \item temperature = 1.0
 \end{itemize}
 
-\section{Harmonizace krátké melodie}
+\section{Harmonizace krátké známé melodie}
 Prvním experimentem nechť je harmonizace skladby o pouhých dvou taktech,
 která se nacházela v trénovací datové sadě 
 (viz noty na obrázku \ref{obrazekNotyKratkeZname},
@@ -1623,8 +1624,11 @@ případně pianoroll MIDI souboru na obrázku \ref{obrazekPianoRollKratkeZname}
 Modelu známá melodie by měla vyústit ve harmonii velmi podobnou té původní.
 Naproti tomu je melodie velmi krátká.
 Pro extrakci samotné melodie z MIDI souboru obsahující tuto skladbu 
-byl vytvořen krátký Python skript \emph{harmonizer/melodyFromMidi.py}, 
+byl vytvořen Python skript \emph{./harmonizer/melodyFromMidi.py}, 
 který jako první parametr přijímá cestu k tomuto souboru.
+Z původního souboru \emph{./midi/590914\_\_part590914.mid}
+tímto způsobem vytvořen soubor 
+\emph{./melodyOnly/590914\_\_part590914\_Short.mid.melodyOnly.mid}.
 
 \begin{figure*}[h]\centering
     \centering
@@ -1661,7 +1665,7 @@ kde doplněné noty původní melodii rozvádí přechody mezi jednotlivými ako
 \begin{figure*}[h]\centering
     \centering
     \includegraphics[width=0.8\linewidth]{obrazky/KratkaSkladbaHarmonizovanaLowNoty.png}\\[1pt]  
-    \caption{Notový zápis vygenerované skladby}    
+    \caption{Notový zápis skladby vygenerované s nižšími než výchozími hodnotami}    
     \label{obrazekKratkaSkladbaHarmonizovanaLowNoty}
 \end{figure*}
 \par
@@ -1696,6 +1700,8 @@ Dva běhy harmonizace s parametrem temperature vyšším než původním
 dále prodlužovaly použité akordy.
 Harmonie byla také více předvídatelná a tolik se neměnily použité akordy.
 Pokusy o pokračování skladby se objevovaly spíše zřídka.
+Mezi výsledky procesů s hodnotami parametru, 
+které byly vyšší než jedna, nebyl pozorován zásadní rozdíl.
 Zdařilá harmonizace s tímto nastavením je na obrázku 
 \ref{obrazekKratkaSkladbaHarmonizovanaHighNoty}.
 
@@ -1707,6 +1713,82 @@ Zdařilá harmonizace s tímto nastavením je na obrázku
     \label{obrazekKratkaSkladbaHarmonizovanaHighNoty}
 \end{figure*}
 \par
+
+Za povšimnutí stojí fakt, 
+že ani jediná z vygenerovaných harmonizací se úplně nepodobá té původní
+z trénovací datové sady.
+
+\section{Harmonizace krátké neznámé melodie}
+Dalším experimentem je harmonizace krátké melodie, 
+podobné té z prvního experimentu 
+(viz obrázek notového zápisu na obrázku \ref{obrazekMyHarmonyShortNoty}, 
+MIDI soubor \emph{./melodyOnly/MyHarmonyShort.mid}).
+Tato melodie byla vytvořena ručně, 
+a nenacházela se v trénovací sadě.
+Stejně jako při předchozím experimentu 
+je harmonizace provedena v několika bězích, 
+vždy s jiným parametrem temperature.
+
+Hodnoty parametrů jsou zvoleny stejně, tedy 0.7, 1.0, 1.3 a 2.0.
+\begin{figure*}[h]\centering
+    \centering
+    \includegraphics[width=0.8\linewidth]{obrazky/MyHarmonyShort-1.png}\\[1pt]  
+    \caption{Notový zápis modelu neznámé melodie, s příslušnou harmonií.}    
+    \label{obrazekMyHarmonyShortNoty}
+\end{figure*}
+\par
+
+Skladby generované s použitím nízké hodnoty parametru temperature, 
+oproti předchozímu experimentu, obsahují delší akordy.
+Ty se ale také často mění.
+Většinou ve špatnou dobu, v průběhu jiné noty.
+Skladby tak zní jako improvizace muzikanta -- začátečníka,
+jenž neví, který z akordů s melodii aktuálně souzní.
+To je dobře vidět na obrázku \ref{obrazekMyHarmonyShortNotyLowTemp},
+kde červené noty značí náhlé změny v harmonii.
+Poslech těchto skladeb, stejně jako u předchozího experimentu 
+(při použití stejné hodnoty temperature), není příliš příjemný.
+
+\begin{figure*}[h]\centering
+    \centering
+    \includegraphics[width=0.8\linewidth]{obrazky/MyHarmonyShortLowTmp-1.png}\\[1pt]  
+    \caption{Notový zápis harmonizace neznámé skladby s nízkou hodnotou temperature.
+    Červené noty jsou špatně umístěné.}    
+    \label{obrazekMyHarmonyShortNotyLowTemp}
+\end{figure*}
+\par
+
+Výchozí hodnoty parametru temperature přínáší delší akordy.
+Narozdíl od předchozí hodnoty se zde vyskytuje hodně skladeb,
+jenž mají jediný akord roztažený po celou dobu trvání melodie.
+Mezi jednotlivými skladbami se však mění právě tento použitý akord.
+Tímto se mění nálada a vyznění melodie.
+Toto chování je demonstrováno na obrázku \ref{obrazekMyHarmonyShortNotyDefTemp}.
+
+\begin{figure*}[h]\centering
+    \centering
+    \includegraphics[width=0.8\linewidth]{obrazky/MyHarmonyShortDefTmp01-1.png}\\[1pt]  
+    \includegraphics[width=0.8\linewidth]{obrazky/MyHarmonyShortDefTmp03-1.png}\\[1pt]  
+    \caption{Notový zápis harmonizací neznámé skladby s výchozí hodnotou temperature.
+    Za povšimnutí stojí použití jednoho akordu pro celou melodii, 
+    který je rozdílný pro obě skladby(horní a dolní)}    
+    \label{obrazekMyHarmonyShortNotyDefTemp}
+\end{figure*}
+\par
+
+Generování harmonie s parametrem temperature vyšším se opět vyznačuje
+dlouhými akordy.
+Rozdílem oproti nižší hodnotě je jejich opakování ve skladbě.
+Tedy stejný akord se rozezní několikrát po sobě.
+V některých případech je jeden z tónů akordu vyměněn.
+
+%doplnit obrázek
+
+%dopsat high temp20
+
+%experiment s dlouho skladbou
+
+%experiment s condition on primer=> generování nové hudby
 
 \chapter{Diskuse}
 % diskuse výsledků
