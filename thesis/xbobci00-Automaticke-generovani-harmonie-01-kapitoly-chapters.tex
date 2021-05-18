@@ -1554,6 +1554,7 @@ polyphony_rnn_generate \
 \end{verbatim}
 
 \chapter{Experimenty}
+\label{experimenty}
 % experimentování s implementovaným systémem
 % představení výsledků
 Tato kapitola popisuje možnosti natrénovaného modelu 
@@ -1830,8 +1831,36 @@ a nepoužívá všechny tóny akordů.
 %experiment s harmonizací s BachBot modelem
 
 \chapter{Diskuse}
-Tato kapitola obsahuje diskusi výsledků experimentů,
-které byly provedeny na modelu Polyphony RNN
+Tato kapitola se zaměřuje na diskusi výsledků experimentů,
+které byly provedeny na modelu Polyphony RNN.
+Ten byl natrénován na vlastní datové sadě.
+Model jako takový je popsán v kapitole \ref{navrhSystemu},
+provedené experimenty pak v \ref{experimenty}.
+Dále jsou navrženy možnosti dalšího pokračování,
+případně rozšíření této práce.
+\par
+
+Harmonie k melodiím, které generoval popisovaný model,
+jsou spíše neuspokojivé.
+Jak již bylo popisováno v experimentech, 
+pro model bylo obtížné harmonizovat i známé melodie, 
+které by měl znát z trénovací sady. 
+Ve vygenerovaných skladbách  byly patrné dva směry.
+Prvním je použití mnoha akordů.
+Ty ale byly málo kdy zaveden do skladby v pravý čas, 
+a tak celkový dojem spíše kazily.
+Správná harmonie těchto akordů byla také velmi ojedinělá.
+Toto bylo pozorováno především u krátkých skladeb 
+s nízkou hodnotou parametru temperature.
+Druhým jevem byl jeden akord, 
+který byl nevhodně dlouhý,
+případně se opakoval hned po sobě.
+Přestože s danou melodií mohl ladit,
+výsledný působil především nudně a nezajímavě.
+Složení akordů z menšího počtu tónů byl také jeden z častých jevů.
+Případně akord začal celý, a postupně ztratil některé tóny.
+
+
 % diskuse výsledků
 % jak je použít
 % srovnání s cizími pracemi a papery
