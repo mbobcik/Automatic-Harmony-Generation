@@ -28,9 +28,9 @@ popřípadě může být jejich výtvor poněkud nudný oproti profesionálnímu
 Cílem práce je seznámit se s problematikou automatické harmonizace na základě znalosti melodie,
 s principem a využitím strojového učení v této úloze, a to zejména s neuronovými sítěmi.
 Dalším bodem je navržení systému, který automatické generování harmonie umožní.
-Poté implementovat daný systém s pomocí vhodného frameworku pro neuronové sítě.
+Poté implementovat daný systém s pomocí vhodného frameworku.
 Implementovaný systém je potřeba otestovat na vhodné datové sadě. 
-Ta bude obsahovat přepis rozličných písniček ze serveru \url{www.hooktheory.com}
+Ta obsahuje přepis rozličných písniček ze serveru hooktheory.com
 do formátu MIDI.
 Na závěr budou diskutovány výsledky testování a možné pokračování této práce.
 
@@ -42,16 +42,7 @@ V první kapitole této práce se nachází přehled hudební teorie.
 Jsou představeny základní kameny hudby -- tóny, jejich soustavy a alterace.
 Následuje část věnovaná notopisu,
 tedy přesnému zápisu hudby speciálními znaky.
-\todo{Hudební teorie je tolik, protože nejsme hudební škola\dots}
 \par
-Druhá kapitola obsahuje popis předchozích přístupů jiných autorů k této problematice.
-Mezi nimi nalezneme například model založený na shodě šablon, 
-jenž porovnává části vstupní melodie s těmi, které zná.
-Další přístup je založen na skrytých markovových modelech, 
-které odhadují nejpravděpodobnější posloupnost akordů k dané melodii.
-Některé z těchto přístupů slouží jako inspirace této práce.
-\par
-
 Následuje teoretická rešerše strojového učení,
 tedy disciplíny, na níž stojí správnost automatizace.
 Nejprve je představeno strojové učení jako takové,
@@ -60,10 +51,50 @@ které jsou v této práci využity.
 Postupně jsou rozebrány neuronové sítě a neurony,
 rekurentní neuronové sítě a jejich LSTM architektura.
 \par
+Čtvrtá kapitola popisuje použitou datovou sadu.
+Nejprve je prozkoumán jeden z formátů pro ukládání hudby.
+Je představeno, jak použití tohoto formátu, tak jeho vnitřní struktra.
+Dále se kapitola věnuje poskytnuté databázi.
+Ta obsahuje hudbu v XML souborech.
+Tyto jsou prozkoumány, a následně je stanoven postup jejich konverze na vhodnější formát.
 
-Třetí kapitola se věnuje návrhu systému,
+Pátá kapitola obsahuje popis předchozích přístupů jiných autorů k této problematice.
+Mezi nimi nalezneme například model založený na shodě šablon, 
+jenž porovnává části vstupní melodie s těmi, které zná.
+Další přístup je založen na skrytých markovových modelech, 
+které odhadují nejpravděpodobnější posloupnost akordů k dané melodii.
+Na neuronových sítích jsou pak založeny modely firmy Google,
+které jsou představeny jako poslední v této kapitole.
+Jeden z těchto je použit v této práci.
+\par
+
+Šestá kapitola se věnuje návrhu systému,
 který umožňuje automatické generování harmonie na základě vstupní melodie.
-\todo{DOPSAT podle diplomky}
+Popisuje použitý model a také to, jak budou vypadat vstupní a výstupní data.
+\par
+
+V další kapitole je tento systém představen více z blízka.
+V první části je popsán postup instalace, 
+poté příprava dat pro použití v procesu trénování modelu.
+Tento proces je popsán záhy.
+Poslední část dává návod, jak použít tento systém pro generování nových skladeb.
+\par
+
+Osmá kapitola obsahuje jednotlivé experimenty, 
+které budou s modelem prováděny.
+Nejprve má model za úkol harmonizovat jednu z krátkých skladeb,
+které se nacházela v trénovací sadě.
+Druhá melodie je podobná té první, 
+avšak v trénovací sadě nebyla.
+Poslední skladbou, se kterou bude experimentováno,
+je skladba čtyřikrát delší než předchozí dvě.
+\par
+
+V poslední kapitole před závěrem jsou diskutovány 
+dosažené výsledky.
+Jsou představeny některé problémy použitého systému společně s několika návrhy,
+jak by šly řešit.
+V druhé části jsou nastíněny možné rozšíření a pokračování této práce.
 
 \chapter{Hudební teorie}
 % základy hudební nauky
@@ -1933,7 +1964,7 @@ Výsledky natrénovaného systému nejsou velmi uspokojivé
 a většinou s původní melodií nezněli a kazily její dojem.
 Avšak mezi vygenerovanými skladbami se našly světlé výjímky,
 které se daly považovat za správnou a zajímavou harmonizaci.
-Použitý model byl však, oproti doporučeným hodnotám, malý.
+Použitý model byl však, oproti doporučeným hodnotám hyperparametrů, malý.
 Lepší výsledky by tak mohlo přinést použití většího modelu,
 k jehož natrénování je však potřeba větší výpočetní síly, 
 než bylo použito v této práci.
