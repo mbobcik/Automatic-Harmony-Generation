@@ -816,7 +816,6 @@ Data k projektu byla získána ve formě SQLite
 se kterou jde jednoduše manipulovat pomocí jazyka Python.
 Tato databáze obsahuje záznamy o písničkách ve formátu XML.
 Velikost databáze je $32.7$MB ($34 334 720$B)
-
 Databáze se skládá z několika tabulek,
 z nichž jedna obsahuje komprimovaný XML soubor.
 Uvnitř každého souboru se nachází jedna skladba,
@@ -1275,7 +1274,6 @@ URL=https://raw.githubusercontent.com/tensorflow/ \
 curl $(URL) > /tmp/magenta-install.sh
 bash /tmp/magenta-install.sh    
 \end{verbatim}
-
 Instalační skript nainstaluje Python distribuci Anaconda\footnote{\url{https://www.anaconda.com/}}
 a s pomocí systému pro správu balíků \emph{conda} vytvoří nové virtuální prostředí \emph{magenta}.
 Do tohoto prostředí dále nainstaluje potřebné balíky.
@@ -1289,7 +1287,6 @@ se aktivuje příkazem
 \begin{verbatim}
 source activate magenta
 \end{verbatim}
-
 Nyní jsou knihovna Magenta a všechny její závislosti 
 připraveny k použití v Pythonu a v Jupyter sešitech.
 Mimo to jsou Magenta skripty zavedeny v proměnné \emph{PATH}.
@@ -1315,7 +1312,6 @@ convert_dir_to_note_sequences \
     --output_file=./tmp/notesequences.tfrecord \
     --recursive
 \end{verbatim} 
-
 Konverze souborů ze složky \emph{./midi} netrvá dlouho
 a výsledný soubor \emph{./tmp/notesequences.tfrecord}
 má velikost $29.7$MB ($31 244 793$B)
@@ -1341,7 +1337,6 @@ polyphony_rnn_create_dataset \
     --output_dir=./tmp/polyphony_rnn/sequence_examples \
     --eval_ratio=0.10
 \end{verbatim}
-
 Generování trénovacích dat trvá zhruba čtyři až šest hodin.
 Ve složce \emph{./tmp/polyphony\_rnn/sequence\_examples} budou po dokončení
 dva soubory. 
@@ -1400,19 +1395,19 @@ polyphony_rnn_train \
     --hparams="batch_size=64,rnn_layer_sizes=[64,64]" \
     --num_training_steps=20000
 \end{verbatim}
-
 S tímto nastavení trvá trénování na testovacím počítači přibližně 25 hodin.
 Skript průběžně zapisuje statistiky o právě probíhajícím cyklu, 
 včetně průměrného počtu cyklů za vteřinu.
 Pomocí této hodnoty lze odhadnout dobu trvání trénování při jiných hyperparametrech,
 například těch výchozích.
-Ovšem ani po uplynutí dvaceti hodin od začátku trénování s těmito hodnotami
+Výchozí hodnoty popisují mnohem větší model o třech RNN vrstvách s 256 neurony v každé.
+Ovšem ani po uplynutí dvaceti hodin od začátku trénování tohoto většího modelu,
 se nedokončil jediný trénovací cyklus.
 Odhadem by tak trénování na tomto stroji trvalo doslova desítky let
 (viz odhad níže, kde $t$ je odhadnutý čas jednoho cyklu).
+Trénování větších modelů je tak podmíňeno použitím počítačů s větší výpočetní silou.
 
 $$t * num\_training\_steps = 20h * 20 000 \approx 45let $$
-\par
 
 Volitelně je možné paralelně spustit stejný skript s přidaným parametrem \emph{eval},
 což spustí vyhodnocovací úlohu.
@@ -1420,19 +1415,8 @@ V tomto případě bude po každém trénovacím cyklu proveden vyhodnocovací c
 Vyhodnocení se provede vždy po dokončení cyklu učení 
 a není tedy možné tento příkaz spustit po dokončení trénování.
 \cite{google_git_polyphony}
-
-\begin{verbatim}
-polyphony_rnn_train \
-    --run_dir=./tmp/polyphony_rnn/logdir/run1 \
-    --sequence_example_file=./tmp/polyphony_rnn/sequence_examples/training_poly_tracks.tfrecord \
-    --hparams="batch_size=64,rnn_layer_sizes=[64,64]" \
-    --num_training_steps=20000 \
-    --eval
-\end{verbatim}  
-\par
-
 Průběh trénovacího a vyhodnocovacího procesu lze sledovat na adrese
-\url{http://localhost:6006} po spuštění TensorBoard nástroje příkazem
+http://localhost:6006 po spuštění TensorBoard nástroje příkazem
 
 \begin{verbatim}
 tensorboard --logdir=./tmp/polyphony_rnn/logdir   
@@ -1466,9 +1450,11 @@ polyphony_rnn_generate \
 
 \section{Použití modelu}
 Generovat polyfonní a harmonizované skladby s použitým modelem
-lze téměř od samého začátku.
-Je ale vhodné jej nechat trénovat dostatečně dlouho.
+lze téměř od samého začátku trénování.
+%Je ale vhodné jej nechat trénovat dostatečně dlouho.
 Kromě toho lze použít také model zabalený v .mag souboru.
+Není tedy nutné trénovat vlastní model, 
+ale je možné využít již předtrénovaný a exportovaný do tohoto formátu.
 Chování generátoru upravuje několik parametrů.
 Výběr modelu specifikují parametry \emph{run\_dir} a \emph{bundle\_file},
 kdy první určuje cestu ke složce s trénovaným modelem (přesněji s uloženými checkpointy)
@@ -1502,16 +1488,13 @@ Ten se vkládá parametrem \emph{primer\_pitches},
 který obsahuje řetězec reprezentující Python pole.
 Jednotlivé prvky tohoto pole jsou MIDI výšky tónů,
 z nichž je tento akord složen.
+Ve vygenerované skladbě trvá základ, 
+vložený tímto způsobem, první dobu (délka čtvrťové noty).
 Například celý parametr určující akord C dur vypadá následovně:
 
 \begin{verbatim}
 --primer_pitches="[67, 64, 60]"
 \end{verbatim}
-
-Ve vygenerované skladbě trvá základ, 
-vložený tímto způsobem, první dobu (délka čtvrťové noty).
-\par
-
 Další možností je vložení počáteční melodie.
 Ta je vložena ve formě Python pole, stejně jako v předchozím případě.
 Noty ve formě MIDI výšek jsou doplněny o dvě řídící hodnoty.
@@ -1522,13 +1505,11 @@ Parametr pro tuto možnost je \emph{primer\_melody}.
 \begin{verbatim}
 --primer_melody="[60, -2, 60, -2, 67, -2, 67, -2 ]"  
 \end{verbatim}
-
 Poslední možností je načtení základní stopy z MIDI souboru,
 jehož cesta je v parametru \emph{primer\_midi}.
 \begin{verbatim}
 --primer_midi=./primer.mid 
 \end{verbatim}
-
 Při použítí více než jednoho parametru pro vložení základu
 mají parametry následující prioritu:
 \begin{enumerate}
@@ -1536,8 +1517,6 @@ mají parametry následující prioritu:
     \item primer\_melody
     \item primer\_midi
 \end{enumerate}
-\par
-
 Další parametry upravují použití základu generátorem.
 Pokud je argument \emph{condition\_on\_primer} nastaven na true, 
 pak je primer načten modelem ještě před začátkem generování nové sekvence.
@@ -1551,7 +1530,7 @@ protože model nejdříve uvidí monofonní melodii
 a má generovat polyfonní.
 \cite{google_git_polyphony}
 
-% experiment s harmonizací melodie s akordama se zaplým condition
+% experiment s harmonizací melodie s akordama se zaplým conditio    n
 \par
 Posledním pro experimenty zajímavým parametrem je \emph{temperature},
 který ovlivňuje náhodnost generovaných stop.
@@ -1591,16 +1570,15 @@ Tedy:
     \item neuronů v každé vrstvě = 64
     \item trénovacích cyklů = 20 000
 \end{itemize}
-
 Parametry použité při generování, pokud není stanoveno jinak, jsou:
 \begin{itemize}
     \item condition\_on\_primer = false
     \item inject\_primer\_during\_generation = true
     \item bundle\_file = ./tmp/polyphony\_rnn.mag
     \item num\_outputs = 10 
+    \item num\_steps = 64
     \item temperature = 1.0
 \end{itemize}
-
 Výsledné MIDI soubory byly analyzovány s pomocí open-source 
 sequenceru a MIDI editoru Sekaiju 6.1\footnote{dostupný z \url{openmidiproject.osdn.jp/Sekaiju_en.html}}.
 Obrázky not byly generovány programem MuseScore\footnote{dostupný z \url{musescore.org/en}}, 
@@ -1707,8 +1685,14 @@ Zdařilá harmonizace s tímto nastavením je na obrázku
 Za povšimnutí stojí fakt, 
 že ani jediná z vygenerovaných harmonizací se úplně nepodobá té původní
 z trénovací datové sady.
-Dále si je patrné, že model používá spíše nestandardní, exotické harmonie,
+Dále si je patrné, že model používá spíše nestandardní a nelibozvučné souzvuky,
 a standardní durové, nebo mollové akordy volí spíše zřídka.
+Automatická harmonizace s pomocí tohoto modelu je tak spíše nefunkční,
+ikdyž se mu v několika málo případech podařilo vygenerovat harmonii 
+(nebo alespoň její část) správnou a poslouchatelnou.
+Model trpí tím, že je malý (dvě RNN vrstvy o 64 neuronech každá),
+oproti autory zamýšlené výchozí velikosti (tři RNN vrstvy o 256 neuronech každá).
+Nedokáže se tak naučit složité znaky používané v harmonii.
 
 \section{Harmonizace krátké neznámé melodie}
 Dalším experimentem je harmonizace krátké melodie, 
@@ -1792,13 +1776,62 @@ jako tomu bylo u předchozích pokusů.
 \end{figure*}
 \par
 
-%experiment s dlouho skladbou
+Harmonizace v tomto experimetu trpí podobnými neduhy, jako v tom předchozím.
+Příčiny tohoto chování lze spatřovat opět v malém modelu.
+Pokud si není schopen zapamatovat krátkou melodii z trénovací sady,
+je pravděpodobné, že neznámou melodii harmonizovat lépe nebude.
+
+\section{Harmonizace dlouhé melodie}
+V tomto experimentu má model za úkol harmonizovat delší skladbu.
+Oproti předchozím skladbám je tato dlouhá osm taktů, je tedy čtyřikrát delší
+(viz obrázek notové osnovy \ref{obrazekMyHarmonyLongNoty} ).
+Kvůli této skutečnosti je potřeba změnit parametr \emph{num\_steps} 
+z původní hodnoty 64 na 256.
+Parametr temperature bude nabývat stejných hodnot jako v předchozích případech.
+Cílem je zjistit, jestli model trpí jenom při krátkých skladbách, 
+nebo jestli mu větší délka skladby pomůže.
+
+\begin{figure*}[h]\centering
+    \centering
+    \includegraphics[width=0.8\linewidth]{obrazky/MyMelodyLongKHarmonizaciNoty-1.png}\\[1pt]  
+    \caption{Původní notový zápis dlouhé skladby.}    
+    \label{obrazekMyHarmonyLongNoty}
+\end{figure*}
+\par
+
+U vygenerovaných skladeb v tomto experimentu lze pozorovat velmi podobné chování,
+jako u předchozích.
+Celé skladbě většinou dominuje jediný akord, který zní po celou dobu skladby,
+čímž trpí syntéza MIDI souboru (viz výše).
+Kvalita výsledků se relativně zlepšuje s vyšším použitým parametrem temperature.
+To znamená, že pokud se akordy mění, je to ve správný čas.
+Ve výsledku však lze říci, že delší skladby, oproti těm krátkým, 
+jsou harmonizovány lépe,
+jelikož v celé době trvání lze najít části, které s původní melodií ladí.
+\par
+
+Jako příklad za všechny z tohoto experimentu,
+nechť poslouží část notové osnovy na obrázku \ref{obrazekMyHarmonyLongPovedenaNoty}.
+Na tomto výtvoru se je jak povedená část (vyznačená červeně),
+tak dva stejné, nepřiměřeně dlouhé akordy (vyznačené modře).
+Je také vidět, že poslední modrá část už není akord, ale samotný tón.
+Znovu se potvrzuje, že takto malý model se nedokázal správně naučit harmonická pravidla,
+a nepoužívá všechny tóny akordů.
+
+\begin{figure*}[h]\centering
+    \centering
+    \includegraphics[width=0.8\linewidth]{obrazky/MyMelodyLongPovedenaHarmonizaceCastNot-1.png}\\[1pt]  
+    \caption{Původní notový zápis dlouhé skladby.}    
+    \label{obrazekMyHarmonyLongPovedenaNoty}
+\end{figure*}
 
 %experiment s condition on primer => generování nové hudby
 
-% pro prohlížení midi souborů použit program ... na začátek experimentů
+%experiment s harmonizací s BachBot modelem
 
 \chapter{Diskuse}
+Tato kapitola obsahuje diskusi výsledků experimentů,
+které byly provedeny na modelu Polyphony RNN
 % diskuse výsledků
 % jak je použít
 % srovnání s cizími pracemi a papery
