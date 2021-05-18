@@ -59,7 +59,7 @@ Ta obsahuje hudbu v XML souborech.
 Tyto jsou prozkoumány, a následně je stanoven postup jejich konverze na vhodnější formát.
 
 Pátá kapitola obsahuje popis předchozích přístupů jiných autorů k této problematice.
-Mezi nimi nalezneme například model založený na shodě šablon, 
+Mezi nimi lze nalézt například model založený na shodě šablon, 
 jenž porovnává části vstupní melodie s těmi, které zná.
 Další přístup je založen na skrytých markovových modelech, 
 které odhadují nejpravděpodobnější posloupnost akordů k dané melodii.
@@ -1369,8 +1369,8 @@ polyphony_rnn_create_dataset \
     --eval_ratio=0.10
 \end{verbatim}
 Generování trénovacích dat trvá zhruba čtyři až šest hodin.
-Ve složce \emph{./tmp/polyphony\_rnn/sequence\_examples} budou po dokončení
-dva soubory. 
+Ve složce ./tmp/polyphony\_rnn/ sequence\_examples budou po dokončení
+vygenerovány dva soubory. 
 Jeden s trénovacími daty, \emph{training\_poly\_tracks.tfrecord},
 který obsahuje 90 \% dat,
 a druhý, \emph{eval\_poly\_tracks.tfrecord} s daty pro vyhodnocení modelu.
@@ -1422,7 +1422,8 @@ Příkaz pro trénování Polyphony RNN na vlastní datové sadě tak bude vypad
 \begin{verbatim}
 polyphony_rnn_train \
     --run_dir=./tmp/polyphony_rnn/logdir/run1 \
-    --sequence_example_file=./tmp/polyphony_rnn/sequence_examples/training_poly_tracks.tfrecord \
+    --sequence_example_file=./tmp/polyphony_rnn/sequence_examples\
+          /training_poly_tracks.tfrecord \
     --hparams="batch_size=64,rnn_layer_sizes=[64,64]" \
     --num_training_steps=20000
 \end{verbatim}
@@ -1456,14 +1457,14 @@ tensorboard --logdir=./tmp/polyphony_rnn/logdir
 
 \begin{figure*}[h]\centering
     \centering
-    \includegraphics[width=0.8\linewidth]{obrazky/AccuracyEpoch.png}\\[1pt]  
-    \includegraphics[width=0.8\linewidth]{obrazky/LossEpoch.png}\\[1pt]  
+    \includegraphics[width=1\linewidth]{obrazky/AccuracyEpoch.png}\\[1pt]  
+    \includegraphics[width=1\linewidth]{obrazky/LossEpoch.png}\\[1pt]  
     \caption{Horní graf zobrazuje přesnost modelu v závislosti na čase trénování.
     Spodní pak ztrátu modelu.}    
     \label{obrazekaccuracyLossPerEpoch}
 \end{figure*}
 
-Na obrázku \ref{} lze vidět ztráta a přesnost modelu v průběhu učení.
+Na obrázku \ref{obrazekaccuracyLossPerEpoch} lze vidět ztráta a přesnost modelu v průběhu učení.
 Horizontální osy zobrazují počet cyklů učení (epoch).
 Je vidět, že naměřená ztráta se postupem učení snižuje, 
 zatímco přesnost modelu se zvyšuje
@@ -1731,7 +1732,7 @@ Zdařilá harmonizace s tímto nastavením je na obrázku
 Za povšimnutí stojí fakt, 
 že ani jediná z vygenerovaných harmonizací se úplně nepodobá té původní
 z trénovací datové sady.
-Dále si je patrné, že model používá spíše nestandardní a nelibozvučné souzvuky,
+Dále si je patrné, že model používá spíše nestandardní a nelibozvučné souzvuky
 a standardní durové, nebo mollové akordy volí spíše zřídka.
 Automatická harmonizace s pomocí tohoto modelu je tak spíše nefunkční,
 ikdyž se mu v několika málo případech podařilo vygenerovat harmonii 
@@ -1745,7 +1746,7 @@ Dalším experimentem je harmonizace krátké melodie,
 podobné té z prvního experimentu 
 (viz obrázek notového zápisu na obrázku \ref{obrazekMyHarmonyShortNoty}, 
 MIDI soubor \emph{./melodyOnly/MyHarmonyShort.mid}).
-Tato melodie byla vytvořena ručně, 
+Tato melodie byla vytvořena ručně 
 a nenacházela se v trénovací sadě.
 Stejně jako při předchozím experimentu 
 je harmonizace provedena v několika bězích, 
@@ -1765,7 +1766,7 @@ oproti předchozímu experimentu, obsahují delší akordy.
 Ty se ale také často mění.
 Většinou ve špatnou dobu, v průběhu jiné noty.
 Skladby tak zní jako improvizace muzikanta -- začátečníka,
-jenž neví, který z akordů s melodii aktuálně souzní.
+jenž neví, který z akordů s melodií aktuálně souzní.
 To je dobře vidět na obrázku \ref{obrazekMyHarmonyShortNotyLowTemp},
 kde červené noty značí náhlé změny v harmonii.
 Poslech těchto skladeb, stejně jako u předchozího experimentu 
@@ -1793,7 +1794,7 @@ Toto chování je demonstrováno na obrázku \ref{obrazekMyHarmonyShortNotyDefTe
     \includegraphics[width=0.8\linewidth]{obrazky/MyHarmonyShortDefTmp03-1.png}\\[1pt]  
     \caption{Notový zápis harmonizací neznámé skladby s výchozí hodnotou temperature.
     Za povšimnutí stojí použití jednoho akordu pro celou melodii, 
-    který je rozdílný pro obě skladby(horní a dolní)}    
+    který je rozdílný pro obě skladby (horní a dolní)}    
     \label{obrazekMyHarmonyShortNotyDefTemp}
 \end{figure*}
 \par
@@ -1822,7 +1823,7 @@ jako tomu bylo u předchozích pokusů.
 \end{figure*}
 \par
 
-Harmonizace v tomto experimetu trpí podobnými neduhy, jako v tom předchozím.
+Harmonizace v tomto experimentu trpí podobnými neduhy jako v tom předchozím.
 Příčiny tohoto chování lze spatřovat opět v malém modelu.
 Pokud si není schopen zapamatovat krátkou melodii z trénovací sady,
 je pravděpodobné, že neznámou melodii harmonizovat lépe nebude.
@@ -1834,7 +1835,7 @@ Oproti předchozím skladbám je tato dlouhá osm taktů, je tedy čtyřikrát d
 Kvůli této skutečnosti je potřeba změnit parametr \emph{num\_steps} 
 z původní hodnoty 64 na 256.
 Parametr temperature bude nabývat stejných hodnot jako v předchozích případech.
-Cílem je zjistit, jestli model trpí jenom při krátkých skladbách, 
+Cílem je zjistit, jestli model trpí jenom při krátkých skladbách 
 nebo jestli mu větší délka skladby pomůže.
 
 \begin{figure*}[h]\centering
@@ -1845,7 +1846,7 @@ nebo jestli mu větší délka skladby pomůže.
 \end{figure*}
 \par
 
-U vygenerovaných skladeb v tomto experimentu lze pozorovat velmi podobné chování,
+U vygenerovaných skladeb v tomto experimentu lze pozorovat velmi podobné chování
 jako u předchozích.
 Celé skladbě většinou dominuje jediný akord, který zní po celou dobu skladby,
 čímž trpí syntéza MIDI souboru (viz výše).
@@ -1858,10 +1859,10 @@ jelikož v celé době trvání lze najít části, které s původní melodií 
 
 Jako příklad za všechny z tohoto experimentu,
 nechť poslouží část notové osnovy na obrázku \ref{obrazekMyHarmonyLongPovedenaNoty}.
-Na tomto výtvoru se je jak povedená část (vyznačená červeně),
+Na tomto výtvoru je jak povedená část (vyznačená červeně),
 tak dva stejné, nepřiměřeně dlouhé akordy (vyznačené modře).
-Je také vidět, že poslední modrá část už není akord, ale samotný tón.
-Znovu se potvrzuje, že takto malý model se nedokázal správně naučit harmonická pravidla,
+Je také vidět, že poslední modrá část už není celý akord, ale samotný tón.
+Znovu se potvrzuje, že takto malý model se nedokázal správně naučit harmonická pravidla
 a nepoužívá všechny tóny akordů.
 
 \begin{figure*}[h]\centering
@@ -1892,7 +1893,7 @@ pro model bylo obtížné harmonizovat i známé melodie,
 které by měl znát z trénovací sady. 
 Ve vygenerovaných skladbách  byly patrné dva směry.
 Prvním je použití mnoha akordů.
-Ty ale byly málo kdy zavedeny do skladby v pravý čas, 
+Ty ale byly málokdy zavedeny do skladby v pravý čas, 
 a tak celkový dojem spíše kazily.
 Správná harmonie těchto akordů byla také velmi ojedinělá.
 Toto bylo pozorováno především u krátkých skladeb 
@@ -1901,20 +1902,20 @@ Druhým jevem byl jeden akord,
 který byl nevhodně dlouhý,
 případně se opakoval hned po sobě.
 Přestože s danou melodií mohl ladit,
-výsledný působil především nudně a nezajímavě.
+výsledek působil především nudně a nezajímavě.
 Složení akordů z menšího počtu tónů byl také jeden z častých jevů.
-Případně akord začal celý, a postupně ztratil některé tóny.
+Případně akord začal celý a postupně ztratil některé tóny.
 Přes všechny tyto problémy se v každém experimentu objevilo několik skladeb,
-které měly alespoň z části správnou, nebo zajímavě provedenou harmonii.
+které měly alespoň z části správnou nebo zajímavě provedenou harmonii.
 Obecně lze říci, že skladby, 
 které byly generovány s vyšší hodnotou parametru temperature,
 byly lépe zpracované ve smyslu správné harmonizace.
 \par
-Tyto skutečnosti naznačují, že ikdyž je model pro použití v harmonizaci malý,
+Tyto skutečnosti naznačují, že i když je model pro použití v harmonizaci malý,
 přece jenom se něco naučil a byl schopen poskytnout pár dobrých výsledků.
 Z toho lze usoudit, že použití většího modelu by mohlo přinést výsledky lepší.
 Jak ale bylo řečeno v kapitole výše (viz \ref{trenovaniModelu} ),
-trénování takového modelu je podmíňeno použitím větší výpočetní síly,
+trénování takového modelu je podmíněno použitím větší výpočetní síly,
 případně paralelizací tohoto procesu.
 Trénování většího modelu je tedy jednou z možností pokračování této práce.
 Dalším rozšířením může být použití a trénování modelu na jiné datové sadě,
@@ -1935,7 +1936,7 @@ převedl na jiný styl.
 Podobně, jako se provádí u obrázků\footnote{viz neural style transfer v citaci \cite{gatys2015neural}}.
 Tato práce by však vyžadovala použití datové sady, 
 která by žánry dostatečně pokrývala
-a každá skladba by byla přiřazena k jednomu z žánrů
+a každá skladba by byla přiřazena k jednomu z žánrů.
 
 % diskuse výsledků
 % možnosti dalšího rozšíření.
@@ -1957,7 +1958,7 @@ Základům hudby a strojového učení byla věnována první,
 respektive druhá kapitola.
 Čtvrtá kapitola představila formát MIDI 
 a podobu datové sady použité v této práci.
-Ta byla poskytnuta ve formě databáze XML souborů, 
+Ta byla poskytnuta ve formě databáze XML souborů 
 a bylo ji nutno převést na MIDI soubory písniček, 
 jak požadovalo zadání.
 %Použitá datová sada, oproti většině jiných prací,
@@ -1969,14 +1970,14 @@ a použity v návrhu systému v kapitole následující.
 Jako harmonizační systém byla vybrána již existující neuronová síť,
 jejíž použití je popsáno v kapitole sedmé.
 Po jejím natrénování na popsané datové sadě byly provedeny experimenty,
-jimž se věnuje kapitola následující.
+jimž se věnuje další kapitola.
 Následuje diskuse dosažených výsledků během testování,
 návrhy dalšího pokračování této práce a závěr.
 \par
 
 Výsledky natrénovaného systému nejsou velmi uspokojivé
-a většinou s původní melodií nezněli a kazily její dojem.
-Avšak mezi vygenerovanými skladbami se našly světlé výjímky,
+a většinou s původní melodií nezněly a kazily její dojem.
+Avšak mezi vygenerovanými skladbami se našly světlé výjimky,
 které se daly považovat za správnou a zajímavou harmonizaci.
 Použitý model byl však, oproti doporučeným hodnotám hyperparametrů, malý.
 Lepší výsledky by tak mohlo přinést použití většího modelu,
