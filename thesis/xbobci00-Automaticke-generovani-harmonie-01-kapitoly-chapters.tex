@@ -1454,6 +1454,20 @@ tensorboard --logdir=./tmp/polyphony_rnn/logdir
 \end{verbatim}
 \par
 
+\begin{figure*}[h]\centering
+    \centering
+    \includegraphics[width=0.8\linewidth]{obrazky/AccuracyEpoch.png}\\[1pt]  
+    \includegraphics[width=0.8\linewidth]{obrazky/LossEpoch.png}\\[1pt]  
+    \caption{Horní graf zobrazuje přesnost modelu v závislosti na čase trénování.
+    Spodní pak ztrátu modelu.}    
+    \label{obrazekaccuracyLossPerEpoch}
+\end{figure*}
+
+Na obrázku \ref{} lze vidět ztráta a přesnost modelu v průběhu učení.
+Horizontální osy zobrazují počet cyklů učení (epoch).
+Je vidět, že naměřená ztráta se postupem učení snižuje, 
+zatímco přesnost modelu se zvyšuje
+
 Po dokončení učení modelu je možné s ním experimentovat 
 a nechat jej harmonizovat melodie uložené v MIDI souborech.
 Případně je možné používat model, který nedokončil všechny cykly určené v parametrech.
