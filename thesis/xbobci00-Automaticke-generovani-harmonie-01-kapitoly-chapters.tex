@@ -598,18 +598,23 @@ kde změna začíná.
 a místo zlomku je značen velkým písmenem C.
 \cite{cmiral,zenkl}
 
-\chapter{Data}
+\chapter{Trénovací sada}
 % ABC, MIDI, GUIDO ... viz NOTES.md
 V této části jsou popsány vstupní data.
 Zadání specifikuje některý ze standardizovaných formátů.
 Jedním z nich je MIDI.
-Tento formát je popsán v první části této kapitoly.
-Veškerá data pro tuto diplomovou práci pochází z webu \url{https://www.hooktheory.com/}.
+Tento formát je popsán v první části této kapitoly (viz \ref{midisoubory}).
+Veškerá data pro tuto diplomovou práci pochází z webu hooktheory.com.
 Ten obsahuje takzvanou Theorytab DB, databázi přepisů známých písniček.
-Přepisy obsahují melodii, harmonii ve formě harmonické funkce a odkaz na písničku na \url{www.youtube.com}
-Jejich podobu a převedení do MIDI popisuje druhá část.
+Přepisy obsahují melodii, harmonii ve formě harmonické funkce 
+a odkaz na písničku na serveru youtube.com.
+Tyto písničky je potřeba nejprve transformovat na MIDI soubory,
+aby systém odpovídal zadání.
+Jejich podobu a postup převedení do MIDI popisuje druhá část této kapitoly (viz \ref{hooktheoryDB}).
+
 
 \section{MIDI soubory}
+\label{midisoubory}
 MIDI (Musical Instrument Digital Interface) je volně přístupný standard,
 který specifikuje hardware i software 
 pro digitální komunikaci hudebních nástrojů,
@@ -804,39 +809,19 @@ A také v tomto případě je ve zprávě obsažena rychlost (puštění klapky)
 která je ale ve většině případech ignorována.
 \cite{MIDI_tutorials}
 
-\section{Databáze Hooktheory}
+\section{Databáze skladeb}
 \label{hooktheoryDB}
 Data k projektu byla získána ve formě SQLite
-\footnote{\url{https://sqlite.org/index.html}} databáze.
-Tato databáze obsahuje záznamy o písničkách extrahovaných z webu \url{https://www.hooktheory.com/}.
+\footnote{\url{https://sqlite.org/index.html}} databáze,
+se kterou jde jednoduše manipulovat pomocí jazyka Python.
+Tato databáze obsahuje záznamy o písničkách ve formátu XML.
 Velikost databáze je $32.7$MB ($34 334 720$B)
 
-Databáze se skládá z několika tabulek.
-Základní tabulkou je \emph{url2id}, 
-která mapuje webový odkaz písničky na identifikátor (dále jen id) písničky v databázi.
-Odkazy v databázi jsou zkrácené a neobsahují doménové jméno webu.
-Pokud je písnička na webu 
-například pod odkazem \emph{https://www.hooktheory.com/theorytab/view/the-beatles/hey-jude},
-pak v databázi je pouze část \emph{/theorytab/view/the-beatles/hey-jude}.
+Databáze se skládá z několika tabulek,
+z nichž jedna obsahuje komprimovaný XML soubor.
+Uvnitř každého souboru se nachází jedna skladba,
+kterou je nutné extrahovat do MIDI souboru.
 \par
-
-Kvůli autorským právům nelze přepsat celou písničku.
-Místo toho uživatelé Hooktheory přepisují pouze její unikátní části, 
-ne delší než 30 vteřin.
-Jména úseků jsou například úvod (Intro), sloka (Verse), nebo refrén (Chorus).
-\cite{ht_guide}
-Další tabulka v databázi spojuje písničky s jejími částmi.
-Její jméno je \emph{id2parts} a mapuje id písniček na id všech jejích částí.
-Tabulka \emph{parts} obsahuje informace o těchto částech.
-Jejími sloupci jsou:
-
-\begin{itemize}
-    \item id - identifikátor části
-    \item name - jméno příslušné písničky
-    \item songkey - tónina části
-    \item xml - BLOB\footnote{Binary Large Object} obsahující komprimovaný XML soubor s dalšími informacemi
-    \item json - nic neobsahující sloupec
-\end{itemize}
 
 Kořenový uzel XML souboru z databáze obsahuje dva potomky -- meta a sections.
 Meta zahrnuje základní informace popisující část písničky.
@@ -1421,12 +1406,12 @@ Skript průběžně zapisuje statistiky o právě probíhajícím cyklu,
 včetně průměrného počtu cyklů za vteřinu.
 Pomocí této hodnoty lze odhadnout dobu trvání trénování při jiných hyperparametrech,
 například těch výchozích.
-Ovšem ani po uplynutí osmi hodin od začátku trénování s těmito hodnotami
+Ovšem ani po uplynutí dvaceti hodin od začátku trénování s těmito hodnotami
 se nedokončil jediný trénovací cyklus.
 Odhadem by tak trénování na tomto stroji trvalo doslova desítky let
 (viz odhad níže, kde $t$ je odhadnutý čas jednoho cyklu).
 
-$$t * num_training_steps = 8h * 20 000 \approx 18let $$
+$$t * num\_training\_steps = 20h * 20 000 \approx 45let $$
 \par
 
 Volitelně je možné paralelně spustit stejný skript s přidaným parametrem \emph{eval},
@@ -1616,6 +1601,11 @@ Parametry použité při generování, pokud není stanoveno jinak, jsou:
     \item temperature = 1.0
 \end{itemize}
 
+Výsledné MIDI soubory byly analyzovány s pomocí open-source 
+sequenceru a MIDI editoru Sekaiju 6.1\footnote{dostupný z \url{openmidiproject.osdn.jp/Sekaiju_en.html}}.
+Obrázky not byly generovány programem MuseScore\footnote{dostupný z \url{musescore.org/en}}, 
+který je vydáván pod licencí GNU GPL.
+
 \section{Harmonizace krátké známé melodie}
 Prvním experimentem nechť je harmonizace skladby o pouhých dvou taktech,
 která se nacházela v trénovací datové sadě 
@@ -1717,6 +1707,8 @@ Zdařilá harmonizace s tímto nastavením je na obrázku
 Za povšimnutí stojí fakt, 
 že ani jediná z vygenerovaných harmonizací se úplně nepodobá té původní
 z trénovací datové sady.
+Dále si je patrné, že model používá spíše nestandardní, exotické harmonie,
+a standardní durové, nebo mollové akordy volí spíše zřídka.
 
 \section{Harmonizace krátké neznámé melodie}
 Dalším experimentem je harmonizace krátké melodie, 
@@ -1781,14 +1773,30 @@ dlouhými akordy.
 Rozdílem oproti nižší hodnotě je jejich opakování ve skladbě.
 Tedy stejný akord se rozezní několikrát po sobě.
 V některých případech je jeden z tónů akordu vyměněn.
+Na obrázku \ref{obrazekMyHarmonyShortNotyHighTemp} je také poznat,
+že model není úplně obeznámen s tím,
+že akord by měl být souzvuk tří tónů, a ne pouze dvou.
+\par
+Nejvyšší použitá hodnota se vyznačuje nejlépe zvládnutou harmonií.
+Povedené skladby obsahují dva až tři akordy,
+které s poskytnutou melodií zní.
+Navíc jsou zavedeny ve správný čas 
+a výsledný souzvuk skladbu nepoškozuje,
+jako tomu bylo u předchozích pokusů.
 
-%doplnit obrázek
-
-%dopsat high temp20
+\begin{figure*}[h]\centering
+    \centering
+    \includegraphics[width=0.8\linewidth]{obrazky/MyHarmonyShortHigherTmp-1.png}\\[1pt]  
+    \caption{Notový zápis harmonizace neznámé skladby s vyšší hodnotou temperature.}    
+    \label{obrazekMyHarmonyShortNotyHighTemp}
+\end{figure*}
+\par
 
 %experiment s dlouho skladbou
 
-%experiment s condition on primer=> generování nové hudby
+%experiment s condition on primer => generování nové hudby
+
+% pro prohlížení midi souborů použit program ... na začátek experimentů
 
 \chapter{Diskuse}
 % diskuse výsledků
