@@ -1,3 +1,15 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+"""
+This file contains helper functions for another scripts.
+
+This file is part of my master thesis.
+"""
+__author__ = "Bc. Martin Bobčík, xbobci00"
+__copyright__= "Copyright (C) 2021 Brno University of Technology, Faculty of Information Technology"
+
+
 from collections import deque
 import lxml.etree as ET
 
@@ -7,21 +19,27 @@ MODES = {1:'ionian', #major
          7:'locrian'}
 
 def getMidiNote(laynotes, key_mode, tnoteo, tnote, midiofs):
+    #fix key
     key = "A" if key_mode == 6 else "C"
+    #compute notes in key
     midinote, midinoteo = getNotesOfKey(key, key_mode)
     midinote, midinoteo = midinote[tnote-1], midinoteo[tnote-1]
+    #convert to midi number
     midinote = laynotes.noteToMidiNumber(midinote, tnoteo + midinoteo+ 4) + midiofs
     return midinote
 
 def getMidiChord(laynotes, key_mode, tnoteo, tnote, midiofs):
+    # fix key
     key = "A" if key_mode == 6 else "C"
 
+    #compute tones in chord
     first = tnote
     second = (first + 2) 
     second = second - 7 if second > 7 else second
     third = (second + 2) % 8
     third = third - 7 if third > 7 else third
 
+    #compute midi numbers of chord tones
     midinotesInKey, midiOctaveKey = getNotesOfKey(key, key_mode)
 
     midinote, midinoteo = midinotesInKey[first-1], midiOctaveKey[first-1]
@@ -65,6 +83,8 @@ def getNotesOfKey(key,mode):
 
     return nnote, noctave
 
+######             |
+######## Not used \|/
 
 class XMLLayer:
     NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
@@ -133,10 +153,10 @@ class SonicXMLLayer:
         self.models += 1
         self.datasets += 1
         l = ET.SubElement(self.display,'layer',self.td(layparams, {'id':self.layers,'type':type,'name':name,'model':self.models,'plotStyle':style,'colour':color, 'darkBackground':'false'}))
-#        <layer id="1" type="timeinstants" name="Time Instants &lt;2&gt;" model="6"  plotStyle="1" colourName="Black" colour="#000000" darkBackground="false" />
+        #<layer id="1" type="timeinstants" name="Time Instants &lt;2&gt;" model="6"  plotStyle="1" colourName="Black" colour="#000000" darkBackground="false" />
         m = ET.SubElement(self.data,'model',self.td(modelparams, {'id':self.models,'name':name,'sampleRate':self.sr, 'type':'sparse', 'dimensions':dimensions, 'resolution':resolution,'notifyOnAdd':'true', 'dataset':self.datasets}))
         d = ET.SubElement(self.data,'dataset',self.td(datasetparams, {'id':self.datasets, 'dimensions':dimensions}))
-#       <model id="6" name="--cXBgR-A-I-parts.txt" sampleRate="44100" type="sparse" dimensions="1" resolution="1" notifyOnAdd="true" dataset="5" />
+        #<model id="6" name="--cXBgR-A-I-parts.txt" sampleRate="44100" type="sparse" dimensions="1" resolution="1" notifyOnAdd="true" dataset="5" />
         return XMLLayer(self, l,m,d)
 
     def addMidiLayer(self, name='',color=None):
