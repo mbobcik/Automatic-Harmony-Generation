@@ -711,8 +711,12 @@ Nakonec v modelu existuje aktivační funkce,
 kterou prochází suma všech váhovaných vstupů a
 určuje, jestli a jak moc může signál pokračovat skrz síť.
 Tato funkce by měla být nelineární.
-Používá se například funkce Sigmoid nebo hyperbolický tangens (zkracováno jako \emph{tanh}).
+Používá se například funkce Sigmoid nebo hyperbolický tangens 
+(zkracováno jako \emph{tanh}. Viz obrázek \ref{obrazekAktivačníFunkce}, případně definice funkcí níže).
 \cite{Goodfellow-et-al-2016, Nicholson_NeuralNets}
+
+$$ Sigmoid(x) = \frac{e^x}{e^x + 1}$$
+$$ tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}$$s
 
 \begin{figure*}[h]\centering
     \centering
@@ -720,7 +724,6 @@ Používá se například funkce Sigmoid nebo hyperbolický tangens (zkracováno
     \caption{Aktivační funkce sigmoid a hyperbolický tangens}    
     \label{obrazekAktivačníFunkce}
 \end{figure*}
-
 
 \section{Neuronové sítě}
 Neuronové sítě jsou množina algoritmů určených k~rozpoznávání vzorů.
