@@ -646,7 +646,7 @@ na stranu druhou nejsou pravidla zcela striktní
 a ponechávají skladateli volnou ruku.
 \par
 
-Strojové učení je v~podstatě forma aplikované statistiky,
+Strojové učení je ve~své~podstatě forma aplikované statistiky,
 s~důrazem na odhad složitých funkcí počítačem.
 Většina algoritmů lze rozdělit do dvou kategorií --
 učení s~učitelem (supervised) 
@@ -664,7 +664,8 @@ Algoritmy bez učitele se učí pouze na základě vlastností objektů
 a už nemají reflexi, zda se naučili správně nebo ne.
 Učení bez učitele se zabývá extrakcí informací z~rozdělení,
 u~kterého nejsou potřeba člověkem označené trénovací data.
-Nejčastěji se jedná o~odhad hustoty, odšumění dat s~nějakým rozdělením,
+Nejčastěji se jedná o~odhad hustoty, 
+odšumění dat s~nějakým rozdělením,
 hledání střední hodnoty všech dat 
 nebo shlukování dat do skupin podobných objektů.
 Hledáme tedy nejlepší reprezentaci dat.
@@ -674,6 +675,52 @@ Mezi představitele tohoto přístupu patří například
 shlukování k-nejbližších sousedů, 
 analýza hlavních komponent nebo lineární regrese. 
 \cite{Goodfellow-et-al-2016}
+
+\subsection*{Neurony}
+Základem neurovnových sítí jsou neurony,
+jejichž myšlenkovým vzorem je biologický neuron, buňka mozku.
+Ty zachycují synapse, neboli signály pomocí denditů 
+a šíří je do jádra buňky.
+Tam díky vnějším signálům vzniká potenciál, 
+a pokud je dostatečně velký, 
+neuron jej pošle dál svým axonem.
+Axon je na konci rozvětven 
+a připojen na dendrity dalších neuronů.
+
+\begin{figure*}[h]\centering
+    \centering
+    \includegraphics[width=0.6\linewidth]{obrazky/neuronSchema.png}\\[1pt]  
+    \caption{Schéma neuronu}    
+    \label{obrazekSchemaNeuronu}
+\end{figure*}
+
+V matematickém modelu neuronu (viz obrázek \ref{obrazekSchemaNeuronu}) 
+se signály $ x $ z předchozích neuronů
+násobí s váhami $ w $ .
+Váhy jsou trénovatelné hodnoty, 
+které řídí velikost potenciálu
+jednotlivých předchozích neuronů na neuron následující. 
+Každému vstupu neuronu je přiřazena váha, 
+která jej buď posílí, nebo utlumí.
+Stejně jako v biologickém neuronu vedou všechny dendrity (hodnoty $ xw $)
+do těla neuronu, kde jsou sečteny.
+Neuron vyšle signál dál pouze pokud vnitřní potenciál překoná jistý práh.
+Ten je ve formě záporné váhy $ w_0 $, 
+která do neuronu vstupuje nezměněna.
+Nakonec v modelu existuje aktivační funkce,
+kterou prochází suma všech váhovaných vstupů a
+určuje, jestli a jak moc může signál pokračovat skrz síť.
+Tato funkce by měla být nelineární.
+Používá se například funkce Sigmoid nebo hyperbolický tangens (zkracováno jako \emph{tanh}).
+\cite{Goodfellow-et-al-2016, Nicholson_NeuralNets}
+
+\begin{figure*}[h]\centering
+    \centering
+    \includegraphics[width=0.6\linewidth]{obrazky/tanh_v_sigmoid.jpg}\\[1pt]  
+    \caption{Aktivační funkce sigmoid a hyperbolický tangens}    
+    \label{obrazekAktivačníFunkce}
+\end{figure*}
+
 
 \section{Neuronové sítě}
 Neuronové sítě jsou množina algoritmů určených k~rozpoznávání vzorů.
@@ -709,28 +756,6 @@ kde $f^{(n)}$ označuje vrstvy sítě,
 jejichž vstupem je vektor z~předchozí vrstvy 
 a výstupem je opět vektor.
 \cite{Goodfellow-et-al-2016}
-
-\subsection*{Neurony}
-Mnohem obvykleji jsou vrstvy reprezentovány množinou uzlů, 
-které se nazývají neurony.
-Vstupem každého neuronu je celý vektor předchozí vrstvy 
-a výstupem je skalární hodnota, prvek výstupního vektoru jeho vrstvy.
-Paralelním výpočtem všech neuronů vrstvy je získán její výsledek.
-\cite{Goodfellow-et-al-2016}
-\par
-
-Každému vstupu neuronu je přiřazena váha, která jej buď posílí, nebo utlumí.
-Suma všech váhovaných vstupů poté prochází takzvanou aktivační funkcí,
-která určuje, jestli a jak moc může signál pokračovat skrz síť.
-Pokud signál projde, pak o~neuronu lze říct, že byl aktivován.
-\cite{Nicholson_NeuralNets}
-
-\begin{figure*}[h]\centering
-    \centering
-    \includegraphics[width=0.6\linewidth]{obrazky/neuronSchema.png}\\[1pt]  
-    \caption{Schéma neuronu}    
-    \label{obrazekSchemaNeuronu}
-\end{figure*}
 
 %\todo{TODO - Dopsat princip uceni NN}
 
@@ -1868,7 +1893,7 @@ a nepoužívá všechny tóny akordů.
 \begin{figure*}[h]\centering
     \centering
     \includegraphics[width=0.8\linewidth]{obrazky/MyMelodyLongPovedenaHarmonizaceCastNot-1.png}\\[1pt]  
-    \caption{Původní notový zápis dlouhé skladby.}    
+    \caption{Část not povedené harmonizace delší melodie.}    
     \label{obrazekMyHarmonyLongPovedenaNoty}
 \end{figure*}
 
