@@ -696,7 +696,7 @@ a připojen na dendrity dalších neuronů.
 
 V matematickém modelu neuronu (viz obrázek \ref{obrazekSchemaNeuronu}) 
 se signály $ x $ z předchozích neuronů
-násobí s váhami $ w $ .
+násobí s váhami $ w $.
 Váhy jsou trénovatelné hodnoty, 
 které řídí velikost potenciálu
 jednotlivých předchozích neuronů na neuron následující. 
@@ -712,7 +712,14 @@ kterou prochází suma všech váhovaných vstupů a
 určuje, jestli a jak moc může signál pokračovat skrz síť.
 Tato funkce by měla být nelineární.
 Používá se například funkce Sigmoid nebo hyperbolický tangens 
-(zkracováno jako \emph{tanh}. Viz obrázek \ref{obrazekAktivačníFunkce}, případně definice funkcí níže).
+(zkracováno jako \emph{tanh}).
+Tvar a definice těchto funkcí viz obrázek \ref{obrazekAktivačníFunkce},
+případně rovnice níže).
+Z grafů lze vyčíst, že pokud je vnitřní potenciál nízký (záporný), 
+výstup neuronu s aktivační funkcí sigmoidy je bude blížit nule.
+Naopak, je-li potenciál dostatečně vysoký, výstupem neuronu bude 1.
+Neuron s aktivační funkcí tanh se chová obdobně,
+ale nízké hodnoty potenciálu se na výstupu blíží hodnotě $ -1 $.
 \cite{Goodfellow-et-al-2016, Nicholson_NeuralNets}
 
 $$ Sigmoid(x) = \frac{e^x}{e^x + 1}$$
@@ -724,6 +731,23 @@ $$ tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}$$s
     \caption{Aktivační funkce sigmoid a hyperbolický tangens}    
     \label{obrazekAktivačníFunkce}
 \end{figure*}
+
+\section{Perceptron}
+Nejjednodušší neuronovou sítí je perceptron.
+Tento model je složen z jediného matematického modelu neuronu.
+Perceptron dokáže klasifikovat pouze dvě lineárně separovatelné kategorie.
+Vstupem je, stejně jako u jediného neuronu, vektor vlastností $x$
+násobený vektorem vah $ w $ a s přičteným prahem $ w_0 $.
+Výsledkem je rovnice nadroviny,
+$$ w_0 + \sum_{i=1}^{n} x_{i}w_{i} = y$$
+která dělí n-dimenzionlní prostor na dva poloprostory.
+Je-li výsledný potenciál dostatečně velký, bod leží v jednom poloprostoru,
+naopak je-li potenciál příliš malý, pak leží v druhém poloprostoru.
+Kategorie bodu je dána jeho příslušností k jednomu, nebo druhému poloprostoru.
+Učení spočívá ve změně vah, tedy ve změně pozice nadroviny tak,
+aby každý poloprostor nejlépe odpovídal pozici kategorie, 
+kterou vyjadřuje. 
+\cite{Goodfellow-et-al-2016, Nicholson_Perceptron, Chalupnik_NeuronoveSite}
 
 \section{Neuronové sítě}
 Neuronové sítě jsou množina algoritmů určených k~rozpoznávání vzorů.
