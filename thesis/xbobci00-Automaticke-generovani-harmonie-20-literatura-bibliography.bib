@@ -20,7 +20,8 @@
   title     = {Základní pojmy hudební},
   publisher = {Supraphon},
   year      = {1974},
-  url       = {https://dnnt.mzk.cz/uuid/uuid:cb736220-216c-11e6-8d01-005056827e52}
+  url       = {https://dnnt.mzk.cz/uuid/uuid:cb736220-216c-11e6-8d01-005056827e52},
+  edition   = {9}
 }
 
 @misc{colah_lstm,
@@ -41,13 +42,16 @@
 }
 
 @inproceedings{fujishima,
-  author    = {Fujishima, Takuya},
-  title     = {Realtime Chord Recognition of Musical Sound: a System Using Common Lisp Music.},
-  booktitle = {Proceedings of the 1999 International Computer Music Conference, {ICMC}
+  author       = {Fujishima, Takuya},
+  title        = {Realtime Chord Recognition of Musical Sound: a System Using Common Lisp Music.},
+  booktitle    = {Proceedings of the 1999 International Computer Music Conference, {ICMC}
                      1999, Beijing, China, October 22-27, 1999},
-  publisher = {Michigan Publishing},
-  year      = {1999},
-  pages     = {464-467}
+  publisher    = {Michigan Publishing},
+  year         = {1999},
+  pages        = {464-467},
+  journal      = {Proc. ICMC, 1999},
+  issn         = { 2223-3881},
+  organization = { Stanford University}
 }
 
 @misc{gatys2015neural,
@@ -59,23 +63,32 @@
   primaryclass  = {cs.CV}
 }
 
-@book{Goodfellow-et-al-2016,
+@misc{Glatt_aboutMIDIFiles,
+  author       = {J. Glatt},
+  title        = {About MIDI files},
+  howpublished = {online},
+  url          = {http://midi.teragonaudio.com},
+  year         = {2004}
+}
+
+ @book{Goodfellow-et-al-2016,
   title     = {Deep Learning},
   author    = {Ian Goodfellow and Yoshua Bengio and Aaron Courville},
   publisher = {MIT Press},
   note      = {\url{http://www.deeplearningbook.org}},
   year      = {2016},
-  isbn      = {9780262035613}
-}
+  isbn      = {9780262035613},
+  edition   = {1}
+} 
 
- @misc{google_git_polyphony,
+@misc{google_git_polyphony,
   author       = {{Google AI}},
   title        = {Polyphony RNN},
   howpublished = {online},
   year         = {2021},
   url          = {https://github.com/magenta/magenta/tree/master/magenta/models/polyphony\_rnn#polyphony-rnn},
   subtitle     = {magenta/magenta/models/polyphony\_rnn at master}
-} 
+}
 
 @misc{google_magentaHome,
   author       = {{Google AI}},
@@ -90,7 +103,7 @@
   title        = {Making music with Magenta},
   subtitle     = {Colaboratory},
   howpublished = {online},
-  year         = {},
+  year         = {2021},
   url          = {https://colab.research.google.com/notebooks/magenta/hello_magenta/hello_magenta.ipynb#scrollTo=oLSgiA6Uktpm}
 }
 
@@ -98,7 +111,8 @@
   author       = {{Google Inc.}},
   title        = {Protocol Buffers},
   howpublished = {online},
-  url          = {https://developers.google.com/protocol-buffers}
+  url          = {https://developers.google.com/protocol-buffers},
+  year         = {2021}
 }
 
 @misc{ha2017neural,
@@ -119,10 +133,23 @@
 }
 
 @inproceedings{huang2017counterpoint,
-  title     = {Counterpoint by Convolution},
-  author    = {Huang, Cheng-Zhi Anna and Cooijmans, Tim and Roberts, Adam and Courville, Aaron and Eck, Douglas},
-  booktitle = {International Society for Music Information Retrieval (ISMIR)},
-  year      = {2017}
+  author    = {Cheng-Zhi Anna Huang and
+                  Tim Cooijmans and
+                  Adam Roberts and
+                  Aaron C. Courville and
+                  Douglas Eck},
+  title     = {Counterpoint by Convolution.},
+  booktitle = {{Proceedings of the 18th International Society for 
+                   Music Information Retrieval Conference}},
+  year      = 2017,
+  pages     = {211-218},
+  publisher = {ISMIR},
+  address   = {Suzhou, China},
+  month     = oct,
+  venue     = {Suzhou, China},
+  doi       = {10.5281/zenodo.1416370},
+  url       = {https://doi.org/10.5281/zenodo.1416370},
+  isbn      = {978-981-11-5179-8}
 }
 
 @misc{Chalupnik_NeuronoveSite,
@@ -166,7 +193,7 @@
   timestamp = {2018-05-29T19:18:24.000+0200},
   title     = {Automatic Stylistic Composition of Bach Chorales with Deep LSTM.},
   url       = {http://dblp.uni-trier.de/db/conf/ismir/ismir2017.html#LiangG0S17},
-  year      = 2017
+  year      = {2017}
 }
 
 @inproceedings{Lim_BLSTM-nets,
@@ -182,14 +209,6 @@
   howpublished = {online},
   url          = {https://www.midi.org/categories-new/midi-tutorials},
   year         = {2021}
-}
-
-@misc{Neznamy_aboutMIDIFiles,
-  author       = {},
-  title        = {About MIDI files},
-  howpublished = {online},
-  url          = {http://midi.teragonaudio.com},
-  year         = {2004}
 }
 
 @misc{Nicholson_NeuralNets,
@@ -208,14 +227,6 @@
   year         = {2020}
 }
 
-@misc{orientaceNaKlaviature,
-  title   = {Orientace na klaviatuře i ve dvě v noci},
-  url     = {http://pianoforte.cz/pevne-zaklady/orientace-na-klaviature-i-ve-dve-v-noci/},
-  journal = {Orientace na klaviatuře i ve dvě v noci " pianoFORTE.cz},
-  year    = {2010},
-  month   = {Mar}
-}
-
 @article{Raczynski,
   author  = {Raczynski, Stanisław and Fukayama, Satoru and Vincent, Emmanuel},
   year    = {2013},
@@ -228,7 +239,7 @@
 }
 
 @misc{SimplifyingSuspended,
-  author       = {},
+  author       = {{Symplifying Theory}},
   title        = {How to use Suspended Chords},
   howpublished = {online},
   year         = {2021},
@@ -240,6 +251,7 @@
   author       = {Jiří Szkandera},
   title        = {Alterované akordy},
   howpublished = {online},
+  year         = {2021},
   subtitle     = {Pojednání o hudební harmonii},
   url          = {https://www.harm.cz/maturita/klasika/Alterovan%C3%A9_akordy}
 }
@@ -258,6 +270,8 @@
   year      = {2020},
   title     = {Automatic Melody Harmonization with Triad Chords: A Comparative Study},
   language  = {eng},
+  edition   = {1},
+  number    = {},
   address   = {Ithaca},
   author    = {Yin-Cheng, Yeh and Wen-Yi, Hsiao and Fukayama, Satoru and Kitahara, Tetsuro and Genchel, Benjamin and Hao-Min, Liu and Hao-Wen, Dong and Chen, Yian and Leong, Terence and Yang, Yi-Hsuan},
   url       = {http://search.proquest.com/docview/2334888248/}
@@ -268,5 +282,6 @@
   title     = {ABC hudební nauky},
   publisher = {Supraphon},
   year      = {2003},
-  isbn      = {80-86385-21-3}
+  isbn      = {80-86385-21-3},
+  edition   = {3}
 }
