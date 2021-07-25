@@ -1193,6 +1193,86 @@ Na rozdíl od předchozího přístupu
 tento model bere v~úvahu předcházející akordy.
 \cite{YinCheng_comparativeStudy}
 
+\section{JamBot}
+JamBot je jeden z novějších přístupů generování akordů 
+a polyfonní hudby založený na LSTM sítích.
+Pracuje ve dvou krocích.
+V prvním kroce akordová LSTM vygeneruje postup, vývoj akordů ve skladbě.
+Tato série akordů je následně vstupem druhé LSTM sítě,
+která na základě vstupu vygeneruje polyfonní hudbu (viz obrázek \ref{obrazekArchitekturaJambot}).
+Tento model tedy nejprve vygeneruje harmonii a k ní poté melodii.
+\par
+
+\begin{figure*}[h]\centering
+    \centering
+    \includegraphics[width=1\linewidth]{obrazky/JambotArchitecture.png}\\[1pt]  
+    \caption{Architektura modelu JamBot\cite{Brunner_Jambot}}    
+    \label{obrazekArchitekturaJambot}
+\end{figure*}
+
+
+K reprezentaci dat pro akordovou LSTM 
+je využita technika ze zpracování přirozeného jazyka 
+(dále jen NLP z anglického Natural Language Precessing).
+Každý jedinečný akord je nahrazen číselným identifikátorem (id).
+K překladu mezi akordy a identifikátory pak slouží slovník dvojic (id, akord).
+V korpusu akordů je pouze N nejčastěji použitých akordů v trénovací sadě.
+Akordy, které se do korpusu nevlezly (vyskytují se příliš řidce),
+získají označení \"neznámý akord\".
+V práci byla zvolena velikost korpusu 50 akordů.
+Před vstupem do LSTM sítě byly identifikátory 
+zakódovány na \emph{jedna z N} reprezentaci
+\footnotetext{One-hot-encoding}.
+Vstupní vektor má velikost korpusu.
+Všechny záznamy vektoru jsou nastaveny na 0,
+kromě toho s indexem rovným identifikátoru akordu,
+který je nastaven na 1.
+\par
+Akordová LSTM má dvě vrstvy.
+První je takzvaná embeddingová vrstva,
+která opět využívá techniku používanou v NLP.
+Tou jsou word embeddings, které mapují slova (v tomto případě akordy)
+ze korpusu do vektorů reálných čísel.
+Word embeddings nejsou pevně dané a musí být natrénovány.
+Vektorový prostor pak zachycuje vztahy mezi jednotlivými slovy,
+a sémanticky podobná slova jsou v tomto prostoru blízko sebe.
+V této práci byly místo slov použity akordy.
+Za embeddingovou vrstvou následuje LSTM vrstva,
+která předpovídá akordy, které následují po aktuálním.
+K predikci nové posloupnosti potřebuje základ libovolné délky.
+Další akord je získán vzorkováním výstupního pravděpodobnostního vektoru
+s parametrem temperature.
+Tento akord je potom dán zpět na vstup této vrstvy,
+a na jeho základě je generován další a tak dále.
+Parametr temperature ovlivňuje různorodost generované posloupnosti.
+Nulová temperature znamená, že pro daný základ 
+budou všechny následující akordy stejné.
+\par
+Vstupní data pro polyfonní LSTM jsou ve tvaru tzv. pianoroll (více o pianoroll viz níže).
+Každý takt je rozdělen na osm částí 
+a každá část je reprezentována vektorem s velikostí rovné počtu tónů.
+Pokud v dané části tón zní, pak je příslušný prvek vektoru nastaven na 1.
+Jedná se o podobný princip jako v části \ref{shodaSablon}.
+Při generování melodie má vstup polyfonní LSTM několik částí.
+První je již zmiňovaný pianoroll vektor aktuálního kroku.
+Kromě aktuálně znějících tónů je na vstupu také embedding 
+aktuálního akordu.
+Díky tomu je možné naučit se, které tóny zní při kterém akordu.
+V hudbě melodie většinou \"postupuje\" k dalšímu akordu.
+Kvůli tomu je další částí vstupu akord následující aktuálnímu kroku.
+Generované písničky jsou tak více strukturované.
+Poslední částí vstupu je binární počítadlo,
+které počítá od 0 do 7 v každém taktu.
+Toto umožňuje LSTM orientovat se uvnitř taktu,
+a ví, kolik kroků zbývá do změny akordu 
+(akordy se mění pouze na začátku taktu. Viz výše).
+Při generování nové písně je na vstupu opět nejprve
+základ skládající se z pianoroll vektoru a příslušných akordů.
+Noty jsou vzorkovány individuálně.
+Pokud je nota vybrána,
+pravděpodobnost výběru ostatních not ovlivněna není.
+\cite{Brunner_Jambot}
+
 \section{Google Magenta}
 \label{magenta}
 Magenta je open-source výzkumný projekt založený Google Brain týmem.
