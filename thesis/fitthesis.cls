@@ -1264,7 +1264,6 @@ Management}{\@fit@EN}%
   frame=single,
   morekeywords={UINT8, UINT16, UINT32, INT8, INT16, INT32, Post, Properties, Protocol, AsciiString, String, StringTerm, BLOB, FormatString, this},
 }
-\usepackage{svg}
 %END Jan Pluskal (ipluskal) listings
 
 
