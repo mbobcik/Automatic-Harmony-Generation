@@ -1758,6 +1758,8 @@ Tedy:
     \item neuronů v~každé vrstvě = 64
     \item trénovacích cyklů = 20 000
 \end{itemize}
+Jak bylo řečeno v~kapitole \ref{trenovaniModelu},
+natrénování modelu s těmito hyperparametry trvalo 25 hodin.
 Parametry použité při generování, pokud není stanoveno jinak, jsou:
 \begin{itemize}
     \item condition\_on\_primer = false
@@ -1808,8 +1810,6 @@ od harmonie.
 Dalším sledovaným parametrem je čas,
 který systém potřebuje k harmonizaci jedné melodie.
 
-
-
 \section{Harmonizace krátké známé melodie}
 Prvním experimentem nechť je harmonizace skladby o~pouhých dvou taktech,
 která se nacházela v~trénovací datové sadě 
@@ -1845,6 +1845,14 @@ Nejprve byly generovány soubory s~výchozí hodnotou ($1.0$),
 poté s~nižší ($0.7$) a nakonec dvakrát s~vyššími hodnotami ($1.3$, respektive $2.0$).
 Při každém běhu bylo vytvořeno 10 souborů,
 které byly ručně analyzovány a poslechnuty.
+\par
+Vygenerování deseti souborů trvá 8 vteřin,
+z nichž první čtyři probíhá inicializace systému
+a samotné generování trvá 4 vteřin.
+Průměrně tak vygenerování jedné skladby trvá $0.2$ vteřiny,
+plus 5 fixních vteřin kvůli inicializaci.
+Při uvážení délky harmonizované skladby, dva takty,
+lze předpokládat, že harmonizace jednoho taktu trvá $0.1$ vteřiny.
 \par
 
 Skladby generované s~nízkou hodnotou temperature vykazovaly,
@@ -1931,6 +1939,11 @@ Stejně jako při předchozím experimentu
 je harmonizace provedena v~několika bězích, 
 vždy s~jiným parametrem temperature.
 Hodnoty parametrů jsou zvoleny stejně, tedy 0.7, 1.0, 1.3 a 2.0.
+\par
+
+Čas potřebný k harmonizaci skladby se oproti předchozímu experimentu nezměnil.
+Harmonizace deseti skladeb opět trvala 8 vteřin
+se stejným rozdělením času mezi inicializaci systému a generování harmonie.
 
 \begin{figure*}[h]\centering
     \centering
@@ -2014,8 +2027,16 @@ Oproti předchozím skladbám je tato dlouhá osm taktů, je tedy čtyřikrát d
 Kvůli této skutečnosti je potřeba změnit parametr \emph{num\_steps} 
 z~původní hodnoty 64 na 256.
 Parametr temperature bude nabývat stejných hodnot jako v~předchozích případech.
-Cílem je zjistit, jestli model trpí jenom při krátkých skladbách 
+Cílem je zjistit, jestli model špatně zvládá harmonizovat jenom krátké skladby, 
 nebo jestli mu větší délka skladby pomůže.
+\par
+Generování deseti harmonizovaných souborů na základě delší melodie
+zabralo systému 16 vteřin. 
+Inicializace opět trvala 4 vteřiny, čímž je potvrzena její fixní doba.
+Zbývajících 12 vteřin systém generoval jednotlivé soubory.
+Při deseti souborech to je průměrně $1.2$ vteřiny na jeden soubor.
+Harmonizace každého taktu melodie tak v průměru zabere $0.15$ vteřiny,
+což je pomalejší o $0.05$ sekund oproti melodiím s dvěma takty.
 
 \begin{figure*}[h]\centering
     \centering
