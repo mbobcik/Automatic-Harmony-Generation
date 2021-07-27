@@ -677,9 +677,9 @@ analýza hlavních komponent nebo lineární regrese.
 \cite{Goodfellow-et-al-2016}
 
 \subsection*{Neurony}
-Základem neurovnových sítí jsou neurony,
+Základem neuronových sítí jsou neurony,
 jejichž myšlenkovým vzorem je biologický neuron, buňka mozku.
-Ty zachycují synapse, neboli signály pomocí denditů 
+Ty zachycují synapse, neboli signály pomocí dendritů 
 a šíří je do jádra buňky.
 Tam díky vnějším signálům vzniká potenciál, 
 a pokud je dostatečně velký, 
@@ -740,7 +740,7 @@ Vstupem je, stejně jako u jediného neuronu, vektor vlastností $x$
 násobený vektorem vah $ w $ a s přičteným prahem $ w_0 $.
 Výsledkem je rovnice nadroviny,
 $$ w_0 + \sum_{i=1}^{n} x_{i}w_{i} = y$$
-která dělí n-dimenzionlní prostor na dva poloprostory.
+která dělí n-dimenzionální prostor na dva poloprostory.
 Je-li výsledný potenciál dostatečně velký, bod leží v jednom poloprostoru,
 naopak je-li potenciál příliš malý, pak leží v druhém poloprostoru.
 Kategorie bodu je dána jeho příslušností k jednomu, nebo druhému poloprostoru.
@@ -1210,14 +1210,13 @@ Tento model tedy nejprve vygeneruje harmonii a k ní poté melodii.
     \label{obrazekArchitekturaJambot}
 \end{figure*}
 
-
 K reprezentaci dat pro akordovou LSTM 
 je využita technika ze zpracování přirozeného jazyka 
 (dále jen NLP z anglického Natural Language Precessing).
 Každý jedinečný akord je nahrazen číselným identifikátorem (id).
 K překladu mezi akordy a identifikátory pak slouží slovník dvojic (id, akord).
 V korpusu akordů je pouze N nejčastěji použitých akordů v trénovací sadě.
-Akordy, které se do korpusu nevlezly (vyskytují se příliš řidce),
+Akordy, které se do korpusu nevlezly (vyskytují se příliš řídce),
 získají označení \"neznámý akord\".
 V práci byla zvolena velikost korpusu 50 akordů.
 Před vstupem do LSTM sítě byly identifikátory 
@@ -1352,11 +1351,19 @@ který umožní automatické generování harmonie na základě známé melodie.
 Jak bylo napsáno, harmonie je souzvuk více zvuků najednou.
 Aby systém dokázal generovat tóny, které spolu opravdu souzní,
 musí obsahovat správně naučený model se správnými vstupy a výstupy.
+Diagram struktury navrženého systému je na obrázku \ref{obrazekArchitekturaSystemu}.
+
+\begin{figure*}[h]\centering
+    \centering
+    \includesvg[width=1\linewidth]{obrazky/SystemArchitecture.svg}\\[1pt]  
+    \caption{Diagram architektury navrženého systému.}    
+    \label{obrazekArchitekturaSystemu}
+\end{figure*}
 
 \section{Vstup}
 Vstupem celého systému je MIDI soubor, obsahující melodii,
 pro kterou je cílem vygenerovat harmonický doprovod.
-Neuronové sítě si ale s~takovými soubory neumí moc poradit,
+Neuronové sítě si ale s formátem takových soubory neumí moc poradit,
 a tak je soubor potřeba převést na vhodnější reprezentaci.
 Podle níže uvedeného zdroje \cite{google_git_polyphony} jsou touto reprezentací protocol buffers,
 rychlejší a efektivnější datový formát než MIDI.
@@ -1569,7 +1576,7 @@ Ovšem ani po uplynutí dvaceti hodin od začátku trénování tohoto většíh
 se nedokončil jediný trénovací cyklus.
 Odhadem by tak trénování na tomto stroji trvalo doslova desítky let
 (viz odhad níže, kde $t$ je odhadnutý čas jednoho cyklu).
-Trénování větších modelů je tak podmíňeno použitím počítačů s~větší výpočetní silou.
+Trénování větších modelů je tak podmíněno použitím počítačů s~větší výpočetní silou.
 
 $$t * num\_training\_steps = 20h * 20 000 \approx 45let $$
 
