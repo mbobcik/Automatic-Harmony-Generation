@@ -1194,6 +1194,7 @@ tento model bere v~úvahu předcházející akordy.
 \cite{YinCheng_comparativeStudy}
 
 \section{JamBot}
+\label{Jambot}
 JamBot je jeden z novějších přístupů generování akordů 
 a polyfonní hudby založený na LSTM sítích.
 Pracuje ve dvou krocích.
@@ -1411,8 +1412,8 @@ kdy je také možné nastavit hyperparametry sítě jako například počet a ve
 
 Primer modelu bude MIDI soubor se samotnou melodií, 
 konvertovaný podle předchozí části na NoteSequence.
-Úkolem systému je doplnění této melodie o~složku harmonie, 
-melodie proto bude použita jako součást výstupu.
+Úkolem systému je doplnění této melodie o~složku harmonie. 
+Melodie proto bude použita jako součást výstupu.
 
 \section{Výstup}
 Výstupem samotného modelu je protocol buffer s~definicí NoteSequence, 
@@ -1651,6 +1652,7 @@ také parametr \emph{hparams} tak, jak byl použit při trénování
 Složku pro uložení vygenerovaných MIDI souborů vymezuje parametr \emph{output\_dir}.
 Počet nových souborů pak parametr \emph{num\_outputs}.
 Každý generovaný soubor je rozdílný, liší se provedením harmonizace.
+
 Je vhodné výsledky poslechnout a zjistit jejich kvalitu.
 \par
 
@@ -1769,6 +1771,34 @@ Výsledné MIDI soubory byly analyzovány s~pomocí open-source
 sequenceru a MIDI editoru Sekaiju 6.1\footnote{dostupný z~\url{openmidiproject.osdn.jp/Sekaiju_en.html}}.
 Obrázky not byly generovány programem MuseScore\footnote{dostupný z~\url{musescore.org/en}}, 
 který je vydáván pod licencí GNU GPL.
+
+\section{Způsob vyhodnocení výsledků}
+Měření výkonu v této oblasti není jednoduché.
+Z důvodu širokého spektra záměrů v oblasti generování hudby,
+je možné setkat se v existující literatuře s různými přístupy
+k  vyhodnocování výstupů harmonizačních algoritmů.
+Jedná se například o porovnávání vygenerované sekvence akordů
+s původní akordy z anotované skladby,
+dále porovnávání jednotlivých generovaných akordů,
+nebo vyhodnocení subjektivním poslechem.
+\cite{Raczynski}
+Posledním způsobem byl hodnocen například projekt JamBot
+uvedený v části \ref{Jambot} (v článku \cite{Brunner_Jambot}).
+Pro vyhodnocení poslechem je, mimo jiné, možné využít 
+placených crowdsourcingových služeb jako například Amazon MTurk.
+Využít masy lidí pro rozličné účely (Crowdsourcing),
+které zahrnují i poslech generované hudby,
+však lze bezplatně.
+Například skupina, která stojí za projektem BachBot,
+vyvinula testovací prostředí svých nahrávek na webu,
+a ten šířila virálně skrz sociální sítě.
+\cite{Liang_AutomaticComposition}
+Některé články dokonce neposkytují žádné vyhodnocení
+své harmonizace.
+\cite{Raczynski}
+Vzhledem k povaze navrženého systému,
+budou výsledky harmonizace 
+manuálně hodnoceny subjektivním poslechem.
 
 \section{Harmonizace krátké známé melodie}
 Prvním experimentem nechť je harmonizace skladby o~pouhých dvou taktech,
