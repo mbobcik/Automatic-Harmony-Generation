@@ -737,15 +737,32 @@ Jedná se o jednu z nejpoužívanějších v moderních neuronových sítích,
 protože významně urychluje chod sítě.
 Důvodem je nižší počet výpočetních operací oproti sigmoidě
 nebo hyperbolickému tangentu.
+Definice funkce ReLU je následující:
+$$ ReLU(x) = max(0, x)$$
 Při kladných vstupních hodnotách propaguje hodnotu na výstup,
-zatímco místo zápoprných hodnot propaguje nulu.
+zatímco místo záporných hodnot propaguje nulu.
 To s sebou přináší problém při učení,
 kdy při záporných hodnotách je gradient nulový a učení stagnuje.
 Tento problém lze řešit upravenou funkcí \emph{Leaky ReLU},
-která místo nuly při záporném vstupu propaguje zápornout hodnotu blízkou nule.
+která místo nuly při záporném vstupu propaguje zápornou hodnotu blízkou nule.
 Gradient tedy není vždy nulový a neuron tak nepřestane reagovat.
 \cite{Mehrotra_ElementsOfNNs}
-$$ ReLU(x) = max(0, x)$$
+\par
+
+Aktivační funkce obvykle používaná u klasifikačních problémů se nazývá softmax.
+Úkolem je přiřadit vzorek do jedné z konečného počtu definovaných tříd.
+Tato funkce se tak používá až v poslední vrstvě,
+kde se stará o to, aby suma výstupních hodnot neuronů rovnala jedné.
+Výstupní hodnoty tak představují pravděpodobnosti příslušnosti prvku
+k jednotlivým klasifikačním třídám.
+Následuje definice funkce softmax:
+
+$$softmax(z_j) = \frac{e^{z_j}}{\sum^{N}_{k=1}e^{z_k}} $$
+
+Kde $j \epsilon (1,N)$ a N je délka výstupního vektoru.
+Na výstupní hodnotu je aplikována exponenciální funkce
+a výsledek je normalizován sumou exponenciál všech prvků vektoru.
+\cite{Mehrotra_ElementsOfNNs,Goodfellow-et-al-2016}
 
 \section{Perceptron}
 Nejjednodušší neuronovou sítí je perceptron.
@@ -781,9 +798,10 @@ Učení sítě spočívá v úpravách hodnot vah mezi jednotlivými neurony.
 Jednotlivé váhy postupně konvergují ke své optimální hodnotě.
 Tato fáze bývá výpočetně i časově velmi náročná,
 kvůli velkému množství výpočtů prováděných nad každým prvkem. 
-Po dokončení účení je síť připravena k použití.
-To už zoravidla nepředstavuje takovou výpočetní zátěž,
+Po dokončení učení je síť připravena k použití.
+To už zpravidla nepředstavuje takovou výpočetní zátěž,
 a použití sítě je velmi rychlé.
+\cite{Goodfellow-et-al-2016, Nicholson_NeuralNets, Kvasnička_NeuronoveSite, Mehrotra_ElementsOfNNs}
 \par
 
 Neuronové sítě mají většinou několik propojených vrstev.
@@ -807,6 +825,7 @@ Vstupem následující vrstvy už nejsou původní příznaky,
 ale příslušnost prvku k jednotlivým oblastem.
 Celý problém je transformován do nového prostoru 
 a druhá vrstva rozdělení zpřesňuje.
+\cite{Goodfellow-et-al-2016, Nicholson_NeuralNets, Kvasnička_NeuronoveSite, Mehrotra_ElementsOfNNs}
 
 \begin{figure*}[h]\centering
     \centering
@@ -824,8 +843,47 @@ Samotná funkce \emph{f} se skládá z~několika zřetězených funkcí
 $f(x)=f^{(3)}(f^{(2)}(f^{(1)}(x)))$,
 kde $f^{(n)}$ označuje vrstvy sítě, 
 jejichž vstupem je vektor z~předchozí vrstvy 
-a výstupem je opět vektor.
-\cite{Goodfellow-et-al-2016, Nicholson_NeuralNets, Kvasnička_NeuronoveSite, Mehrotra_ElementsOfNNs}
+a výstupem je opět vektor.\cite{Goodfellow-et-al-2016}
+\par
+
+\section{Chybové funkce}
+V poslední vrstvě neuronových sítí se využívají chybové funkce.
+Ty slouží k určení přesnosti sítě,
+a při trénování také k učení sítě zpětným šířením chyby přes všechny neurony.
+\par
+Jednou z chybových funkcí je čtvercová chyba,
+neboli MSE z anglického \emph{Mean squared error}.
+Tato funkce odečte hodnotu na výstupu sítě od očekávané hodnoty.
+Aby chyba nebyla záporná, rozdíl hodnot je umocněn na druhou.
+Tímto způsobem se uměle zvyšuje rozdíl chyby mezi korektně
+a chybně klasifikovaným vzorkem,
+což zrychluje tréning sítě.
+Definice funkce čtvercové chyby je následující:
+
+$$ MSE = \frac{1}{N} \sum^{N}_{i=1}(d_i - y_i)^2 $$
+
+Kde N je počet prvků z trénovací sady, $d_i$ je očekávaná hodnota a $y_i$ je výstup sítě.
+\par
+
+Jinou, hojně využívanou chybovou funkcí je křížová entropie
+(anglicky Cross-Entropy),
+která se používá při klasifikaci do tříd.
+Předpokladem k použití jsou dva a více neuronů ve výstupní vrstvě.
+Tato funkce se často používá zároveň s aktivační funckí softmax,
+která normalizuje výstupní hodnoty poslední vrstvy 
+do pravděpodobností náležitosti k jednotlivým třídám.
+Následuje definice funkce křížové entropie (CE) pro počet výstupních neuronů $C > 2$:
+$$CE = - \sum^C_i d_i log(y_i)$$
+kde opět $d_i$ je očekávaná hodnota a $y_i$ je výstup sítě.
+\par
+
+Pro binární klasifikátor, tedy $C = 2$, lze funkci zjednodušit následovně:
+
+$$CE = - d_i log(y_i) + (1 - d_i) log(1 - y_i)$$
+
+Stejně jako u MSE platí, že lépe naučená síť má nižší hodnoty křížové entropie.
+Dokonale naučená neuronová síť má křížovou entropii rovnu nule.
+\cite{Goodfellow-et-al-2016, Kvasnička_NeuronoveSite, Mehrotra_ElementsOfNNs}
 
 %\todo{TODO - Dopsat princip uceni NN}
 
@@ -1390,12 +1448,15 @@ což je vhodné při harmonizaci již existující melodie.
 
 \chapter{Návrh systému}
 \label{navrhSystemu}
+Cílem systému je přiřadit správnou harmonii k původní melodii.
 V~této kapitole je představen návrh systému,
-který umožní automatické generování harmonie na základě známé melodie.
+který umožní automatické generování harmonie.
 Jak bylo napsáno, harmonie je souzvuk více zvuků najednou.
 Aby systém dokázal generovat tóny, které spolu opravdu souzní,
 musí obsahovat správně naučený model se správnými vstupy a výstupy.
 Diagram struktury navrženého systému je na obrázku \ref{obrazekArchitekturaSystemu}.
+Systém se skládá z několika částí, 
+které na sebe navazují.
 
 \begin{figure*}[h]\centering
     \centering
@@ -1407,9 +1468,12 @@ Diagram struktury navrženého systému je na obrázku \ref{obrazekArchitekturaS
 \section{Vstup}
 Vstupem celého systému je MIDI soubor, obsahující melodii,
 pro kterou je cílem vygenerovat harmonický doprovod.
-Neuronové sítě si ale s formátem takových soubory neumí moc poradit,
-a tak je soubor potřeba převést na vhodnější reprezentaci.
-Podle níže uvedeného zdroje \cite{google_git_polyphony} jsou touto reprezentací protocol buffers,
+Soubory MIDI jsou získány z databáze.
+Postup je popsán v kapitole \ref{hooktheoryDB}.
+Neuronové sítě si ale s formátem souborů MIDI neumí moc poradit,
+a tak je potřeba převést je na vhodnější reprezentaci.
+Podle níže uvedeného zdroje \cite{google_git_polyphony} 
+jsou touto reprezentací protocol buffers,
 rychlejší a efektivnější datový formát než MIDI.
 Protocol buffers je mechanismus firmy Google pro serializaci strukturovaných dat,
 který je rozšiřitelný a nezávislý na jazyce a platformě, podobně jako například XML.
