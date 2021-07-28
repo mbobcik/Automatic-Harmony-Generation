@@ -732,6 +732,21 @@ $$ tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}$$s
     \label{obrazekAktivačníFunkce}
 \end{figure*}
 
+Další aktivační funkcí je tzv. \emph{Rectified Linear Unit} (dále jen ReLU).
+Jedná se o jednu z nejpoužívanějších v moderních neuronových sítích,
+protože významně urychluje chod sítě.
+Důvodem je nižší počet výpočetních operací oproti sigmoidě
+nebo hyperbolickému tangentu.
+Při kladných vstupních hodnotách propaguje hodnotu na výstup,
+zatímco místo zápoprných hodnot propaguje nulu.
+To s sebou přináší problém při učení,
+kdy při záporných hodnotách je gradient nulový a učení stagnuje.
+Tento problém lze řešit upravenou funkcí \emph{Leaky ReLU},
+která místo nuly při záporném vstupu propaguje zápornout hodnotu blízkou nule.
+Gradient tedy není vždy nulový a neuron tak nepřestane reagovat.
+\cite{Mehrotra_ElementsOfNNs}
+$$ ReLU(x) = max(0, x)$$
+
 \section{Perceptron}
 Nejjednodušší neuronovou sítí je perceptron.
 Tento model je složen z jediného matematického modelu neuronu.
@@ -755,15 +770,43 @@ Vzory jsou jakékoliv data, čísla, obrázky, zvuk, text a další.
 Ty musí být převedeny na vektory čísel, 
 které jsou následně použity jako vstup.
 Tyto sítě se také nazývají dopředné (Feedforward Neural Networks).
-\cite{Nicholson_NeuralNets}
+Při činnosti neuronových sítí se přesně neví,
+co se uvnitř děje,
+fungují na principu zvaném černá skříňka, black box.
+Před uvedením sítě do provozu je potřeba 
+ji nejprve jednorázově natrénovat na datech z datové sady.
+Ty se nazývají trénovací a jsou podobná těm, 
+která bude naučená sít zpracovávat.
+Učení sítě spočívá v úpravách hodnot vah mezi jednotlivými neurony.
+Jednotlivé váhy postupně konvergují ke své optimální hodnotě.
+Tato fáze bývá výpočetně i časově velmi náročná,
+kvůli velkému množství výpočtů prováděných nad každým prvkem. 
+Po dokončení účení je síť připravena k použití.
+To už zoravidla nepředstavuje takovou výpočetní zátěž,
+a použití sítě je velmi rychlé.
 \par
 
 Neuronové sítě mají většinou několik propojených vrstev.
+Neurony jedné vrstvy jsou spojeny pouze s neurony z jiné vrstvy.
+Neurony v jedné vrstvě mezi sebou nesdílí žádné vazby.
 První vrstva se také nazývá vstupní, 
 zatímco poslední je výstupní.
 Vrstvy mezi vstupní a výstupní jsou takzvaně skryté.
 Počet vrstev udává hloubku modelu, odtud také hluboké učení, 
 a velikost vektoru jeho šířku.
+Každý neuron sítě řeší část celého problému 
+a výsledek je tvořen kompozicí všech.
+Každý neuron sítě, stejně jako perceptron, 
+dělí prostor na dva poloprostory.
+Jedna vrstva, obsahující několik neuronů, 
+rozdělí prostor na několik různých poloprostorů,
+což jej umožňuje dobře zmapovat.
+Větším množstvím neuronů se zvyšuje počet různých rozdělení prostoru
+a tedy i rozlišovací schopnost sítě.
+Vstupem následující vrstvy už nejsou původní příznaky,
+ale příslušnost prvku k jednotlivým oblastem.
+Celý problém je transformován do nového prostoru 
+a druhá vrstva rozdělení zpřesňuje.
 
 \begin{figure*}[h]\centering
     \centering
@@ -782,7 +825,7 @@ $f(x)=f^{(3)}(f^{(2)}(f^{(1)}(x)))$,
 kde $f^{(n)}$ označuje vrstvy sítě, 
 jejichž vstupem je vektor z~předchozí vrstvy 
 a výstupem je opět vektor.
-\cite{Goodfellow-et-al-2016}
+\cite{Goodfellow-et-al-2016, Nicholson_NeuralNets, Kvasnička_NeuronoveSite, Mehrotra_ElementsOfNNs}
 
 %\todo{TODO - Dopsat princip uceni NN}
 
