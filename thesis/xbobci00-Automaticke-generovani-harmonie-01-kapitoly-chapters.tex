@@ -899,7 +899,7 @@ V algoritmu se pracuje také s parametrem míry učení (anglicky learning rate)
 Tento parametr nabývá hodnot z intervalu $<0,1>$.
 Při vyšších hodnotách je váhy modifikují výrazněji,
 ale mohou uváznout v lokálním minimu, z nějž už se nebudou moci dostat.
-Proto některé algoritmy míru učení postupně snižují v průběhu trénningu.
+Proto některé algoritmy míru učení postupně snižují v průběhu tréningu.
 \par
 
 Algoritmus back-propagation klade podmínku na využitou aktivační funkci každého neuronu.
@@ -922,6 +922,7 @@ Před začátkem algoritmu jsou všechny váhy v sítě
 inicializovány na náhodnou hodnotu z rozmezí $<0,1>$.
 Iterativní postup algoritmu ke globálnímu minimu 
 ilustruje obrázek \ref{obrazekGradientDescent}.
+\cite{Raschka_GradientDescent, Goodfellow-et-al-2016}
 
 \begin{figure*}[h]\centering
     \centering
@@ -939,7 +940,21 @@ Taková omezení neberou v~úvahu proudová data,
 tedy sekvence na sobě závislých vektorů.
 Rekurentní sítě umožňují mít takovou sekvenci jako vstup, 
 jako výstup, nebo jako obojí.
-\cite{Karpathy_RNNs}.
+Principem RNN jsou smyčky, kdy výstupy jedné vrstvy jsou
+propojeny se svými vstupy.
+Systém si tak při řešení problému uchovává informaci
+o předešlích prvcích vstupních dat,
+která může ovlivnit následující výsledky.
+Použítí rekurentních sítí znatelně zvětšuje prohledávaný prostor řešení,
+což zvyšuje požadavky na výpočetní čas při učení.
+\par
+Přenášení předchozích znalostí z důvodu ovlivnění 
+následujících prvků je problémové.
+Velmi totiž závisí na vzdálenosti mezi prvky,
+které se mohou ovlivnit.
+Pokud jsou od sebe prvky až příliš vzdáleny,
+rekurentní síť se nedokáže naučit spojitost mezi nimi.
+\cite{Karpathy_RNNs}
 
 \begin{figure*}[h]\centering
     \centering
