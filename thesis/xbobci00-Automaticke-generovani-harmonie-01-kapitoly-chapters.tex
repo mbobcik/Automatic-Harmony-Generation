@@ -1679,9 +1679,11 @@ Polyphony RNN z~projektu Magenta.
 V~porovnání s~ostatními přístupy je nejnovější a využívá framework TensorFlow
 \cite{YinCheng_comparativeStudy,google_git_polyphony}.
 Magenta poskytuje model\footnote{dostupný z~\url{http://download.magenta.tensorflow.org/models/polyphony_rnn.mag}} 
-již natrénovaný na chorálech, které složil Johann Sebastian Bach\footnote{
+již natrénovaný na chorálech, které složil Johann Sebastian Bach
+\footnote{
 dostupné z~\url{https://web.archive.org/web/20150503021418/http://www.jsbchorales.net/xml.shtml}, 
 popřípadě z~\url{https://github.com/cuthbertLab/music21/tree/master/music21/corpus/bach}}.
+
 Kromě toho lze model natrénovat s~pomocí vlastních dat,
 kdy je také možné nastavit hyperparametry sítě jako například počet a velikost RNN vrstev.
 \cite{google_git_polyphony}
@@ -1718,7 +1720,7 @@ Pro instalaci knihovny na použitý operační systém je poskytnut instalační
 
 \begin{verbatim}
 URL=https://raw.githubusercontent.com/tensorflow/ \
-    magenta/master/magenta/tools/magenta-install.sh
+magenta/master/magenta/tools/magenta-install.sh
 curl $(URL) > /tmp/magenta-install.sh
 bash /tmp/magenta-install.sh    
 \end{verbatim}
@@ -1740,6 +1742,19 @@ připraveny k~použití v~Pythonu a v~Jupyter sešitech.
 Mimo to jsou Magenta skripty zavedeny v~proměnné \emph{PATH}.
 \cite{google_git_polyphony}
 \par
+
+Pro automatizaci celého procesu instalace byly vytvořeny skripty 
+\emph{prerequisities.sh} a \emph{install.sh}.
+První nainstaluje potřebné prerekvizity a
+vytvoří virtuální prostředí.
+Druhý skript do virtuálního prostředí nainstaluje veškeré vyžadované python balíčky.
+Z důvodu instalace prerekvizit skript vyžaduje administrátorská práva.
+Pokud počítač neobsahuje systém pro správu balíků Anaconda,
+skript \emph{prerequisities.sh} se jej pokusí nainstalovat sám.
+V takovém případě je nutné odsouhlasit autorská práva 
+a jiné požadavky této instalace.
+Po instalaci prerekvizit prvním skriptem je vhodné restartovat okno s terminálem
+a teprve spustit skript \emph{install.sh}.
 
 \section{Příprava dat}
 Dalším krokem je převedení sady trénovacích MIDI souborů na protocol buffer soubor
@@ -1794,6 +1809,27 @@ a druhý, \emph{eval\_poly\_tracks.tfrecord} s~daty pro vyhodnocení modelu.
 Tento obsahuje zbývajících 10 \% dat.
 Velikost obou souborů dohromady je $8.39GB + 79.5GB = 87.9GB$ ($94 454 904 591$B).
 \par
+
+Celý proces automatizuje skript \emph{prepareData.sh}.
+Ten má celkově dva argumenty.
+Prvním argumentem je předána cesta ke složce s MIDI soubory.
+Tento argument je povinný.
+Pokud je toto jediný argument, počítá se s tím,
+že složka MIDI soubory už obsahuje.
+Skript také automatizuje konverzi databáze, která je popsaná v kapitole \ref{hooktheoryDB}.
+V tomto případě je opět nutné jako první argument zadat 
+složku do které budou ukládány výsledky
+a jako druhý argument cestu k souboru se SQLite databází.
+Tímto způsobem bude převedena databáze až na SequenceExample soubor,
+který je možné použít pro trénování sítě.
+\par
+
+Skript lze také použít pouze na soubor s NoteSequence prvky.
+V tom případě se jako první argument musí zadat přepínač \emph{-s},
+a jako druhý argument cesta k .tfrecord souboru obsahující NoteSequence zprávy.
+\par
+
+Ve všech případech se jedná o časově náročnou operaci, která může trvat až 8 hodin!
 
 \section{Trénování}
 Nyní je vše připraveno k~trénování modelu.
@@ -2130,6 +2166,8 @@ Průměrně tak vygenerování jedné skladby trvá $0.2$ vteřiny,
 plus 5 fixních vteřin kvůli inicializaci.
 Při uvážení délky harmonizované skladby (dva takty)
 lze předpokládat, že harmonizace jednoho taktu trvá $0.1$ vteřiny.
+Při zvážení délky přehrávání jednoho taktu, a sice 2 vteřiny, 
+je takový výsledek příznivý.
 \par
 
 Skladby generované s~nízkou hodnotou temperature vykazovaly,
@@ -2330,8 +2368,9 @@ Celé skladbě většinou dominuje jediný akord, který zní po celou dobu skla
 Kvalita výsledků se relativně zlepšuje s~vyšším použitým parametrem temperature.
 To znamená, že pokud se akordy mění, je to ve správný čas.
 Ve výsledku však lze říci, že delší skladby, oproti těm krátkým, 
-jsou harmonizovány lépe,
-jelikož v~celé době trvání lze najít části, které s~původní melodií ladí.
+jsou harmonizovány lépe.
+Důvodem je, že v~celé době trvání má systém více prostoru se projevit 
+a vygenerovat části, které s původní melodií ladí.
 \par
 
 Jako příklad za všechny z~tohoto experimentu,
@@ -2339,8 +2378,6 @@ nechť poslouží část notové osnovy na obrázku \ref{obrazekMyHarmonyLongPov
 Na tomto výtvoru je jak povedená část (vyznačená červeně),
 tak dva stejné, nepřiměřeně dlouhé akordy (vyznačené modře).
 Je také vidět, že poslední modrá část už není celý akord, ale samotný tón.
-Znovu se potvrzuje, že takto malý model se nedokázal správně naučit harmonická pravidla
-a nepoužívá všechny tóny akordů.
 
 \begin{figure*}[h]\centering
     \centering
@@ -2363,16 +2400,16 @@ Dále jsou navrženy možnosti dalšího pokračování,
 případně rozšíření této práce.
 \par
 
-Harmonie k~melodiím, které generoval popisovaný model,
+Některé harmonie, které generoval popisovaný model,
 jsou spíše neuspokojivé.
 Jak již bylo popisováno v~experimentech, 
 pro model bylo obtížné harmonizovat i známé melodie, 
 které by měl znát z~trénovací sady. 
-Ve vygenerovaných skladbách  byly patrné dva směry.
+Ve vygenerovaných skladbách byly patrné dva směry.
 Prvním je použití mnoha akordů.
 Ty ale byly málokdy zavedeny do skladby v~pravý čas, 
-a tak celkový dojem spíše kazily.
-Správná harmonie těchto akordů byla také velmi ojedinělá.
+a tak celkový dojem z poslechu spíše kazily.
+Správná harmonie těchto akordů byla ojedinělá.
 Toto bylo pozorováno především u~krátkých skladeb 
 s~nízkou hodnotou parametru temperature.
 Druhým jevem byl jeden akord, 
@@ -2381,16 +2418,25 @@ případně se opakoval hned po sobě.
 Přestože s~danou melodií mohl ladit,
 výsledek působil především nudně a nezajímavě.
 Složení akordů z~menšího počtu tónů byl také jeden z~častých jevů.
-Případně akord začal celý a postupně ztratil některé tóny.
+Případně akord začal celý a postupně přestaly znít některé jeho tóny.
 Přes všechny tyto problémy se v~každém experimentu objevilo několik skladeb,
 které měly alespoň z~části správnou nebo zajímavě provedenou harmonii.
+V každém experimentu (40 skladeb) bylo možné najít 4 až 6 skladeb,
+které měly zdařilou harmonizaci.
+To znamená úspěch v deseti až patnácti procentech případů.
 Obecně lze říci, že skladby, 
 které byly generovány s~vyšší hodnotou parametru temperature,
 byly lépe zpracované ve smyslu správné harmonizace.
 \par
+Co se týče trvání generování harmonie byly výsledky velmi uspokojivé.
+Doba generování jednoho taktu se i u delších skladeb pohybovala okolo $0.15$ vteřiny.
+V porovnání s dobou znění jednoho taktu je doba generování téměř zanedbatelná.
+
+\par
 Tyto skutečnosti naznačují, že i když je model pro použití v~harmonizaci malý,
-přece jenom se něco naučil a byl schopen poskytnout pár dobrých výsledků.
-Z~toho lze usoudit, že použití většího modelu by mohlo přinést výsledky lepší.
+přece jenom se něco naučil a byl schopen poskytnout dobré výsledky.
+Z~toho lze usoudit, že použití většího modelu by mohlo přinést výsledky lepší,
+a ve více případech.
 Jak ale bylo řečeno v~kapitole výše (viz \ref{trenovaniModelu} ),
 trénování takového modelu je podmíněno použitím větší výpočetní síly,
 případně paralelizací tohoto procesu.
@@ -2400,20 +2446,34 @@ neboť většina výzkumů používá pouze korpus chorálů Johanna Sebastiana 
 Bach však nebyl jediným skladatelem.
 Jako vhodný základ by tak mohla sloužit hudba jiných skladatelů.
 \par
+
 Možným důsledkem špatných výsledků této práce
 může být nevhodná konverze písniček z~XML souborů v~dodané databázi na MIDI soubory.
 Toto by mohlo být eliminováno přímo použitím jiných dat již ve formátu MIDI.
-Na internetu se několik takových sad vyskytuje, 
-ale jejich legalita je diskutabilní.
 \par
-Zajímavým počinem by bylo vytvoření systému, který 
+
+Zajímavým pokračováním této práce by bylo vytvoření systému, který 
 by melodii harmonizoval ve stylu nějakého žánru.
 Případně již harmonizovanou skladbu v~nějakém stylu 
 převedl na jiný styl.
-Podobně, jako se provádí u~obrázků\footnote{viz neural style transfer v~citaci \cite{gatys2015neural}}.
+Podobně, jako se provádí u~obrázků
+\footnote{viz neural style transfer v~citaci \cite{gatys2015neural}}.
 Tato práce by však vyžadovala použití datové sady, 
-která by žánry dostatečně pokrývala
-a každá skladba by byla přiřazena k~jednomu z~žánrů.
+která by všechny žánry dostatečně pokrývala 
+a všechny skladby by byly anotované.
+Dále by mohl být problém s licencemi skladeb případně celé takové datové sady.
+\par
+
+Pro automatizaci harmonizace by bylo možné 
+využít také architektury neuronových sítí
+jiné než LSTM.
+Z nich jsou pro tento problém vhodné například
+generativní kontradiktorní sítě, 
+více známe pod svým anglickým překladem 
+Generative adversarial networks,
+nebo pod zkratkou GAN.
+Případně auto-regresivní modely,
+které při generování sekvencí berou v potaz i předchozí vygenerovanou sekvenci. 
 
 % diskuse výsledků
 % možnosti dalšího rozšíření.
@@ -2431,16 +2491,14 @@ Navržený systém dále implementovat a otestovat na vhodné datové sadě.
 Posledním bodem zadání je rozbor dosažených výsledků 
 a nastínění možných rozšíření této práce.
 \par
-Základům hudby a strojového učení byla věnována první,
-respektive druhá kapitola.
+Základům hudby a strojového učení byla věnována druhá,
+respektive třetí kapitola.
 Čtvrtá kapitola představila formát MIDI 
 a podobu datové sady použité v~této práci.
 Ta byla poskytnuta ve formě databáze XML souborů 
 a bylo ji nutno převést na MIDI soubory písniček, 
 jak požadovalo zadání.
-%Použitá datová sada, oproti většině jiných prací,
-%není pouze korpusem Bachových chorálů.
-Postup této konverze byl také součástí této kapitoly.
+Postup konverze souborů byl také součástí této kapitoly.
 Další kapitola popisovala různé přístupy k~automatické harmonizaci. 
 Některé poznatky z~těchto prací byly vybrány 
 a použity v~návrhu systému v~kapitole následující.
@@ -2448,14 +2506,18 @@ Jako harmonizační systém byla vybrána již existující neuronová síť,
 jejíž použití je popsáno v~kapitole sedmé.
 Po jejím natrénování na popsané datové sadě byly provedeny experimenty,
 jimž se věnuje další kapitola.
+Zkoumanými vlastnostmi byla doba potřebná k harmonizaci skladby
+a správnost harmonizace,
+která byla manuálně zjištěna subjektivním poslechem.
 Následuje diskuse dosažených výsledků během testování,
 návrhy dalšího pokračování této práce a závěr.
 \par
 
-Výsledky natrénovaného systému nejsou velmi uspokojivé
+Ne všechny výsledky natrénovaného systému byly  uspokojivé
 a většinou s~původní melodií nezněly a kazily její dojem.
-Avšak mezi vygenerovanými skladbami se našly světlé výjimky,
+Nicméně mezi vygenerovanými skladbami se našly světlé výjimky,
 které se daly považovat za správnou a zajímavou harmonizaci.
+
 Použitý model byl však, oproti doporučeným hodnotám hyperparametrů, malý.
 Lepší výsledky by tak mohlo přinést použití většího modelu,
 k~jehož natrénování je však potřeba větší výpočetní síly, 
