@@ -3,6 +3,8 @@
 # Prerequisite is to run scripts prerequisities.sh and install.sh
 # First argument is folder with MIDI files.
 # Second argument is the SQLite DB file with songs.
+# If first argument is -s and second path to the noteSequence file, 
+# then script will make only SequenceExamples from that file.
 # If left unspecified, the conversion from DB file is omited.
 # This file is part of my Master thesis.
 #
@@ -13,6 +15,18 @@
 if [ -z "$1" ] 
     then
     echo "Folder with MIDI files not specified!"
+    echo "Script which will automatically prepare dataset for training neural network.
+Prerequisite is to run scripts prerequisities.sh and install.sh
+First argument is folder with MIDI files.
+Second argument is the SQLite DB file with songs.
+
+If first argument is -s and second path to the noteSequence file, 
+then script will make only SequenceExamples from that file.
+If left unspecified, the conversion from DB file is omited.
+This file is part of my Master thesis.
+
+Author: Bc. Martin Bobčík, xbobci00
+Copyright (C) 2021 Brno University of Technology, Faculty of Information Technology"
     exit 1
 fi
 
@@ -29,6 +43,18 @@ if [ "$1" == "-s" ]
         exit 1
     fi
     echo "NoteSequence file not specified!"
+        echo "Script which will automatically prepare dataset for training neural network.
+Prerequisite is to run scripts prerequisities.sh and install.sh
+First argument is folder with MIDI files.
+Second argument is the SQLite DB file with songs.
+
+If first argument is -s and second path to the noteSequence file, 
+then script will make only SequenceExamples from that file.
+If left unspecified, the conversion from DB file is omited.
+This file is part of my Master thesis.
+
+Author: Bc. Martin Bobčík, xbobci00
+Copyright (C) 2021 Brno University of Technology, Faculty of Information Technology"
     exit 1
 fi
 echo "COntinue"

@@ -1705,6 +1705,7 @@ který obsahuje původní melodii(primer), která je následována její harmoni
 \label{trenovaniModelu}
 % popis implementace
 V~této kapitole je představen postup zprovoznění systému a jeho trénování.
+Všechny kroky byly automatizovány pomocí jazyka bash.
 Vstupní data a postup jejich vytvoření je popsán v~kapitole \ref{hooktheoryDB}.
 Využitý systém je představen v~části \ref{magenta} 
 a podrobnější návrh potom v~\ref{navrhSystemu}.
@@ -1947,6 +1948,12 @@ polyphony_rnn_generate \
     --save_generator_bundle
 \end{verbatim}
 
+Proces tréningu automatizují dva skripty, \emph{train.sh} a \emph{eval.sh}
+Oba vyžadují dva argumenty.
+Prvním z nich je cesta k adresáři pro ukládání průběžných výsledků
+a druhý je cesta k souboru datové sady sloužící pro tréning, nebo evaluaci.
+Po dokončení tréningu je model automaticky zabalen jak bylo popsáno výše.
+
 \section{Použití modelu}
 Generovat polyfonní a harmonizované skladby s~použitým modelem
 lze téměř od samého začátku trénování.
@@ -2052,6 +2059,14 @@ polyphony_rnn_generate \
     --condition_on_primer=false \
     --inject_primer_during_generation=true    
 \end{verbatim}
+
+Harmonizaci skladby lze provést také skriptem \emph{harmonize.sh},
+který už obsahuje všechny potřebné parametry.
+Je ale potřeba v parametrech specifikovat 
+cestu k \emph{bundle\_file} souboru, 
+který obsahuje natrénovaný model.
+Dále cestu k MIDI souboru určenému k harmonizace,
+a nakonec počet taktů, které tento soubor obsahuje.
 
 \chapter{Experimenty}
 \label{experimenty}
@@ -2522,6 +2537,3 @@ Použitý model byl však, oproti doporučeným hodnotám hyperparametrů, malý
 Lepší výsledky by tak mohlo přinést použití většího modelu,
 k~jehož natrénování je však potřeba větší výpočetní síly, 
 než bylo použito v~této práci.
-
-\par
-
