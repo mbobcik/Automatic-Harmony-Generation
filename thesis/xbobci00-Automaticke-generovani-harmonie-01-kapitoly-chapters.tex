@@ -634,7 +634,7 @@ a místo zlomku je značen velkým písmenem C.
 Umělá inteligence dokázala relativně rychle řešit problémy, 
 které jsou pro člověka intelektuálně náročné, 
 ale jsou popsány formálními pravidly.
-Avšak pro člověka intuitivní \"problémy\" lze jen s~těží formálně popsat.
+Avšak pro člověka intuitivní "problémy" lze jen s~těží formálně popsat.
 Strojové učení umožňuje počítači naučit se ze zkušeností
 a porozumět světu v~souvislostech.
 Získáváním zkušeností je odbourán proces formálního zápisu veškerých vědomostí,
@@ -943,9 +943,9 @@ jako výstup, nebo jako obojí.
 Principem RNN jsou smyčky, kdy výstupy jedné vrstvy jsou
 propojeny se svými vstupy.
 Systém si tak při řešení problému uchovává informaci
-o předešlích prvcích vstupních dat,
+o předešlých prvcích vstupních dat,
 která může ovlivnit následující výsledky.
-Použítí rekurentních sítí znatelně zvětšuje prohledávaný prostor řešení,
+Použití rekurentních sítí znatelně zvětšuje prohledávaný prostor řešení,
 což zvyšuje požadavky na výpočetní čas při učení.
 \par
 Přenášení předchozích znalostí z důvodu ovlivnění 
@@ -954,7 +954,7 @@ Velmi totiž závisí na vzdálenosti mezi prvky,
 které se mohou ovlivnit.
 Pokud jsou od sebe prvky až příliš vzdáleny,
 rekurentní síť se nedokáže naučit spojitost mezi nimi.
-\cite{Karpathy_RNNs}
+\cite{Karpathy_RNNs, colah_lstm}
 
 \begin{figure*}[h]\centering
     \centering
@@ -963,17 +963,111 @@ rekurentní síť se nedokáže naučit spojitost mezi nimi.
     \label{obrazekSchemaRekurentniNeuronoveSite}
 \end{figure*}
 
-\section{LSTM}
+\section{Long Short-Term Memory}
 \label{lstmTeorie}
-Long Short-Term Network (dále jen LSTM), 
+Long Short-Term Memory (dále jen LSTM), 
 jsou speciálním druhem rekurentních neuronových sítí.
 Jsou schopny se naučit i dlouhodobější závislosti v~sekvencích dat.
 S~touto vlastností byly primárně navrženy.\cite{colah_lstm}
 \par
 
-Narozdíl od RNN mají LSTM čtyři vrstvy v~jednom opakujícím se modulu.
+\begin{figure*}[h]\centering
+    \centering
+    \includegraphics[width=0.6\linewidth]{obrazky/LSTM3-chain.png}\\[1pt]  
+    \caption{Schéma opakujícího se LSTM modulu. \cite{colah_lstm}}    
+    \label{obrazekLSTMBunka}
+\end{figure*}
 
-% frameworky ... viz NOTES.md
+Narozdíl od RNN mají LSTM čtyři vrstvy v~jednom opakujícím se modulu.
+Schéma LSTM modulu je na obrázku \ref{obrazekLSTMBunka}.
+Hlavním prvkem je horizontální čára,
+která vede horní částí diagramu.
+Ta vede vektor stavu buňky (anglicky cell state).
+Informaci ve stavu lze modifikovat malými, lineárními změnami.
+Každá buňka může informaci přidat, nebo odebrat.
+Je také možné stav nechat beze změny.\cite{colah_lstm}
+\par
+
+Při práci musí LSTM nejprve rozhodnout,
+kterou informaci chce zapomenout, 
+tedy vyřadit ze stavu buňky.
+Toto rozhodnutí provádí takzvaná "forget gate layer",
+tedy vrstva s aktivační funkcí sigmoidy.
+Tato brána vezme v úvahu aktuální vstup a výstup předchozí buňky,
+a převede je na hodnotu z intervalu $<0,1>$,
+přičemž 1 znamená ponechat informaci
+a 0 znamená kompletně zapomenout.
+Práce forget gate layer a její funkce jsou ilustrovány na obrázku 
+\ref{obrazekForgetGate}, kde $W$ a $b$ jsou váhy a práh (bias),
+$h_{t-1}$ je předchozí výsledek, $x_t$ je aktuální vstup a 
+$[h_{t-1}, x_t]$ je konkatenace prvků.\cite{colah_lstm}
+
+\begin{figure*}[h]\centering
+    \centering
+    \includegraphics[width=0.6\linewidth]{obrazky/LSTM3-focus-f.png}\\[1pt]  
+    \caption{Schéma a funkce forget gate layer.\cite{colah_lstm}}    
+    \label{obrazekForgetGate}
+\end{figure*}
+
+Následuje rozhodnutí, jakou informaci ve stavu uchovat.
+Tento proces se skládá ze dvou částí.
+První se nazývá input gate layer, 
+opět vrstva se sigmoidou jako aktivační funkcí.
+Tato brána rozhoduje o tom, které hodnoty budou aktualizovány.
+Druhou částí je vrstva s aktivační funkcí tanh,
+jenž sestavuje vektor nových kandidátních hodnot
+určených pro přidání do stavu.\cite{colah_lstm}
+Činnost input gate layer opět ilustruje následující obrázek \ref{obrazekInputLayer}.
+
+\begin{figure*}[h]\centering
+    \centering
+    \includegraphics[width=0.6\linewidth]{obrazky/LSTM3-focus-i.png}\\[1pt]  
+    \caption{Schéma a funkce input gate layer.\cite{colah_lstm}}    
+    \label{obrazekInputLayer}
+\end{figure*}
+
+Po výpočtu změn v předchozích dvou krocích
+je potřeba aktualizovat starý stav buňky.
+Nejprve je násoben vektorem $f_t$, tedy tím, co má být zapomenuto.
+Následně je přičteno $i_t\tilde{C}_t $, 
+tedy nové kandidátní informace násobené hodnotou,
+která určuje jak moc tyto informace ovlivní stav.\cite{colah_lstm}
+
+\begin{figure*}[h]\centering
+    \centering
+    \includegraphics[width=0.6\linewidth]{obrazky/LSTM3-focus-C.png}\\[1pt]  
+    \caption{Schéma a funkce aktualizace stavu buňky.\cite{colah_lstm}}    
+    \label{obrazekAktualizaceLSTM}
+\end{figure*}
+
+Zbývajícím krokem je určit výstupní data buňky v aktuálním kroku.
+Dá se řící, že tento krok je podobný obrácení předchozího kroku.
+Nejprve projde aktuální vstup vrstvou sigmoid, 
+která rozhodne, co bude na výstupu.
+Následně projde stav buňky vrstvou s aktivační funkcí tanh,
+a výsledek se vynásobí s výstupem sigmoid vrstvy.\cite{colah_lstm}
+Práce je patrná na obrázku \ref{obrazekLSTMOutput}
+
+\begin{figure*}[h]\centering
+    \centering
+    \includegraphics[width=0.6\linewidth]{obrazky/LSTM3-focus-o.png}\\[1pt]  
+    \caption{Schéma a funkce výpočtu výstupních hodnot LSTM buňky.\cite{colah_lstm}}    
+    \label{obrazekLSTMOutput}
+\end{figure*}
+
+Ne všechny LSTM mají stejnou strukturu jak výše popsaná síť.
+Do buněk lze zavést různé, více či méně zásadní prvky.
+Jedna z variant například dovoluje forget gate a input gate
+podívat se na stav buňky ještě předtím, 
+než rozhodnou o jeho modifikaci.\cite{colah_lstm}
+Viz obrázek \ref{obrazekLSTMPeepholes}.
+
+\begin{figure*}[h]\centering
+    \centering
+    \includegraphics[width=0.6\linewidth]{obrazky/LSTM3-var-peepholes.png}\\[1pt]  
+    \caption{Schéma a funkce varianty LSTM buňky.\cite{colah_lstm}}    
+    \label{obrazekLSTMPeepholes}
+\end{figure*}
 
 
 \chapter{Trénovací sada}
@@ -1377,7 +1471,7 @@ Každý jedinečný akord je nahrazen číselným identifikátorem (id).
 K překladu mezi akordy a identifikátory pak slouží slovník dvojic (id, akord).
 V korpusu akordů je pouze N nejčastěji použitých akordů v trénovací sadě.
 Akordy, které se do korpusu nevlezly (vyskytují se příliš řídce),
-získají označení \"neznámý akord\".
+získají označení "neznámý akord".
 V práci byla zvolena velikost korpusu 50 akordů.
 Před vstupem do LSTM sítě byly identifikátory 
 zakódovány na \emph{jedna z N} reprezentaci
@@ -1417,7 +1511,7 @@ První je již zmiňovaný pianoroll vektor aktuálního kroku.
 Kromě aktuálně znějících tónů je na vstupu také embedding 
 aktuálního akordu.
 Díky tomu je možné naučit se, které tóny zní při kterém akordu.
-V hudbě melodie většinou \"postupuje\" k dalšímu akordu.
+V hudbě melodie většinou "postupuje" k dalšímu akordu.
 Kvůli tomu je další částí vstupu akord následující aktuálnímu kroku.
 Generované písničky jsou tak více strukturované.
 Poslední částí vstupu je binární počítadlo,
