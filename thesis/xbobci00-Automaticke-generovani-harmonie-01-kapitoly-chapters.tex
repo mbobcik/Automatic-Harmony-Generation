@@ -1041,7 +1041,7 @@ která určuje jak moc tyto informace ovlivní stav.\cite{colah_lstm}
 \end{figure*}
 
 Zbývajícím krokem je určit výstupní data buňky v aktuálním kroku.
-Dá se řící, že tento krok je podobný obrácení předchozího kroku.
+Dá se říci, že tento krok je podobný obrácení předchozího kroku.
 Nejprve projde aktuální vstup vrstvou sigmoid, 
 která rozhodne, co bude na výstupu.
 Následně projde stav buňky vrstvou s aktivační funkcí tanh,
@@ -1069,6 +1069,24 @@ Viz obrázek \ref{obrazekLSTMPeepholes}.
     \label{obrazekLSTMPeepholes}
 \end{figure*}
 
+\section{Gated Reccurent Unit}
+Další variantou vycházející z architektury LSTM
+je Gated Reccurent Unit (dále jen GRU).
+Nejvýznamnější je kombinace forget gate a input gate 
+do jediné update gate layer.
+Dále také kombinuje stav buňky s výstupní hodnotou.
+Strukturu buňky GRU reprezentuje obrázek \ref{obrazekGRU}.
+Výsledkem těchto modifikací je buňka,
+která zjednodušuje jak výpočet, tak trénování.
+Díky tomu začíná být více populární, a je často používána.
+\cite{colah_lstm}
+
+\begin{figure*}[h]\centering
+    \centering
+    \includegraphics[width=0.8\linewidth]{obrazky/LSTM3-var-GRU.png}\\[1pt]  
+    \caption{Schéma a funkce varianty Gated Reccurent Unit.\cite{colah_lstm}}    
+    \label{obrazekGRU}
+\end{figure*}
 
 \chapter{Trénovací sada}
 % ABC, MIDI, GUIDO ... viz NOTES.md
