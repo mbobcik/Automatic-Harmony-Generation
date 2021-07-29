@@ -885,7 +885,50 @@ Stejně jako u MSE platí, že lépe naučená síť má nižší hodnoty kří�
 Dokonale naučená neuronová síť má křížovou entropii rovnu nule.
 \cite{Goodfellow-et-al-2016, Kvasnicka_NeuronoveSite, Mehrotra_ElementsOfNNs}
 
-%\todo{TODO - Dopsat princip uceni NN}
+\section{Back-propagation}
+Jedním z nejpoužívanějších algoritmů k učení neuronových sítí
+je back-propagation, tedy zpětné šíření chyby.
+Tento algoritmus patří do třídy gradientních metod
+a zajišťuje změnu vah neuronů v jednotlivých vrstvách sítě.
+Algoritmus začíná pracovat u výstupní vrstvy
+a postupně šíří chybu dalšími vrstvami směrem ke vstupní.
+Postupně upravuje jednotlivé váhy neuronů,
+dokud nedojde k lokálnímu, nebo, 
+v lepším případě, globálnímu minimu chyby.
+V algoritmu se pracuje také s parametrem míry učení (anglicky learning rate), který určuje rychlost učení.
+Tento parametr nabývá hodnot z intervalu $<0,1>$.
+Při vyšších hodnotách je váhy modifikují výrazněji,
+ale mohou uváznout v lokálním minimu, z nějž už se nebudou moci dostat.
+Proto některé algoritmy míru učení postupně snižují v průběhu trénningu.
+\par
+
+Algoritmus back-propagation klade podmínku na využitou aktivační funkci každého neuronu.
+Ta musí být diferencovatelná, tedy musí existovat její derivace.
+Tato vlastnost je zásadní pro gradientní sestup (anglicky gradient descent),
+což je optimalizační metoda pro hledání minima nějaké funkce.
+Gradient je vektor největšího růstu funkce.
+Pro hledání minima tedy algoritmus postupuje opačným směrem,
+proti směru gradientu.
+Jeho velikost se dále používá pro určení kroku každé iterace.
+Délka kroku je přímo úměrná velikosti gradientu 
+a také již zmiňované míře učení.
+Následuje vztah pro postupnou změnu vah:
+
+$$ w_{i+1} = w_i - \eta \nabla G(w_i) $$
+
+Kde $w$ je hodnota váhy, $\eta$ je hodnota míry učení, 
+$\nabla G$ je hodnota gradientu a $i$ je aktuální krok.
+Před začátkem algoritmu jsou všechny váhy v sítě
+inicializovány na náhodnou hodnotu z rozmezí $<0,1>$.
+Iterativní postup algoritmu ke globálnímu minimu 
+ilustruje obrázek \ref{obrazekGradientDescent}.
+
+\begin{figure*}[h]\centering
+    \centering
+    \includegraphics[width=0.6\linewidth]{obrazky/GradientDescent.png}\\[1pt]  
+    \caption{Gradientní sestup\cite{Raschka_GradientDescent}}    
+    \label{obrazekGradientDescent}
+\end{figure*}
 
 \section{Rekurentní neuronové sítě}
 Samotné neuronové sítě jsou pro některé typy problémů pořád příliš omezené.
