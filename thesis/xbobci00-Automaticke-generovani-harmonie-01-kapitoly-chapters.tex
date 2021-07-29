@@ -61,7 +61,7 @@ Tyto jsou prozkoumány, a následně je stanoven postup jejich konverze na vhodn
 Pátá kapitola obsahuje popis předchozích přístupů jiných autorů k~této problematice.
 Mezi nimi lze nalézt například model založený na shodě šablon, 
 jenž porovnává části vstupní melodie s~těmi, které zná.
-Další přístup je založen na skrytých markovových modelech, 
+Další přístup je založen na skrytých Markovových modelech, 
 které odhadují nejpravděpodobnější posloupnost akordů k~dané melodii.
 Na neuronových sítích jsou pak založeny modely firmy Google,
 které jsou představeny jako poslední v~této kapitole.
@@ -634,7 +634,7 @@ a místo zlomku je značen velkým písmenem C.
 Umělá inteligence dokázala relativně rychle řešit problémy, 
 které jsou pro člověka intelektuálně náročné, 
 ale jsou popsány formálními pravidly.
-Avšak pro člověka intuitivní "problémy" lze jen s~těží formálně popsat.
+Avšak pro člověka intuitivní "problémy" lze jen stěží formálně popsat.
 Strojové učení umožňuje počítači naučit se ze zkušeností
 a porozumět světu v~souvislostech.
 Získáváním zkušeností je odbourán proces formálního zápisu veškerých vědomostí,
@@ -648,7 +648,7 @@ a ponechávají skladateli volnou ruku.
 
 Strojové učení je ve~své~podstatě forma aplikované statistiky,
 s~důrazem na odhad složitých funkcí počítačem.
-Většina algoritmů lze rozdělit do dvou kategorií --
+Většinu algoritmů lze rozdělit do dvou kategorií --
 učení s~učitelem (supervised) 
 a učení bez učitele (unsupervised).
 Při učení s~učitelem se algoritmus snaží nějakému vstupu přiřadit daný výstup
@@ -663,7 +663,7 @@ k-nejbližších sousedů nebo rozhodovací stromy.
 Algoritmy bez učitele se učí pouze na základě vlastností objektů 
 a už nemají reflexi, zda se naučili správně nebo ne.
 Učení bez učitele se zabývá extrakcí informací z~rozdělení,
-u~kterého nejsou potřeba člověkem označené trénovací data.
+u~kterého nejsou potřeba člověkem označená trénovací data.
 Nejčastěji se jedná o~odhad hustoty, 
 odšumění dat s~nějakým rozdělením,
 hledání střední hodnoty všech dat 
@@ -679,9 +679,9 @@ analýza hlavních komponent nebo lineární regrese.
 \subsection*{Neurony}
 Základem neuronových sítí jsou neurony,
 jejichž myšlenkovým vzorem je biologický neuron, buňka mozku.
-Ty zachycují synapse, neboli signály pomocí dendritů 
+Ty zachycují synapse, neboli signály pomocí dendritů, 
 a šíří je do jádra buňky.
-Tam díky vnějším signálům vzniká potenciál, 
+Tam díky vnějším signálům vzniká potenciál 
 a pokud je dostatečně velký, 
 neuron jej pošle dál svým axonem.
 Axon je na konci rozvětven 
@@ -714,9 +714,9 @@ Tato funkce by měla být nelineární.
 Používá se například funkce Sigmoid nebo hyperbolický tangens 
 (zkracováno jako \emph{tanh}).
 Tvar a definice těchto funkcí viz obrázek \ref{obrazekAktivačníFunkce},
-případně rovnice níže).
+případně rovnice níže.
 Z grafů lze vyčíst, že pokud je vnitřní potenciál nízký (záporný), 
-výstup neuronu s aktivační funkcí sigmoidy je bude blížit nule.
+výstup neuronu s aktivační funkcí sigmoidy se bude blížit nule.
 Naopak, je-li potenciál dostatečně vysoký, výstupem neuronu bude 1.
 Neuron s aktivační funkcí tanh se chová obdobně,
 ale nízké hodnoty potenciálu se na výstupu blíží hodnotě $ -1 $.
@@ -733,7 +733,7 @@ $$ tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}$$s
 \end{figure*}
 
 Další aktivační funkcí je tzv. \emph{Rectified Linear Unit} (dále jen ReLU).
-Jedná se o jednu z nejpoužívanějších v moderních neuronových sítích,
+Jedná se o jednu z~nejpoužívanějších v moderních neuronových sítích,
 protože významně urychluje chod sítě.
 Důvodem je nižší počet výpočetních operací oproti sigmoidě
 nebo hyperbolickému tangentu.
@@ -752,9 +752,9 @@ Gradient tedy není vždy nulový a neuron tak nepřestane reagovat.
 Aktivační funkce obvykle používaná u klasifikačních problémů se nazývá softmax.
 Úkolem je přiřadit vzorek do jedné z konečného počtu definovaných tříd.
 Tato funkce se tak používá až v poslední vrstvě,
-kde se stará o to, aby suma výstupních hodnot neuronů rovnala jedné.
+kde se stará o to, aby se suma výstupních hodnot neuronů rovnala jedné.
 Výstupní hodnoty tak představují pravděpodobnosti příslušnosti prvku
-k jednotlivým klasifikačním třídám.
+k~jednotlivým klasifikačním třídám.
 Následuje definice funkce softmax:
 
 $$softmax(z_j) = \frac{e^{z_j}}{\sum^{N}_{k=1}e^{z_k}} $$
@@ -793,13 +793,13 @@ fungují na principu zvaném černá skříňka, black box.
 Před uvedením sítě do provozu je potřeba 
 ji nejprve jednorázově natrénovat na datech z datové sady.
 Ty se nazývají trénovací a jsou podobná těm, 
-která bude naučená sít zpracovávat.
+která bude naučená síť zpracovávat.
 Učení sítě spočívá v úpravách hodnot vah mezi jednotlivými neurony.
 Jednotlivé váhy postupně konvergují ke své optimální hodnotě.
 Tato fáze bývá výpočetně i časově velmi náročná,
 kvůli velkému množství výpočtů prováděných nad každým prvkem. 
 Po dokončení učení je síť připravena k použití.
-To už zpravidla nepředstavuje takovou výpočetní zátěž,
+To už zpravidla nepředstavuje takovou výpočetní zátěž
 a použití sítě je velmi rychlé.
 \cite{Goodfellow-et-al-2016, Nicholson_NeuralNets, Kvasnicka_NeuronoveSite, Mehrotra_ElementsOfNNs}
 \par
@@ -848,7 +848,7 @@ a výstupem je opět vektor.\cite{Goodfellow-et-al-2016}
 
 \section{Chybové funkce}
 V poslední vrstvě neuronových sítí se využívají chybové funkce.
-Ty slouží k určení přesnosti sítě,
+Ty slouží k určení přesnosti sítě
 a při trénování také k učení sítě zpětným šířením chyby přes všechny neurony.
 \par
 Jednou z chybových funkcí je čtvercová chyba,
@@ -869,7 +869,7 @@ Jinou, hojně využívanou chybovou funkcí je křížová entropie
 (anglicky Cross-Entropy),
 která se používá při klasifikaci do tříd.
 Předpokladem k použití jsou dva a více neuronů ve výstupní vrstvě.
-Tato funkce se často používá zároveň s aktivační funckí softmax,
+Tato funkce se často používá zároveň s aktivační funkcí softmax,
 která normalizuje výstupní hodnoty poslední vrstvy 
 do pravděpodobností náležitosti k jednotlivým třídám.
 Následuje definice funkce křížové entropie (CE) pro počet výstupních neuronů $C > 2$:
@@ -893,12 +893,12 @@ a zajišťuje změnu vah neuronů v jednotlivých vrstvách sítě.
 Algoritmus začíná pracovat u výstupní vrstvy
 a postupně šíří chybu dalšími vrstvami směrem ke vstupní.
 Postupně upravuje jednotlivé váhy neuronů,
-dokud nedojde k lokálnímu, nebo, 
+dokud nedojde k lokálnímu nebo, 
 v lepším případě, globálnímu minimu chyby.
 V algoritmu se pracuje také s parametrem míry učení (anglicky learning rate), který určuje rychlost učení.
 Tento parametr nabývá hodnot z intervalu $<0,1>$.
 Při vyšších hodnotách je váhy modifikují výrazněji,
-ale mohou uváznout v lokálním minimu, z nějž už se nebudou moci dostat.
+ale mohou uváznout v lokálním minimu, z něhož už se nebudou moci dostat.
 Proto některé algoritmy míru učení postupně snižují v průběhu tréningu.
 \par
 
@@ -939,7 +939,7 @@ a na jeho konci je opět vektor pevné délky.
 Taková omezení neberou v~úvahu proudová data, 
 tedy sekvence na sobě závislých vektorů.
 Rekurentní sítě umožňují mít takovou sekvenci jako vstup, 
-jako výstup, nebo jako obojí.
+jako výstup nebo jako obojí.
 Principem RNN jsou smyčky, kdy výstupy jedné vrstvy jsou
 propojeny se svými vstupy.
 Systém si tak při řešení problému uchovává informaci
@@ -965,7 +965,7 @@ rekurentní síť se nedokáže naučit spojitost mezi nimi.
 
 \section{Long Short-Term Memory}
 \label{lstmTeorie}
-Long Short-Term Memory (dále jen LSTM), 
+Long Short-Term Memory (dále jen LSTM) 
 jsou speciálním druhem rekurentních neuronových sítí.
 Jsou schopny se naučit i dlouhodobější závislosti v~sekvencích dat.
 S~touto vlastností byly primárně navrženy.\cite{colah_lstm}
@@ -993,7 +993,7 @@ kterou informaci chce zapomenout,
 tedy vyřadit ze stavu buňky.
 Toto rozhodnutí provádí takzvaná "forget gate layer",
 tedy vrstva s aktivační funkcí sigmoidy.
-Tato brána vezme v úvahu aktuální vstup a výstup předchozí buňky,
+Tato brána vezme v úvahu aktuální vstup a výstup předchozí buňky
 a převede je na hodnotu z intervalu $<0,1>$,
 přičemž 1 znamená ponechat informaci
 a 0 znamená kompletně zapomenout.
@@ -1031,7 +1031,7 @@ je potřeba aktualizovat starý stav buňky.
 Nejprve je násoben vektorem $f_t$, tedy tím, co má být zapomenuto.
 Následně je přičteno $i_t\tilde{C}_t $, 
 tedy nové kandidátní informace násobené hodnotou,
-která určuje jak moc tyto informace ovlivní stav.\cite{colah_lstm}
+která určuje, jak moc tyto informace ovlivní stav.\cite{colah_lstm}
 
 \begin{figure*}[h]\centering
     \centering
@@ -1044,7 +1044,7 @@ Zbývajícím krokem je určit výstupní data buňky v aktuálním kroku.
 Dá se říci, že tento krok je podobný obrácení předchozího kroku.
 Nejprve projde aktuální vstup vrstvou sigmoid, 
 která rozhodne, co bude na výstupu.
-Následně projde stav buňky vrstvou s aktivační funkcí tanh,
+Následně projde stav buňky vrstvou s aktivační funkcí tanh
 a výsledek se vynásobí s výstupem sigmoid vrstvy.\cite{colah_lstm}
 Práce je patrná na obrázku \ref{obrazekLSTMOutput}
 
@@ -1078,7 +1078,7 @@ Dále také kombinuje stav buňky s výstupní hodnotou.
 Strukturu buňky GRU reprezentuje obrázek \ref{obrazekGRU}.
 Výsledkem těchto modifikací je buňka,
 která zjednodušuje jak výpočet, tak trénování.
-Díky tomu začíná být více populární, a je často používána.
+Díky tomu začíná být více populární a je často používána.
 \cite{colah_lstm}
 
 \begin{figure*}[h]\centering
@@ -1503,9 +1503,9 @@ Akordová LSTM má dvě vrstvy.
 První je takzvaná embeddingová vrstva,
 která opět využívá techniku používanou v NLP.
 Tou jsou word embeddings, které mapují slova (v tomto případě akordy)
-ze korpusu do vektorů reálných čísel.
+z korpusu do vektorů reálných čísel.
 Word embeddings nejsou pevně dané a musí být natrénovány.
-Vektorový prostor pak zachycuje vztahy mezi jednotlivými slovy,
+Vektorový prostor pak zachycuje vztahy mezi jednotlivými slovy
 a sémanticky podobná slova jsou v tomto prostoru blízko sebe.
 V této práci byly místo slov použity akordy.
 Za embeddingovou vrstvou následuje LSTM vrstva,
@@ -1513,7 +1513,7 @@ která předpovídá akordy, které následují po aktuálním.
 K predikci nové posloupnosti potřebuje základ libovolné délky.
 Další akord je získán vzorkováním výstupního pravděpodobnostního vektoru
 s parametrem temperature.
-Tento akord je potom dán zpět na vstup této vrstvy,
+Tento akord je potom dán zpět na vstup této vrstvy
 a na jeho základě je generován další a tak dále.
 Parametr temperature ovlivňuje různorodost generované posloupnosti.
 Nulová temperature znamená, že pro daný základ 
@@ -1534,9 +1534,9 @@ Kvůli tomu je další částí vstupu akord následující aktuálnímu kroku.
 Generované písničky jsou tak více strukturované.
 Poslední částí vstupu je binární počítadlo,
 které počítá od 0 do 7 v každém taktu.
-Toto umožňuje LSTM orientovat se uvnitř taktu,
+Toto umožňuje LSTM orientovat se uvnitř taktu
 a ví, kolik kroků zbývá do změny akordu 
-(akordy se mění pouze na začátku taktu. Viz výše).
+(akordy se mění pouze na začátku taktu, viz výše).
 Při generování nové písně je na vstupu opět nejprve
 základ skládající se z pianoroll vektoru a příslušných akordů.
 Noty jsou vzorkovány individuálně.
@@ -2104,29 +2104,31 @@ který je vydáván pod licencí GNU GPL.
 
 \section{Způsob vyhodnocení výsledků}
 Měření výkonu v této oblasti není jednoduché.
-Z důvodu širokého spektra záměrů v oblasti generování hudby,
+Z důvodu širokého spektra záměrů v oblasti generování hudby
 je možné setkat se v existující literatuře s různými přístupy
 k  vyhodnocování výstupů harmonizačních algoritmů.
 Jedná se například o porovnávání vygenerované sekvence akordů
-s původní akordy z anotované skladby,
-dále porovnávání jednotlivých generovaných akordů,
+s původními akordy z anotované skladby,
+dále porovnávání jednotlivých generovaných akordů
 nebo vyhodnocení subjektivním poslechem.
 \cite{Raczynski}
 Posledním způsobem byl hodnocen například projekt JamBot
 uvedený v části \ref{Jambot} (v článku \cite{Brunner_Jambot}).
-Pro vyhodnocení poslechem je, mimo jiné, možné využít 
+\par
+
+Pro vyhodnocení poslechem je možné využít, mimo jiné,
 placených crowdsourcingových služeb jako například Amazon MTurk.
 Využít masy lidí pro rozličné účely (Crowdsourcing),
 které zahrnují i poslech generované hudby,
 však lze bezplatně.
 Například skupina, která stojí za projektem BachBot,
-vyvinula testovací prostředí svých nahrávek na webu,
+vyvinula testovací prostředí svých nahrávek na webu
 a ten šířila virálně skrz sociální sítě.
 \cite{Liang_AutomaticComposition}
 Některé články dokonce neposkytují žádné vyhodnocení
 své harmonizace.
 \cite{Raczynski}
-Vzhledem k povaze navrženého systému,
+Vzhledem k povaze navrženého systému
 budou výsledky harmonizace 
 manuálně hodnoceny subjektivním poslechem.
 Na základě empirických zkušeností s hudbou 
