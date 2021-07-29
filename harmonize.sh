@@ -1,9 +1,12 @@
 #!/bin/bash
-# Script which will automatically prepare dataset for training neural network.
-# Prerequisite is to run scripts prerequisities.sh and install.sh
-# First argument is folder with MIDI files.
-# Second argument is the SQLite DB file with songs.
-# If left unspecified, the conversion from DB file is omited.
+# Script which will generate 10 harmonized files based on 
+# specified MIDI file with melody.
+
+# First argument specifies path to bundle file of model
+# Second argument specifies path to MIDI file.
+# Third argument specifies number of measures in the MIDI file
+# Last argument is temperature, which is optional.
+# Default value is 1.0
 # This file is part of my Master thesis.
 #
 # Author: Bc. Martin Bobčík, xbobci00
@@ -12,12 +15,16 @@
 if [ -z "$1" ] 
     then
     echo "Bundle file with model not specified!"
-    echo "Script which will automatically prepare dataset for training neural network.
-Prerequisite is to run scripts prerequisities.sh and install.sh
-First argument is folder with MIDI files.
-Second argument is the SQLite DB file with songs.
-If left unspecified, the conversion from DB file is omited.
+    echo "Script which will generate 10 harmonized files based on 
+specified MIDI file with melody.
+
+First argument specifies path to bundle file of model
+Second argument specifies path to MIDI file.
+Third argument specifies number of measures in the MIDI file
+Last argument is temperature, which is optional.
+Default value is 1.0
 This file is part of my Master thesis.
+
 Author: Bc. Martin Bobčík, xbobci00
 Copyright (C) 2021 Brno University of Technology, Faculty of Information Technology"
     
@@ -27,12 +34,16 @@ fi
 if [ -z "$2" ] 
     then
     echo "MIDI file with melody not specified!"
-        echo "Script which will automatically prepare dataset for training neural network.
-Prerequisite is to run scripts prerequisities.sh and install.sh
-First argument is folder with MIDI files.
-Second argument is the SQLite DB file with songs.
-If left unspecified, the conversion from DB file is omited.
+    echo "Script which will generate 10 harmonized files based on 
+specified MIDI file with melody.
+
+First argument specifies path to bundle file of model
+Second argument specifies path to MIDI file.
+Third argument specifies number of measures in the MIDI file
+Last argument is temperature, which is optional.
+Default value is 1.0
 This file is part of my Master thesis.
+
 Author: Bc. Martin Bobčík, xbobci00
 Copyright (C) 2021 Brno University of Technology, Faculty of Information Technology"
     exit 1
@@ -40,16 +51,25 @@ fi
 
 if [ -z "$3" ] 
     then
-    echo "Number of measures not specified!"
-        echo "Script which will automatically prepare dataset for training neural network.
-Prerequisite is to run scripts prerequisities.sh and install.sh
-First argument is folder with MIDI files.
-Second argument is the SQLite DB file with songs.
-If left unspecified, the conversion from DB file is omited.
+    echo "Script which will generate 10 harmonized files based on 
+specified MIDI file with melody.
+
+First argument specifies path to bundle file of model
+Second argument specifies path to MIDI file.
+Third argument specifies number of measures in the MIDI file
+Last argument is temperature, which is optional.
+Default value is 1.0
 This file is part of my Master thesis.
+
 Author: Bc. Martin Bobčík, xbobci00
 Copyright (C) 2021 Brno University of Technology, Faculty of Information Technology"
     exit 1
+fi
+
+TEMP=$4
+if [ -z "$4" ] 
+    then
+    TEMP=1.0
 fi
 
 BUNDLEFILE=$(readlink -f $1)
@@ -63,4 +83,5 @@ polyphony_rnn_generate \
     --num_steps=$STEPS \
     --primer_midi="$MIDI" \
     --condition_on_primer=false \
-    --inject_primer_during_generation=true    
+    --inject_primer_during_generation=true \
+    --temperature="$TEMP"    
