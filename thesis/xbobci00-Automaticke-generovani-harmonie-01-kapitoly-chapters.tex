@@ -2253,10 +2253,10 @@ Za povšimnutí stojí fakt,
 z~trénovací datové sady.
 Dále si je patrné, že model používá spíše nestandardní a nelibozvučné souzvuky
 a standardní durové, nebo mollové akordy volí spíše zřídka.
-Automatická harmonizace s~pomocí tohoto modelu je tak spíše nefunkční,
+Automatická harmonizace s~pomocí tohoto modelu na krátkých skladbách je tak spíše nefunkční,
 ikdyž se mu v~několika málo případech podařilo vygenerovat harmonii 
 (nebo alespoň její část) správnou a poslouchatelnou.
-Model trpí tím, že je malý (dvě RNN vrstvy o~64 neuronech každá),
+Důvodem může být velikost modelu (dvě RNN vrstvy o~64 neuronech každá),
 oproti autory zamýšlené výchozí velikosti (tři RNN vrstvy o~256 neuronech každá).
 Nedokáže se tak naučit složité znaky používané v~harmonii.
 
@@ -2335,7 +2335,7 @@ Nejvyšší použitá hodnota se vyznačuje nejlépe zvládnutou harmonií.
 Povedené skladby obsahují dva až tři akordy,
 které s~poskytnutou melodií zní.
 Navíc jsou zavedeny ve správný čas 
-a výsledný souzvuk skladbu nepoškozuje,
+a výsledný souzvuk dojem ze skladby nepoškozuje,
 jako tomu bylo u~předchozích pokusů.
 
 \begin{figure*}[h]\centering
@@ -2359,8 +2359,9 @@ Oproti předchozím skladbám je tato dlouhá osm taktů, je tedy čtyřikrát d
 Kvůli této skutečnosti je potřeba změnit parametr \emph{num\_steps} 
 z~původní hodnoty 64 na 256.
 Parametr temperature bude nabývat stejných hodnot jako v~předchozích případech.
-Cílem je zjistit, jestli model špatně zvládá harmonizovat jenom krátké skladby, 
-nebo jestli mu větší délka skladby pomůže.
+Cílem je zjistit, jak se model chová při harmonizaci delší skladby.
+Jestli model špatně zvládá harmonizovat jenom krátké skladby, 
+nebo mu větší délka skladby pomůže.
 \par
 Generování deseti harmonizovaných souborů na základě delší melodie
 zabralo systému 16 vteřin. 
@@ -2403,9 +2404,52 @@ Je také vidět, že poslední modrá část už není celý akord, ale samotný
     \label{obrazekMyHarmonyLongPovedenaNoty}
 \end{figure*}
 
-%experiment s condition on primer => generování nové hudby
+\section{Harmonizace velmi dlouhé melodie}
+Posledním experimentem s modelem je harmonizace velmi dlouhé skladby.
+Uvažovaná skladba má délku 127 taktů, 
+a tak je potřeba změnit paramet \emph{num\_steps} 
+z původní hodnoty 64 na $ 32 * 127 = 4064$ kroků.
+Stejně jako u předchozích experimentů budou skladby generovány
+s parametrem temperature o hodnotách 0.7, 1.0, 1.3 a 2.0.
+Cílem je ověřit, že model vykazuje lepší výsledky 
+při harmonizaci delších skladeb.
+Dále je cílem zjistit, o kolik se zvýší doba harmonizace jednoho taktu,
+s ohledem na předchozí experiment,
+kdy se doba zvýšila o $0.05$ sekundy při použití čtyřikrát delší skladby.
+\par
+Vygenerování deseti skladeb trvalo 5:24 minut.
+Po odečtení doby inicializace zbývá na generování 5:20 minut,
+tedy $320$ vteřin.
+Průměrná doba harmonizace jedné skladby činí $32$ sekund.
+Průměr každého taktu je tedy $0.25$s.
+V porovnání s délkou harmonizace předchozích experimentů
+se jedná o nepatrné zvýšení o $0.15$, respektive $0.1$ vteřiny.
+Srovnání lze pozorovat na grafu na obrázku \ref{obrazekCasHarmonizace}.
 
-%experiment s harmonizací s BachBot modelem
+\begin{figure*}[h]\centering
+    \centering
+    \includegraphics[width=0.8\linewidth]{obrazky/chartCasHarmonizace.png}\\[1pt]  
+    \caption{Graf založnený na datech ze všech experimentů,
+     zobrazující vztah mezi délkou skladby, a dobou trvání harmonizace jednoho taktu.}    
+    \label{obrazekCasHarmonizace}
+\end{figure*}
+
+Z harmonizačního hlediska jsou na tom výsledky lépe než v předchozích experimentech.
+Ve skladbě nevadí dlouhé akordy (za předpokladu použití správného syntetizátoru),
+jelikož je model včas změní na jiný.
+Dlouhé akordy se, oproti předchozím experimentům,
+vyskytují spíše ve skladbách generovaných s nízkou (0.7) a výchozí (1.0) hodnotou temperature.
+Harmonizace skladeb s tímto nastavením lze považovat za dobře provedené.
+Nicméně i v nich lze najít disharmonie.
+\par
+Naopak při generování s vyššími hodnotami temperature (1.3 a 2.0) 
+se akordy a jejich tóny střídají až příliš rychle.
+Harmonizace je s těmito hodnotami spíše náhodná.
+\par
+Potvrdila se tedy domněnka z předchozího experimentu,
+že model vykazuje lepší výsledky při harmonizaci
+delších skladeb.
+
 
 \chapter{Diskuse}
 Tato kapitola se zaměřuje na diskusi výsledků experimentů,
@@ -2432,8 +2476,8 @@ s~nízkou hodnotou parametru temperature.
 Druhým jevem byl jeden akord, 
 který byl nevhodně dlouhý,
 případně se opakoval hned po sobě.
-Přestože s~danou melodií mohl ladit,
-výsledek působil především nudně a nezajímavě.
+\par
+
 Složení akordů z~menšího počtu tónů byl také jeden z~častých jevů.
 Případně akord začal celý a postupně přestaly znít některé jeho tóny.
 Přes všechny tyto problémy se v~každém experimentu objevilo několik skladeb,
@@ -2441,9 +2485,11 @@ které měly alespoň z~části správnou nebo zajímavě provedenou harmonii.
 V každém experimentu (40 skladeb) bylo možné najít 4 až 6 skladeb,
 které měly zdařilou harmonizaci.
 To znamená úspěch v deseti až patnácti procentech případů.
-Obecně lze říci, že skladby, 
+Obecně lze říci, že krátké skladby, 
 které byly generovány s~vyšší hodnotou parametru temperature,
 byly lépe zpracované ve smyslu správné harmonizace.
+Harmonizace dlouhých skladeb s původní hodnotou temperature
+byly převážně harmonizovány správně i přes částečné disonance.
 \par
 Co se týče trvání generování harmonie byly výsledky velmi uspokojivé.
 Doba generování jednoho taktu se i u delších skladeb pohybovala okolo $0.15$ vteřiny.
@@ -2457,6 +2503,8 @@ a ve více případech.
 Jak ale bylo řečeno v~kapitole výše (viz \ref{trenovaniModelu} ),
 trénování takového modelu je podmíněno použitím větší výpočetní síly,
 případně paralelizací tohoto procesu.
+\par
+
 Trénování většího modelu je tedy jednou z~možností pokračování této práce.
 Dalším rozšířením může být použití a trénování modelu na jiné datové sadě,
 neboť většina výzkumů používá pouze korpus chorálů Johanna Sebastiana Bacha.
@@ -2530,10 +2578,12 @@ Následuje diskuse dosažených výsledků během testování,
 návrhy dalšího pokračování této práce a závěr.
 \par
 
-Ne všechny výsledky natrénovaného systému byly  uspokojivé
+Ne všechny výsledky natrénovaného systému byly uspokojivé
 a většinou s~původní melodií nezněly a kazily její dojem.
 Nicméně mezi vygenerovanými skladbami se našly světlé výjimky,
 které se daly považovat za správnou a zajímavou harmonizaci.
+Obecně lze řící, že model při harmonizaci dlouhých skladeb
+vykazoval lepší výsledky.
 
 Použitý model byl však, oproti doporučeným hodnotám hyperparametrů, malý.
 Lepší výsledky by tak mohlo přinést použití většího modelu,
