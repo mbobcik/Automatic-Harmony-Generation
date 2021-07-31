@@ -319,7 +319,9 @@ který s~I. stupněm tvoří interval velké tercie.
 Jinými slovy, první a třetí tón stupnice jsou vzdáleny dva celé tóny.
 Vzdálenost mezi jednotlivými stupni durové stupnice jsou dva celé tóny, 
 půltón, tři celé tóny, půltón.
-$$ 1 - 1 - 1/2 - 1 - 1 - 1 - 1/2 $$
+\begin{equation*}
+    1 - 1 - 1/2 - 1 - 1 - 1 - 1/2
+\end{equation*}
 Půltóny jsou tedy mezi III.--IV. a VII.--VIII. stupněm.
 Pro stupnice začínající od jiného základního tónu než \emph{c} 
 je potřeba pomocí posuvek (viz část \ref{kapitolaPosuvky}:Posuvky) 
@@ -735,7 +737,6 @@ ale nízké hodnoty potenciálu se na výstupu blíží hodnotě $ -1 $.
     tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}
 \end{equation}
 
-
 \begin{figure*}[h]\centering
     \centering
     \includegraphics[width=0.8\linewidth]{obrazky/tanh_v_sigmoid.jpg}\\[1pt]  
@@ -749,7 +750,9 @@ protože významně urychluje chod sítě.
 Důvodem je nižší počet výpočetních operací oproti sigmoidě
 nebo hyperbolickému tangentu.
 Definice funkce ReLU je následující:
-$$ ReLU(x) = max(0, x)$$
+\begin{equation}
+    ReLU(x) = max(0, x)
+\end{equation}
 Při kladných vstupních hodnotách propaguje hodnotu na výstup,
 zatímco místo záporných hodnot propaguje nulu.
 To s sebou přináší problém při učení,
@@ -768,9 +771,10 @@ Výstupní hodnoty tak představují pravděpodobnosti příslušnosti prvku
 k~jednotlivým klasifikačním třídám.
 Následuje definice funkce softmax:
 
-$$softmax(z_j) = \frac{e^{z_j}}{\sum^{N}_{k=1}e^{z_k}} $$
-
-Kde $j \in (1,N)$ a N je délka výstupního vektoru.
+\begin{equation}
+    softmax(z_j) = \frac{e^{z_j}}{\sum^{N}_{k=1}e^{z_k}}
+\end{equation}
+,kde $j \in (1,N)$ a N je délka výstupního vektoru.
 Na výstupní hodnotu je aplikována exponenciální funkce
 a výsledek je normalizován sumou exponenciál všech prvků vektoru.
 \cite{Mehrotra_ElementsOfNNs,Goodfellow-et-al-2016}
@@ -781,9 +785,11 @@ Tento model je složen z jediného matematického modelu neuronu.
 Perceptron dokáže klasifikovat pouze dvě lineárně separovatelné kategorie.
 Vstupem je, stejně jako u jediného neuronu, vektor vlastností $x$
 násobený vektorem vah \textbf{w} a s přičteným prahem $ w_0 $.
-Výsledkem je rovnice nadroviny,
-$$ w_0 + \sum_{i=1}^{n} x_{i}w_{i} = y$$
-která dělí n-dimenzionální prostor na dva poloprostory.
+Výsledkem je rovnice nadroviny
+\begin{equation}
+    w_0 + \sum_{i=1}^{n} x_{i}w_{i} = y
+\end{equation}
+,která dělí n-dimenzionální prostor na dva poloprostory.
 Je-li výsledný potenciál dostatečně velký, bod leží v jednom poloprostoru,
 naopak je-li potenciál příliš malý, pak leží v druhém poloprostoru.
 Kategorie bodu je dána jeho příslušností k jednomu, nebo druhému poloprostoru.
@@ -872,9 +878,9 @@ Tímto způsobem se uměle zvyšuje rozdíl chyby mezi korektně
 a chybně klasifikovaným vzorkem,
 což zrychluje tréning sítě.
 Definice funkce čtvercové chyby je následující:
-
-$$ MSE = \frac{1}{N} \sum^{N}_{i=1}(d_i - y_i)^2 $$
-
+\begin{equation}
+    MSE = \frac{1}{N} \sum^{N}_{i=1}(d_i - y_i)^2 
+\end{equation}
 ,kde $N$ je počet prvků z trénovací sady, $d_i$ je očekávaná hodnota a $y_i$ je výstup sítě.
 \par
 
@@ -886,14 +892,16 @@ Tato funkce se často používá zároveň s aktivační funkcí softmax,
 která normalizuje výstupní hodnoty poslední vrstvy 
 do pravděpodobností náležitosti k jednotlivým třídám.
 Následuje definice funkce křížové entropie (CE) pro počet výstupních neuronů $C > 2$:
-$$CE = - \sum^C_i d_i log(y_i)$$
-kde opět $d_i$ je očekávaná hodnota a $y_i$ je výstup sítě.
+\begin{equation}
+    CE = - \sum^C_i d_i log(y_i)
+\end{equation}
+,kde opět $d_i$ je očekávaná hodnota a $y_i$ je výstup sítě.
 \par
 
 Pro binární klasifikátor, tedy $C = 2$, lze funkci zjednodušit následovně:
-
-$$CE = - d_i log(y_i) + (1 - d_i) log(1 - y_i)$$
-
+\begin{equation}
+    CE = - d_i log(y_i) + (1 - d_i) log(1 - y_i)
+\end{equation}
 Stejně jako u MSE platí, že lépe naučená síť má nižší hodnoty křížové entropie.
 Dokonale naučená neuronová síť má křížovou entropii rovnu nule.
 \cite{Goodfellow-et-al-2016, Kvasnicka_NeuronoveSite, Mehrotra_ElementsOfNNs}
@@ -1669,9 +1677,9 @@ Nevýhodou je velikost výsledných .tfrecord souborů s~touto definicí oproti 
 Tento formát může zvýšit velikost datové sady desetinásobně,
 avšak při převedení všech MIDI souborů (viz kapitola \ref{hooktheoryDB}) 
 je výsledná velikost $9.409e^3$krát vyšší (viz výpočet podle měření níže).
-
-$$ tf / m = 94454904591B / 10038169B = 9.409575e^3$$
-
+\begin{equation}
+     tf / m = 94454904591B / 10038169B = 9.409575e^3
+\end{equation}
 kde \emph{tf} je velikost všech výsledných .tfrecord souborů 
 a \emph{m} je velikost všech vstupních MIDI souborů.
 
@@ -1891,10 +1899,13 @@ Výchozí hodnoty popisují mnohem větší model o~třech RNN vrstvách s~256 n
 Ovšem ani po uplynutí dvaceti hodin od začátku trénování tohoto většího modelu,
 se nedokončil jediný trénovací cyklus.
 Odhadem by tak trénování na tomto stroji trvalo doslova desítky let
-(viz odhad níže, kde $t$ je odhadnutý čas jednoho cyklu).
+(viz odhad \ref{funkceOdhadCasuUceni} níže, kde $t$ je odhadnutý čas jednoho cyklu 
+a $x$ je odhad doby trvání trénování).
 Trénování větších modelů je tak podmíněno použitím počítačů s~větší výpočetní silou.
 
-$$t * num\_training\_steps = 20h * 20 000 \approx 45let $$
+\begin{equation}\label{funkceOdhadCasuUceni}
+    x = t * num\_training\_steps = 20h \times 20 000 \approx 45\text{let}
+\end{equation}
 
 Volitelně je možné paralelně spustit stejný skript s~přidaným parametrem \emph{eval},
 což spustí vyhodnocovací úlohu.
