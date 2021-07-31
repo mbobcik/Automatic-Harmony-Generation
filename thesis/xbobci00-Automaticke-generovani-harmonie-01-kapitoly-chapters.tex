@@ -38,6 +38,7 @@ Na závěr budou diskutovány výsledky testování a možné pokračování té
 %úvod do problému
 \section{Struktura práce}
 %popis struktury práce
+Tato práce je členěna následovně.
 V~první kapitole této práce se nachází přehled hudební teorie.
 Jsou představeny základní kameny hudby -- tóny, jejich soustavy a alterace.
 Následuje část věnovaná notopisu,
@@ -175,7 +176,7 @@ a značí se buď $e^2$, nebo{ e''}.
         $c^3$ & $d^3$ & $e^3$ & $f^3$ & $g^3$ & $a^3$ & $h^3$ & Tříčárková oktáva   \\
         $c^4$ & $d^4$ & $e^4$ & $f^4$ & $g^4$ & $a^4$ & $h^4$ & Čtyřčárková oktáva  \\
     \end{tabular}
-    \caption{Značení tónů a názvy jednotlivých oktáv}
+    \caption{Značení tónů a názvy jednotlivých oktáv.}
     \label{tabulkaOktav}
 \end{table}
 
@@ -212,7 +213,7 @@ Těmto tónům říkáme enharmonické. Enharmonická záměna je pak nahrazení
 \begin{figure*}[h]\centering
     \centering
     \includegraphics[width=0.4\linewidth]{obrazky/klaviatura.jpg}\\[1pt]  
-    \caption{Přehledné uspořádání tónů a půltónů v~oktávě }    
+    \caption{Přehledné uspořádání tónů a půltónů v~oktávě. }    
     \label{obrazekRozlozeniKlaviatury}
 \end{figure*}
 
@@ -506,8 +507,8 @@ První mezera je mezi první a druhou linkou.\par
 
 \begin{figure*}[h]\centering
     \centering
-    \includegraphics[width=0.5\linewidth]{obrazky/notovaOsnova.png}\\[1pt]  
-    \caption{Číslování notové osnovy}    
+    \includegraphics[width=0.4\linewidth]{obrazky/notovaOsnova.png}\\[1pt]  
+    \caption{Číslování notové osnovy.}    
     \label{obrazekNotovaOsnova}
 \end{figure*}
 
@@ -547,8 +548,8 @@ a to G-klíč (houslový), F-klíč (basový) a dva C-klíče (altový a tenorov
 
 \begin{figure*}[h]\centering
     \centering
-    \includegraphics[width=0.6\linewidth]{obrazky/Klíče.png}\\[1pt]  
-    \caption{Hudební klíče s~příslušnou pozicí noty $c^1$}    
+    \includegraphics[width=0.5\linewidth]{obrazky/Klíče.png}\\[1pt]  
+    \caption{Hudební klíče s~příslušnou pozicí noty $c^1$.}    
     \label{obrazek4Klice}
 \end{figure*}
 
@@ -576,8 +577,8 @@ Celá pomlka značí pomlku na jakýkoliv celý takt.
 
 \begin{figure*}[h]\centering
     \centering
-    \includegraphics[width=0.8\linewidth]{obrazky/pomlky.png}\\[1pt]  
-    \caption{Pomlky ve čtyř čtvrťovém taktu}    
+    \includegraphics[width=0.7\linewidth]{obrazky/pomlky.png}\\[1pt]  
+    \caption{Pomlky ve čtyř čtvrťovém taktu.}    
     \label{obrazekPomlky}
 \end{figure*}
 
@@ -638,9 +639,9 @@ Avšak pro člověka intuitivní "problémy" lze jen stěží formálně popsat.
 Strojové učení umožňuje počítači naučit se ze zkušeností
 a porozumět světu v~souvislostech.
 Získáváním zkušeností je odbourán proces formálního zápisu veškerých vědomostí,
-které jsou k~řešení problému potřeba.
-\cite{Goodfellow-et-al-2016}
-Harmonizace melodie je někde na půl cesty mezi těmito extrémy.
+které jsou k~řešení problému potřeba
+\cite{Goodfellow-et-al-2016}.
+Harmonizace melodie je někde na pomyslné půli cesty mezi těmito extrémy.
 Na jednu stranu popsána pravidly hudební nauky,
 na stranu druhou nejsou pravidla zcela striktní 
 a ponechávají skladateli volnou ruku.
@@ -677,8 +678,8 @@ analýza hlavních komponent nebo lineární regrese.
 \cite{Goodfellow-et-al-2016}
 
 \subsection*{Neurony}
-Základem neuronových sítí jsou neurony,
-jejichž myšlenkovým vzorem je biologický neuron, buňka mozku.
+Základním stavebním prvkem umělých neuronových sítí je neuron,
+který je inspirován biologickým neuronem, buňkou mozku.
 Ty zachycují synapse, neboli signály pomocí dendritů, 
 a šíří je do jádra buňky.
 Tam díky vnějším signálům vzniká potenciál 
@@ -690,7 +691,7 @@ a připojen na dendrity dalších neuronů.
 \begin{figure*}[h]\centering
     \centering
     \includegraphics[width=0.6\linewidth]{obrazky/neuronSchema.png}\\[1pt]  
-    \caption{Schéma neuronu}    
+    \caption{Schéma neuronu.}    
     \label{obrazekSchemaNeuronu}
 \end{figure*}
 
@@ -713,22 +714,32 @@ určuje, jestli a jak moc může signál pokračovat skrz síť.
 Tato funkce by měla být nelineární.
 Používá se například funkce Sigmoid nebo hyperbolický tangens 
 (zkracováno jako \emph{tanh}).
-Tvar a definice těchto funkcí viz obrázek \ref{obrazekAktivačníFunkce},
+Definice obou aktivačních funkcí je uvedena v rovnici
+\ref{funkceSigmoid} a \ref{funkceTanh} 
+a jejich průběh je pro ilustraci znázorněn taktéž na obrázku 
+\ref{obrazekAktivačníFunkce}.
 případně rovnice níže.
-Z grafů lze vyčíst, že pokud je vnitřní potenciál nízký (záporný), 
+Z tvarů křivek lze identifikovat několik oblastí.
+Pokud je vnitřní potenciál nízký (záporný), 
 výstup neuronu s aktivační funkcí sigmoidy se bude blížit nule.
 Naopak, je-li potenciál dostatečně vysoký, výstupem neuronu bude 1.
 Neuron s aktivační funkcí tanh se chová obdobně,
 ale nízké hodnoty potenciálu se na výstupu blíží hodnotě $ -1 $.
 \cite{Goodfellow-et-al-2016, Nicholson_NeuralNets}
 
-$$ Sigmoid(x) = \frac{e^x}{e^x + 1}$$
-$$ tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}$$s
+\begin{equation}\label{funkceSigmoid}
+     Sigmoid(x) = \frac{e^x}{e^x + 1}
+\end{equation}
+
+\begin{equation}\label{funkceTanh}
+    tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}
+\end{equation}
+
 
 \begin{figure*}[h]\centering
     \centering
     \includegraphics[width=0.8\linewidth]{obrazky/tanh_v_sigmoid.jpg}\\[1pt]  
-    \caption{Aktivační funkce sigmoid a hyperbolický tangens}    
+    \caption{Aktivační funkce sigmoid a hyperbolický tangens.}    
     \label{obrazekAktivačníFunkce}
 \end{figure*}
 
@@ -759,7 +770,7 @@ Následuje definice funkce softmax:
 
 $$softmax(z_j) = \frac{e^{z_j}}{\sum^{N}_{k=1}e^{z_k}} $$
 
-Kde $j \epsilon (1,N)$ a N je délka výstupního vektoru.
+Kde $j \in (1,N)$ a N je délka výstupního vektoru.
 Na výstupní hodnotu je aplikována exponenciální funkce
 a výsledek je normalizován sumou exponenciál všech prvků vektoru.
 \cite{Mehrotra_ElementsOfNNs,Goodfellow-et-al-2016}
@@ -769,7 +780,7 @@ Nejjednodušší neuronovou sítí je perceptron.
 Tento model je složen z jediného matematického modelu neuronu.
 Perceptron dokáže klasifikovat pouze dvě lineárně separovatelné kategorie.
 Vstupem je, stejně jako u jediného neuronu, vektor vlastností $x$
-násobený vektorem vah $ w $ a s přičteným prahem $ w_0 $.
+násobený vektorem vah \textbf{w} a s přičteným prahem $ w_0 $.
 Výsledkem je rovnice nadroviny,
 $$ w_0 + \sum_{i=1}^{n} x_{i}w_{i} = y$$
 která dělí n-dimenzionální prostor na dva poloprostory.
@@ -821,6 +832,7 @@ rozdělí prostor na několik různých poloprostorů,
 což jej umožňuje dobře zmapovat.
 Větším množstvím neuronů se zvyšuje počet různých rozdělení prostoru
 a tedy i rozlišovací schopnost sítě.
+Současně se však také zvyšují výpočetní nároky na učení sítě.
 Vstupem následující vrstvy už nejsou původní příznaky,
 ale příslušnost prvku k jednotlivým oblastem.
 Celý problém je transformován do nového prostoru 
@@ -830,7 +842,7 @@ a druhá vrstva rozdělení zpřesňuje.
 \begin{figure*}[h]\centering
     \centering
     \includegraphics[width=0.6\linewidth]{obrazky/NNSchema.png}\\[1pt]  
-    \caption{Schéma neuronové sítě}    
+    \caption{Příklad neuronové sítě se čtyřmi vstupy a dvěma výstupy tvořené třemi vrstvami. }    
     \label{obrazekSchemaNeuronoveSite}
 \end{figure*}
 
@@ -847,11 +859,12 @@ a výstupem je opět vektor.\cite{Goodfellow-et-al-2016}
 \par
 
 \section{Chybové funkce}
-V poslední vrstvě neuronových sítí se využívají chybové funkce.
+Abychom mohli provést aktualizaci vah v průběhu učící fáze,
+používáme chybové funkce.
 Ty slouží k určení přesnosti sítě
 a při trénování také k učení sítě zpětným šířením chyby přes všechny neurony.
 \par
-Jednou z chybových funkcí je čtvercová chyba,
+Jednou z chybových funkcí je střední kvadratická chyba,
 neboli MSE z anglického \emph{Mean squared error}.
 Tato funkce odečte hodnotu na výstupu sítě od očekávané hodnoty.
 Aby chyba nebyla záporná, rozdíl hodnot je umocněn na druhou.
@@ -862,7 +875,7 @@ Definice funkce čtvercové chyby je následující:
 
 $$ MSE = \frac{1}{N} \sum^{N}_{i=1}(d_i - y_i)^2 $$
 
-Kde N je počet prvků z trénovací sady, $d_i$ je očekávaná hodnota a $y_i$ je výstup sítě.
+,kde $N$ je počet prvků z trénovací sady, $d_i$ je očekávaná hodnota a $y_i$ je výstup sítě.
 \par
 
 Jinou, hojně využívanou chybovou funkcí je křížová entropie
@@ -885,7 +898,7 @@ Stejně jako u MSE platí, že lépe naučená síť má nižší hodnoty kří�
 Dokonale naučená neuronová síť má křížovou entropii rovnu nule.
 \cite{Goodfellow-et-al-2016, Kvasnicka_NeuronoveSite, Mehrotra_ElementsOfNNs}
 
-\section{Back-propagation}
+\section{Učení neuronové sítě}
 Jedním z nejpoužívanějších algoritmů k učení neuronových sítí
 je back-propagation, tedy zpětné šíření chyby.
 Tento algoritmus patří do třídy gradientních metod
@@ -914,7 +927,9 @@ Délka kroku je přímo úměrná velikosti gradientu
 a také již zmiňované míře učení.
 Následuje vztah pro postupnou změnu vah:
 
-$$ w_{i+1} = w_i - \eta \nabla G(w_i) $$
+\begin{equation}
+    w_{i+1} = w_i - \eta \nabla G(w_i)
+\end{equation}
 
 Kde $w$ je hodnota váhy, $\eta$ je hodnota míry učení, 
 $\nabla G$ je hodnota gradientu a $i$ je aktuální krok.
@@ -927,7 +942,7 @@ ilustruje obrázek \ref{obrazekGradientDescent}.
 \begin{figure*}[h]\centering
     \centering
     \includegraphics[width=0.7\linewidth]{obrazky/GradientDescent.png}\\[1pt]  
-    \caption{Gradientní sestup\cite{Raschka_GradientDescent}}    
+    \caption{Gradientní sestup. \cite{Raschka_GradientDescent}}    
     \label{obrazekGradientDescent}
 \end{figure*}
 
@@ -940,7 +955,7 @@ Taková omezení neberou v~úvahu proudová data,
 tedy sekvence na sobě závislých vektorů.
 Rekurentní sítě umožňují mít takovou sekvenci jako vstup, 
 jako výstup nebo jako obojí.
-Principem RNN jsou smyčky, kdy výstupy jedné vrstvy jsou
+Principem RNN jsou zpětnovazební smyčky, kdy výstupy jedné vrstvy jsou
 propojeny se svými vstupy.
 Systém si tak při řešení problému uchovává informaci
 o předešlých prvcích vstupních dat,
@@ -959,15 +974,15 @@ rekurentní síť se nedokáže naučit spojitost mezi nimi.
 \begin{figure*}[h]\centering
     \centering
     \includegraphics[width=0.6\linewidth]{obrazky/RNNSchema.png}\\[1pt]  
-    \caption{Schéma rekurentní neuronové sítě\cite{colah_lstm}}    
+    \caption{Schéma rekurentní neuronové sítě. \cite{colah_lstm}}    
     \label{obrazekSchemaRekurentniNeuronoveSite}
 \end{figure*}
 
-\section{Long Short-Term Memory}
+\subsection{Long Short-Term Memory}
 \label{lstmTeorie}
 Long Short-Term Memory (dále jen LSTM) 
 jsou speciálním druhem rekurentních neuronových sítí.
-Jsou schopny se naučit i dlouhodobější závislosti v~sekvencích dat.
+Jsou schopny se naučit i dlouhodobější závislosti v datech.
 S~touto vlastností byly primárně navrženy.\cite{colah_lstm}
 \par
 
@@ -984,11 +999,10 @@ Hlavním prvkem je horizontální čára,
 která vede horní částí diagramu.
 Ta vede vektor stavu buňky (anglicky cell state).
 Informaci ve stavu lze modifikovat malými, lineárními změnami.
-Každá buňka může informaci přidat, nebo odebrat.
-Je také možné stav nechat beze změny.\cite{colah_lstm}
+Každá buňka může informaci přidat, odebrat, nebo nechat beze změny.\cite{colah_lstm}
 \par
 
-Při práci musí LSTM nejprve rozhodnout,
+V průběhu inference se musí LSTM nejprve rozhodnout,
 kterou informaci chce zapomenout, 
 tedy vyřadit ze stavu buňky.
 Toto rozhodnutí provádí takzvaná "forget gate layer",
@@ -1005,14 +1019,14 @@ $[h_{t-1}, x_t]$ je konkatenace prvků.\cite{colah_lstm}
 \begin{figure*}[h]\centering
     \centering
     \includegraphics[width=0.8\linewidth]{obrazky/LSTM3-focus-f.png}\\[1pt]  
-    \caption{Schéma a funkce forget gate layer.\cite{colah_lstm}}    
+    \caption{Schéma a funkce forget gate layer. \cite{colah_lstm}}    
     \label{obrazekForgetGate}
 \end{figure*}
 
 Následuje rozhodnutí, jakou informaci ve stavu uchovat.
 Tento proces se skládá ze dvou částí.
 První se nazývá input gate layer, 
-opět vrstva se sigmoidou jako aktivační funkcí.
+opět vrstva se aktivační funkcí Sigmoid.
 Tato brána rozhoduje o tom, které hodnoty budou aktualizovány.
 Druhou částí je vrstva s aktivační funkcí tanh,
 jenž sestavuje vektor nových kandidátních hodnot
@@ -1022,7 +1036,7 @@ určených pro přidání do stavu.\cite{colah_lstm}
 \begin{figure*}[h]\centering
     \centering
     \includegraphics[width=0.8\linewidth]{obrazky/LSTM3-focus-i.png}\\[1pt]  
-    \caption{Schéma a funkce input gate layer.\cite{colah_lstm}}    
+    \caption{Schéma a funkce input gate layer. \cite{colah_lstm}}    
     \label{obrazekInputLayer}
 \end{figure*}
 
@@ -1036,7 +1050,7 @@ která určuje, jak moc tyto informace ovlivní stav.\cite{colah_lstm}
 \begin{figure*}[h]\centering
     \centering
     \includegraphics[width=0.8\linewidth]{obrazky/LSTM3-focus-C.png}\\[1pt]  
-    \caption{Schéma a funkce aktualizace stavu buňky.\cite{colah_lstm}}    
+    \caption{Schéma a funkce aktualizace stavu buňky. \cite{colah_lstm}}    
     \label{obrazekAktualizaceLSTM}
 \end{figure*}
 
@@ -1051,7 +1065,7 @@ Práce je patrná na obrázku \ref{obrazekLSTMOutput}
 \begin{figure*}[h]\centering
     \centering
     \includegraphics[width=0.8\linewidth]{obrazky/LSTM3-focus-o.png}\\[1pt]  
-    \caption{Schéma a funkce výpočtu výstupních hodnot LSTM buňky.\cite{colah_lstm}}    
+    \caption{Schéma a funkce výpočtu výstupních hodnot LSTM buňky. \cite{colah_lstm}}    
     \label{obrazekLSTMOutput}
 \end{figure*}
 
@@ -1065,11 +1079,10 @@ Viz obrázek \ref{obrazekLSTMPeepholes}.
 \begin{figure*}[h]\centering
     \centering
     \includegraphics[width=0.8\linewidth]{obrazky/LSTM3-var-peepholes.png}\\[1pt]  
-    \caption{Schéma a funkce varianty LSTM buňky.\cite{colah_lstm}}    
+    \caption{Schéma a funkce varianty LSTM buňky. \cite{colah_lstm}}    
     \label{obrazekLSTMPeepholes}
 \end{figure*}
 
-\section{Gated Reccurent Unit}
 Další variantou vycházející z architektury LSTM
 je Gated Reccurent Unit (dále jen GRU).
 Nejvýznamnější je kombinace forget gate a input gate 
@@ -1084,7 +1097,7 @@ Díky tomu začíná být více populární a je často používána.
 \begin{figure*}[h]\centering
     \centering
     \includegraphics[width=0.8\linewidth]{obrazky/LSTM3-var-GRU.png}\\[1pt]  
-    \caption{Schéma a funkce varianty Gated Reccurent Unit.\cite{colah_lstm}}    
+    \caption{Schéma a funkce varianty Gated Reccurent Unit. \cite{colah_lstm}}    
     \label{obrazekGRU}
 \end{figure*}
 
@@ -1098,11 +1111,11 @@ Veškerá data pro tuto diplomovou práci pochází z~webu hooktheory.
 Ten obsahuje takzvanou Theorytab DB, databázi přepisů známých písniček.
 Přepisy obsahují melodii, harmonii ve formě harmonické funkce 
 a odkaz na písničku na serveru youtube.com.
-Tyto písničky je potřeba nejprve transformovat na MIDI soubory,
+Tyto hudební soubory je potřeba nejprve transformovat na MIDI soubory,
 aby systém odpovídal zadání.
 Jejich podobu a postup převedení do MIDI popisuje druhá část této kapitoly (viz \ref{hooktheoryDB}).
 
-\section{MIDI soubory}
+\section{Formát MIDI}
 \label{midisoubory}
 MIDI (Musical Instrument Digital Interface) je volně přístupný standard,
 který specifikuje hardware i software 
@@ -1284,7 +1297,7 @@ Z~toho vyplývá, že subkontra oktáva je nultá a čtyřčárková je sedmá.
         \textbf{8}                       & 108        & 109          & 110        & 111          & 112        & 113        & 114          & 115        & 116          & 117        & 118          & 119        \\
         \textbf{9}                       & 120        & 121          & 222        & 123          & 124        & 125        & 126          & 127        & \multicolumn{4}{l}{}                                 
     \end{tabular}
-    \caption{Čísla všech MIDI not po oktávách \cite{Back_SMF_Specif}}
+    \caption{Čísla všech MIDI not po oktávách. \cite{Back_SMF_Specif}}
     \label{tableMIDINotes}
 \end{table}
 
@@ -1425,7 +1438,7 @@ což je pro stroj velmi obtížné zachytit.
 \cite{YinCheng_comparativeStudy}
 \par
 
-V~této kapitole bude představeno několik přístupů právě k~automatické harmonizaci.
+V~této kapitole bude představeno několik přístupů k~automatické harmonizaci.
 
 \section{Model založený na shodě šablon}
 \label{shodaSablon}
@@ -1478,7 +1491,7 @@ Tento model tedy nejprve vygeneruje harmonii a k ní poté melodii.
 \begin{figure*}[h]\centering
     \centering
     \includegraphics[width=1\linewidth]{obrazky/JambotArchitecture.png}\\[1pt]  
-    \caption{Architektura modelu JamBot\cite{Brunner_Jambot}}    
+    \caption{Architektura modelu JamBot. \cite{Brunner_Jambot}}    
     \label{obrazekArchitekturaJambot}
 \end{figure*}
 
@@ -1581,7 +1594,7 @@ nyní obsahující pravděpodobnosti not ve smazaných částech.
 \cite{huang2017counterpoint}
 Tento natrénovaný model lze vyzkoušet jako Google Doodle na \url{https://www.google.com/doodles/celebrating-johann-sebastian-bach}
 \par
-Jedním z~dalších Magenta modelů, které se zabývá hudbou je méně propagovaný Polyphony RNN. 
+Jedním z~dalších Magenta modelů, které se zabývá hudbou je Polyphony RNN. 
 Ten aplikuje jazykové modely ke generování polyfonní hudby za použití LSTM neuronových sítí
 a je založen na projektu BachBot, který je popsán v~následující citaci \cite{Liang_AutomaticComposition}.
 Na rozdíl od modelu Melody RNN, který také využívá jazykových modelů, 
@@ -1591,20 +1604,9 @@ Více-hlasý vstup je zde modelován jako jeden proud notových událostí se sp
 Skladba je rozdělena na stejné časové úseky (stepy) 
 a každý z~úseků obsahuje seznam aktivních not.
 Noty jsou v~každém úseku seřazeny podle výšky (v~MIDI formátu) 
-a je popsán jejich vztah v~závislosti k~předchozímu stavu tónu (viz níže akord C trvající dva úseky).
+a je popsán jejich vztah v~závislosti k~předchozímu stavu tónu.
 \cite{google_git_polyphony}
-\begin{verbatim}
-START
-NEW_NOTE, 67
-NEW_NOTE, 64
-NEW_NOTE, 60
-STEP_END
-CONTINUED_NOTE, 67
-CONTINUED_NOTE, 64
-CONTINUED_NOTE, 60
-STEP_END
-END
-\end{verbatim}
+
 Pro generování nové skladby potřebuje model tzv. primer, tedy pár not, 
 použitých jako počátek skladby. 
 Primer lze vložit ve třemi způsoby, a to jako počáteční akord,
@@ -1653,11 +1655,11 @@ V~projektu Magenta se pro serializaci not používá jednotná definice zvaná N
 \cite{google_musicColab}
 \par
 
-Pro trénování je vhodné samostatné serializované noty dále převést na SequenceExamples.
-\cite{google_git_polyphony}
-To je TensorFlow definice protocol bufferů určená k~práci se sekvenčními daty.
+Pro trénování je vhodné samostatné serializované noty dále převést na tzv. SequenceExamples
+\cite{google_git_polyphony},
+což je TensorFlow definice protocol bufferů určená k~práci se sekvenčními daty.
 Definice obsahuje dvě části -- context a feature\_lists.
-Context obsahuje nesekvenční vlastnosti (features) jako například tempo a 
+Kontext obsahuje nesekvenční vlastnosti (features) jako například tempo a 
 feature\_lists obsahuje sekvenční vlastnosti, jednotlivé noty.
 Výhodou SequenceExamples je možnost distribuce trénování, 
 kdy je možné rozdělit jeden .tfrecord soubor na více.
@@ -1689,8 +1691,7 @@ kdy je také možné nastavit hyperparametry sítě jako například počet a ve
 \cite{google_git_polyphony}
 \par
 
-Primer modelu bude MIDI soubor se samotnou melodií, 
-konvertovaný podle předchozí části na NoteSequence.
+Melodie bude představovat v tomto případě tzv. primer modelu. Vstupní soubor je transformován na NoteSequence strukturu přesně, jak bylo uvedeno v předchozí sekci.
 Úkolem systému je doplnění této melodie o~složku harmonie. 
 Melodie proto bude použita jako součást výstupu.
 
@@ -1704,8 +1705,8 @@ který obsahuje původní melodii(primer), která je následována její harmoni
 \chapter{Trénování systému}
 \label{trenovaniModelu}
 % popis implementace
-V~této kapitole je představen postup zprovoznění systému a jeho trénování.
-Všechny kroky byly automatizovány pomocí jazyka bash.
+V~této kapitole je představen postup zprovoznění navrženého systému a jeho trénování.
+Všechny kroky byly automatizovány pomocí skriptu v jazyce BASH.
 Vstupní data a postup jejich vytvoření je popsán v~kapitole \ref{hooktheoryDB}.
 Využitý systém je představen v~části \ref{magenta} 
 a podrobnější návrh potom v~\ref{navrhSystemu}.
@@ -1716,7 +1717,7 @@ Postup harmonizace melodie modelem a provedené experimenty jsou popsány v~kapi
 Před začátkem trénování je nutné nainstalovat Magentu.
 Jako testovací prostředí byl zvolen operační systém Ubuntu 20.04 LTS (Focal Fossa)
 nainstalovaný na počítači s~procesorem Intel Core i7-4720HQ s~frekvencí 2.6GHz
-a s~8Gb operační paměti. 
+a s~8GB operační paměti. 
 Pro instalaci knihovny na použitý operační systém je poskytnut instalační skript.
 
 \begin{verbatim}
@@ -1778,7 +1779,7 @@ convert_dir_to_note_sequences \
 \end{verbatim} 
 Konverze souborů ze složky \emph{./midi} netrvá dlouho
 a výsledný soubor \emph{./tmp/notesequences.tfrecord}
-má velikost $29.7$MB ($31 244 793$B)
+má velikost $29.7$MB ($31244793$B)
 \par
 
 Nyní je nutné vytvořit SequenceExample soubory,
@@ -1830,7 +1831,7 @@ V tom případě se jako první argument musí zadat přepínač \emph{-s},
 a jako druhý argument cesta k .tfrecord souboru obsahující NoteSequence zprávy.
 \par
 
-Ve všech případech se jedná o časově náročnou operaci, která může trvat až 8 hodin!
+Ve všech případech se jedná o časově náročnou operaci, která může trvat až 8 hodin.
 
 \section{Trénování}
 Nyní je vše připraveno k~trénování modelu.
@@ -1971,7 +1972,6 @@ také parametr \emph{hparams} tak, jak byl použit při trénování
 Složku pro uložení vygenerovaných MIDI souborů vymezuje parametr \emph{output\_dir}.
 Počet nových souborů pak parametr \emph{num\_outputs}.
 Každý generovaný soubor je rozdílný, liší se provedením harmonizace.
-
 Je vhodné výsledky poslechnout a zjistit jejich kvalitu.
 \par
 
@@ -2077,14 +2077,8 @@ postup jeho zprovoznění, trénování a použití pak v~kapitole \ref{trenovan
 Použitá trénovací sada je popsána v~kapitole \ref{hooktheoryDB}.
 Model, na kterém byly experimenty prováděny, 
 byl natrénován s~hyperparametry, které byly představeny v~minulé kapitole.
-Tedy:
-\begin{itemize}
-    \item velikost dávky = 64
-    \item počet RNN vrstev = 2
-    \item neuronů v~každé vrstvě = 64
-    \item trénovacích cyklů = 20 000
-\end{itemize}
-Jak bylo řečeno v~kapitole \ref{trenovaniModelu},
+
+Jak bylo uvedeno v~kapitole \ref{trenovaniModelu},
 natrénování modelu s těmito hyperparametry trvalo 25 hodin.
 Parametry použité při generování, pokud není stanoveno jinak, jsou:
 \begin{itemize}
@@ -2102,7 +2096,7 @@ který je vydáván pod licencí GNU GPL.
 
 \section{Způsob vyhodnocení výsledků}
 Měření výkonu v této oblasti není jednoduché.
-Z důvodu širokého spektra záměrů v oblasti generování hudby
+Z důvodu širokého spektra cílů výzkumů v oblasti generování hudby
 je možné setkat se v existující literatuře s různými přístupy
 k  vyhodnocování výstupů harmonizačních algoritmů.
 Jedná se například o porovnávání vygenerované sekvence akordů
@@ -2197,7 +2191,7 @@ kde doplněné noty původní melodii rozvádí přechody mezi jednotlivými ako
 \begin{figure*}[h]\centering
     \centering
     \includegraphics[width=0.8\linewidth]{obrazky/KratkaSkladbaHarmonizovanaLowNoty.png}\\[1pt]  
-    \caption{Notový zápis skladby vygenerované s~nižšími než výchozími hodnotami}    
+    \caption{Notový zápis skladby vygenerované s~nižšími než výchozími hodnotami.}    
     \label{obrazekKratkaSkladbaHarmonizovanaLowNoty}
 \end{figure*}
 \par
@@ -2315,7 +2309,7 @@ Toto chování je demonstrováno na obrázku \ref{obrazekMyHarmonyShortNotyDefTe
     \includegraphics[width=0.8\linewidth]{obrazky/MyHarmonyShortDefTmp03-1.png}\\[1pt]  
     \caption{Notový zápis harmonizací neznámé skladby s~výchozí hodnotou temperature.
     Za povšimnutí stojí použití jednoho akordu pro celou melodii, 
-    který je rozdílný pro obě skladby (horní a dolní)}    
+    který je rozdílný pro obě skladby (horní a dolní).}    
     \label{obrazekMyHarmonyShortNotyDefTemp}
 \end{figure*}
 \par
@@ -2580,7 +2574,7 @@ Ne všechny výsledky natrénovaného systému byly uspokojivé
 a většinou s~původní melodií nezněly a kazily její dojem.
 Nicméně mezi vygenerovanými skladbami se našly světlé výjimky,
 které se daly považovat za správnou a zajímavou harmonizaci.
-Obecně lze řící, že model při harmonizaci dlouhých skladeb
+Obecně lze říci, že model při harmonizaci dlouhých skladeb
 vykazoval lepší výsledky.
 
 Použitý model byl však, oproti doporučeným hodnotám hyperparametrů, malý.
