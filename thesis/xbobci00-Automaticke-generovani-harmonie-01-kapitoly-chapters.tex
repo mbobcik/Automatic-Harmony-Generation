@@ -637,16 +637,22 @@ a místo zlomku je značen velkým písmenem C.
 Umělá inteligence dokázala relativně rychle řešit problémy, 
 které jsou pro člověka intelektuálně náročné, 
 ale jsou popsány formálními pravidly.
-Avšak pro člověka intuitivní "problémy" lze jen stěží formálně popsat.
+Existuje však celá řada problémů a úloh, 
+k jehož řešení člověk přistupuje intuitivně či kreativně.
+V případě intuitivního přístupu lze hovořit 
+např. o rozpoznávání objektů na scéně, nebo rozpoznání řečníků v nahrávce.
+Společným rysem těchto úloh je nemožnost formalizace. 
+Jedinou aktuálně používanou technikou řešení takových problémů
+je tzv. učení s učitelem založené na existenci datové sady,
+která slouží k vytvoření znalostí o daném problému.
 Strojové učení umožňuje počítači naučit se ze zkušeností
 a porozumět světu v~souvislostech.
 Získáváním zkušeností je odbourán proces formálního zápisu veškerých vědomostí,
 které jsou k~řešení problému potřeba
 \cite{Goodfellow-et-al-2016}.
-Harmonizace melodie je někde na pomyslné půli cesty mezi těmito extrémy.
-Na jednu stranu popsána pravidly hudební nauky,
-na stranu druhou nejsou pravidla zcela striktní 
-a ponechávají skladateli volnou ruku.
+Harmonizace melodie je někde na pomyslné půli cesty mezi těmito extrémy,
+tedy formalizovanou hudební naukou,
+a intuicí skladatele.
 Text této kapitoly čerpá z \cite{Goodfellow-et-al-2016}, \cite{Nicholson_NeuralNets}, 
 \cite{Chalupnik_NeuronoveSite}, \cite{Mehrotra_ElementsOfNNs}, \cite{Nicholson_NeuralNets}, \cite{Nicholson_Perceptron} a \cite{Kvasnicka_NeuronoveSite}.
 \par
@@ -804,11 +810,14 @@ aby každý poloprostor nejlépe odpovídal pozici kategorie,
 kterou vyjadřuje. 
 
 \section{Neuronové sítě}
-Neuronové sítě jsou množina algoritmů určených k~rozpoznávání vzorů.
+Neuronové sítě jsou výpočetní model používaný v umělé inteligenci.
+Existuje několik variant.
+Základním přístupem jsou dopředné neuronové sítě (Feedforward Neural Networks).
+Dále rozlišujeme konvoluční sítě\cite{krizhevsky2012imagenet} 
+a rekurentní sítě\cite{Karpathy_RNNs}.
 Vzory jsou jakékoliv data, čísla, obrázky, zvuk, text a další.
 Ty musí být převedeny na vektory čísel, 
 které jsou následně použity jako vstup.
-Tyto sítě se také nazývají dopředné (Feedforward Neural Networks).
 Před uvedením sítě do provozu je potřeba 
 ji nejprve jednorázově natrénovat na datech z datové sady.
 Ty se nazývají trénovací a jsou podobná těm, 
@@ -1098,8 +1107,8 @@ Viz obrázek \ref{obrazekLSTMPeepholes}.
 
 \begin{figure*}[h]\centering
     \centering
-    \includegraphics[width=0.8\linewidth]{obrazky/LSTM3-var-peepholes.png}\\[1pt]  
-    \caption{Schéma a funkce varianty LSTM buňky. \cite{colah_lstm}}    
+    \includegraphics[width=0.4\linewidth]{obrazky/LSTM3-var-peepholes.png}\\[1pt]  
+    \caption{Schéma varianty LSTM buňky. \cite{colah_lstm}}    
     \label{obrazekLSTMPeepholes}
 \end{figure*}
 
@@ -1116,8 +1125,8 @@ Díky tomu začíná být více populární a je často používána.
 
 \begin{figure*}[h]\centering
     \centering
-    \includegraphics[width=0.8\linewidth]{obrazky/LSTM3-var-GRU.png}\\[1pt]  
-    \caption{Schéma a funkce varianty Gated Reccurent Unit. \cite{colah_lstm}}    
+    \includegraphics[width=0.4\linewidth]{obrazky/LSTM3-var-GRU.png}\\[1pt]  
+    \caption{Schéma varianty Gated Reccurent Unit. \cite{colah_lstm}}    
     \label{obrazekGRU}
 \end{figure*}
 
@@ -1170,7 +1179,7 @@ Soubory MIDI mají dva druhy bloků.
 Hlavičkový blok poskytuje informace vztahující se k~celému souboru.
 Bloky stopy obsahují proudy MIDI dat až šestnácti MIDI kanálů.
 MIDI soubor vždy začíná hlavičkovým blokem 
-a je následován jedním nebo více bloky stop.\cite{Back_SMF_Specif}
+a je následován jedním nebo více bloky stop\cite{Back_SMF_Specif}.
 
 \begin{itemize} [label={}]
     \item MThd <délka hlavičky>
@@ -1200,8 +1209,8 @@ Jsou zde tři možnosti:
 \end{enumerate}
 
 Formát 0 je nejrozšířenější a je podporován i nejjednoduššími programy 
-a hardware.
-\cite{Back_SMF_Specif}
+a hardware
+\cite{Back_SMF_Specif}.
 Formát 1 obsahuje jednu nebo více vertikálně synchronních stop.
 Jinými slovy, při přehrávání takového souboru 
 začnou všechny stopy ve stejný čas 
@@ -1222,21 +1231,21 @@ pak zbývající bity reprezentují počet "tiků" generátoru hodin,
 které se vlezou do jedné čtvrťové noty.
 Pokud je bit nastaven na 1, 
 pak je čas vyjádřen jako rozdělení vteřin podle SMPTE standardu
-a MIDI Time Codu.
-\cite{Back_SMF_Specif}
+a MIDI Time Codu
+\cite{Back_SMF_Specif}.
 Filmovým průmyslem vytvořený SMPTE, mimo jiné, 
 definuje čtyři různé snímkovací frekvence.
 Je podle něj možné rozdělit vteřinu na 24, 25, 29 nebo 30 snímků.
 Pro hudební účely je však potřeba ještě jemnější rozlišení.
-Každý snímek je tedy dále možné rozdělit na "sub-snímky".
-\cite{Glatt_aboutMIDIFiles}
+Každý snímek je tedy dále možné rozdělit na "sub-snímky"
+\cite{Glatt_aboutMIDIFiles}.
 Bity 14 až 8 časového kódování udávají počet SMPTE snímků za vteřinu 
 a zbývající část je rozlišení jednoho snímku.
 Pro představu,
 při časování událostí na milisekundy je potřeba nastavit 25 SMPTE snímků
 a rozlišení 40, neboť $ 40 * 25 = 1000 $ "sub-snímků" za vteřinu, 
-stejně jako milisekund. 
-\cite{Back_SMF_Specif}
+stejně jako milisekund 
+\cite{Back_SMF_Specif}.
 \par
 
 \subsection{Stopy}
@@ -1245,8 +1254,8 @@ Ten zahrnuje parametry použitých nástrojů, jednotlivé noty skladby,
 ale také různé textové informace jako název skladby nebo její text.
 Za identifikátorem bloku "MTrk" a jeho délkou 
 následuje posloupnost MIDI událostí
-ve tvaru časový přírůstek, stavový bajt, datové bajty.
-\cite{Back_SMF_Specif}
+ve tvaru časový přírůstek, stavový bajt, datové bajty
+\cite{Back_SMF_Specif}.
 \par
 
 Časový přírůstek (deltatime) značí počet "tiků" od předchozí události.
@@ -1257,11 +1266,11 @@ aby malá čísla plýtvala místem a plnila jej nulami.
 Hodnoty jsou kódovány do 7-bitových bajtů 
 a osmý, nejvýznamnější bit je nastaven na jedničku.
 Pokud je bajt poslední v~posloupnosti, pak na nulu.
-Celý deltatime by však ideálně neměl přesáhnout 4 bajty.
-\cite{Glatt_aboutMIDIFiles}
+Celý deltatime by však ideálně neměl přesáhnout 4 bajty
+\cite{Glatt_aboutMIDIFiles}.
 První událost stopy nebo dvě současné události 
-mají časový přírůstek roven nule.
-\cite{Back_SMF_Specif}
+mají časový přírůstek roven nule
+\cite{Back_SMF_Specif}.
 \par
 
 Za časovým údajem následuje MIDI zpráva tvořená stavovým bajtem 
@@ -1285,8 +1294,8 @@ Systémové zprávy jsou buď
 určeny všem přijímačům v~systému (System Common Message),
 použity pro synchronizaci hodin MIDI komponent (System Real Time Message), 
 nebo použity pro přenos dat mezi komponenty jednoho výrobce 
-(System Exclusive Message). 
-\cite{Back_SMF_Specif}
+(System Exclusive Message) 
+\cite{Back_SMF_Specif}.
 \par
 
 Aktivace a vypuštění jedné noty je v~MIDI považováno za dvě rozdílné události.
@@ -1328,8 +1337,8 @@ ale ve výsledku určuje to, jak hlasitě (s~jakou amplitudou) bude tón znít o
 Pro ztlumení znící noty slouží zpráva \emph{Note Off} označená bajtem \emph{0x8k}.
 Stejně jako při rozeznění je potřeba vědět, o~jakou notu se jedná.
 A~také v~tomto případě je ve zprávě obsažena rychlost (puštění klapky), 
-která je ale ve většině případech ignorována.
-\cite{MIDI_tutorials}
+která je ale ve většině případech ignorována
+\cite{MIDI_tutorials}.
 
 \section{Databáze skladeb}
 \label{hooktheoryDB}
@@ -1403,7 +1412,7 @@ pak vlastnost \emph{sus} obsahuje řetězec \emph{sus4} v~případě kvarty,
 Akord lze také vyměnit za akord z~jiného modu.
 Toto "vypůjčení" je zaznamenáno v~uzlu \emph{borrowed}.
 Složka \emph{alternate} značí akordy alterované, 
-tedy akordy s~jedním nebo více tóny alterovanými.
+tedy akordy s~jedním nebo více tóny alterovanými
 \cite{SzkanderaAlterovane}.
 \par
 Kromě těchto popsaných tabulek obsahuje databáze také další,
@@ -1454,8 +1463,8 @@ Správná harmonie závisí na subjektivním pocitu, hudebním žánru a další
 V~hudbě se ustálilo mnoho pouček a zákonů o~tom, které akordy k~sobě patří
 a jak na sebe navazují.
 Často určují jemné nuance, či jsou podmíněny kulturním vlivem, 
-což je pro stroj velmi obtížné zachytit.
-\cite{YinCheng_comparativeStudy}
+což je pro stroj velmi obtížné zachytit
+\cite{YinCheng_comparativeStudy}.
 \par
 
 V~této kapitole bude představeno několik přístupů k~automatické harmonizaci.
@@ -1481,8 +1490,8 @@ Označení akordu je opět ve formě PCP, a to tak,
 \par
 
 Nevýhodou tohoto modelu je, že určuje jednotlivé segmenty nezávisle bez toho,
-aby bral v~úvahu sousední akordy nebo postup akordů ve skladbě.
-\cite{YinCheng_comparativeStudy}
+aby bral v~úvahu sousední akordy nebo postup akordů ve skladbě
+\cite{YinCheng_comparativeStudy}.
 
 \section{Skryté Markovovy modely}
 Jednou z~nejpoužívanějších metod generování akordů a harmonizace melodie, 
@@ -1574,8 +1583,8 @@ Při generování nové písně je na vstupu opět nejprve
 základ skládající se z pianoroll vektoru a příslušných akordů.
 Noty jsou vzorkovány individuálně.
 Pokud je nota vybrána,
-pravděpodobnost výběru ostatních not ovlivněna není.
-\cite{Brunner_Jambot}
+pravděpodobnost výběru ostatních not ovlivněna není
+\cite{Brunner_Jambot}.
 
 \section{Google Magenta}
 \label{magenta}
@@ -1587,8 +1596,8 @@ Projekt je distribuován pro Python a JavaScript.
 Magenta.js je pouze API pro používání předtrénovaných modelů v~prohlížečích.
 Magenta pro Python je celá knihovna, která zahrnuje kromě předtrénovaných modelů
 také nástroje pro manipulaci dat, trénování vlastních modelů a generování
-nových výtvorů na jejich základě.
-\cite{google_magentaHome} 
+nových výtvorů na jejich základě
+\cite{google_magentaHome}.
 Vytvořené modely se zabývají generováním a modifikací hudebních 
 a obrazových uměleckých dat.
 Obrazové modely jsou například image\_stylization\footnote{https://github.com/magenta/magenta/tree/master/magenta/models/image\_stylization},
@@ -1610,8 +1619,8 @@ Na nižší úrovni je vstup tří dimenzionální pole,
 kde jedna z~dimenzí vymezuje čtyřhlas, další číslo MIDI noty a poslední čas\footnote{V literatuře se pole s~dimenzemi (MIDI nota, čas) nazývají pianoroll}.
 Tento objekt je vstupem konvoluční neuronové sítě.  
 Výstupem je objekt o~stejné velikosti, 
-nyní obsahující pravděpodobnosti not ve smazaných částech.
-\cite{huang2017counterpoint}
+nyní obsahující pravděpodobnosti not ve smazaných částech
+\cite{huang2017counterpoint}.
 Tento natrénovaný model lze vyzkoušet jako Google Doodle na \url{https://www.google.com/doodles/celebrating-johann-sebastian-bach}
 \par
 Jedním z~dalších Magenta modelů, které se zabývá hudbou je Polyphony RNN. 
@@ -1624,8 +1633,8 @@ Více-hlasý vstup je zde modelován jako jeden proud notových událostí se sp
 Skladba je rozdělena na stejné časové úseky (stepy) 
 a každý z~úseků obsahuje seznam aktivních not.
 Noty jsou v~každém úseku seřazeny podle výšky (v~MIDI formátu) 
-a je popsán jejich vztah v~závislosti k~předchozímu stavu tónu.
-\cite{google_git_polyphony}
+a je popsán jejich vztah v~závislosti k~předchozímu stavu tónu
+\cite{google_git_polyphony}.
 
 Pro generování nové skladby potřebuje model tzv. primer, tedy pár not, 
 použitých jako počátek skladby. 
@@ -1635,8 +1644,8 @@ Tento vstup lze vložit do modelu před generováním,
 tedy ve vygenerované sekvenci vstup nebude, ale bude jím ovlivněn.
 Toto se hodí například pro ustanovení tóniny generované skladby.
 Dále je možné použít vstup jako součást generované sekvence,
-což je vhodné při harmonizaci již existující melodie.
-\cite{google_git_polyphony}
+což je vhodné při harmonizaci již existující melodie
+\cite{google_git_polyphony}.
 
 \chapter{Návrh systému}
 \label{navrhSystemu}
@@ -1668,17 +1677,18 @@ Vstupem celého systému je MIDI soubor, obsahující melodii,
 pro kterou je cílem vygenerovat harmonický doprovod.
 Soubory MIDI jsou získány z databáze.
 Postup je popsán v kapitole \ref{hooktheoryDB}.
-Neuronové sítě si ale s formátem souborů MIDI neumí moc poradit,
-a tak je potřeba převést je na vhodnější reprezentaci.
-Podle níže uvedeného zdroje \cite{google_git_polyphony} 
-jsou touto reprezentací protocol buffers,
-rychlejší a efektivnější datový formát než MIDI.
-Protocol buffers je mechanismus firmy Google pro serializaci strukturovaných dat,
-který je rozšiřitelný a nezávislý na jazyce a platformě, podobně jako například XML.
+Formát MIDI však je příliš komplikovaný, 
+aby byl zpracováván přímo neuronovou sítí. 
+Z tohoto důvodu jsou vstupní data transformována 
+na posloupnost not.
+Tato posloupnost je uložena pomocí formátu Protocol buffer \cite{google_ProtocolBuffers},
+který umožňuje nezávislost na platformě a jazyce 
+a který je nativně podporován frameworkem TensorFlow.
+Protocol buffers je mechanismus firmy Google pro serializaci strukturovaných dat.
 Veškeré protocol buffers zprávy jsou uložené v~jednom .tfrecord souboru.
-Definici zpráv určují takzvané .proto soubory.\cite{google_ProtocolBuffers}
-V~projektu Magenta se pro serializaci not používá jednotná definice zvaná NoteSequence.
-\cite{google_musicColab}
+Definici zpráv určují takzvané .proto soubory.
+V~projektu Magenta se pro serializaci not používá jednotná definice zvaná NoteSequence
+\cite{google_musicColab}.
 \par
 
 Pro trénování je vhodné samostatné serializované noty dále převést na tzv. SequenceExamples
@@ -1690,8 +1700,8 @@ feature\_lists obsahuje sekvenční vlastnosti, jednotlivé noty.
 Výhodou SequenceExamples je možnost distribuce trénování, 
 kdy je možné rozdělit jeden .tfrecord soubor na více.
 Další výhodou je znovupoužitelnost modelu, který SequenceExamples využívá.
-Nevýhodou je velikost výsledných .tfrecord souborů s~touto definicí oproti původním datům. 
-\cite{britz_undocumentedFeatures}
+Nevýhodou je velikost výsledných .tfrecord souborů s~touto definicí oproti původním datům 
+\cite{britz_undocumentedFeatures}.
 Tento formát může zvýšit velikost datové sady desetinásobně,
 avšak při převedení všech MIDI souborů (viz kapitola \ref{hooktheoryDB}) 
 je výsledná velikost $9.409e^3$krát vyšší (viz výpočet podle měření níže).
@@ -1707,8 +1717,7 @@ Polyphony RNN z~projektu Magenta.
 V~porovnání s~ostatními přístupy je nejnovější a využívá framework TensorFlow
 \cite{YinCheng_comparativeStudy,google_git_polyphony}.
 Magenta poskytuje model\footnote{dostupný z~\url{http://download.magenta.tensorflow.org/models/polyphony_rnn.mag}} 
-již natrénovaný na chorálech, které složil Johann Sebastian Bach
-\footnote{
+již natrénovaný na chorálech, které složil Johann Sebastian Bach\footnote{
 dostupné z~\url{https://web.archive.org/web/20150503021418/http://www.jsbchorales.net/xml.shtml}, 
 popřípadě z~\url{https://github.com/cuthbertLab/music21/tree/master/music21/corpus/bach}}.
 
