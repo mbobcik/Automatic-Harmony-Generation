@@ -114,7 +114,7 @@ Nejen pro harmonizaci melodie je potřeba znát hudební nauku.
 V~této kapitole budou nastíněny základy a pojmy hudební nauky, 
 tedy co to jsou tóny, noty, jejich vlastnosti a stupnice. 
 Dále bude rozdělena melodie a harmonie a popsány akordy a tóniny. 
-Text této kapitoly čerpá z \cite{zenkl}, \cite{cmiral} a \cite{kofron}.
+Text této kapitoly čerpá z~\cite{zenkl}, \cite{cmiral} a \cite{kofron}.
 \par 
 
 \section{Tóny}
@@ -606,13 +606,13 @@ Umělá inteligence dokázala relativně rychle řešit problémy,
 které jsou pro člověka intelektuálně náročné, 
 ale jsou popsány formálními pravidly.
 Existuje však celá řada problémů a úloh, 
-k jehož řešení člověk přistupuje intuitivně či kreativně.
-V případě intuitivního přístupu lze hovořit 
-např. o rozpoznávání objektů na scéně, nebo rozpoznání řečníků v nahrávce.
+k~jehož řešení člověk přistupuje intuitivně či kreativně.
+V~případě intuitivního přístupu lze hovořit 
+např. o~rozpoznávání objektů na scéně, nebo rozpoznání řečníků v~nahrávce.
 Společným rysem těchto úloh je nemožnost formalizace. 
 Jedinou aktuálně používanou technikou řešení takových problémů
-je tzv. učení s učitelem založené na existenci datové sady,
-která slouží k vytvoření znalostí o daném problému.
+je tzv. učení s~učitelem založené na existenci datové sady,
+která slouží k~vytvoření znalostí o~daném problému.
 Strojové učení umožňuje počítači naučit se ze zkušeností
 a porozumět světu v~souvislostech.
 Získáváním zkušeností je odbourán proces formálního zápisu veškerých vědomostí,
@@ -621,7 +621,7 @@ které jsou k~řešení problému potřeba
 Harmonizace melodie je někde na pomyslné půli cesty mezi těmito extrémy,
 tedy formalizovanou hudební naukou,
 a intuicí skladatele.
-Text této kapitoly čerpá z \cite{Goodfellow-et-al-2016}, \cite{Nicholson_NeuralNets}, 
+Text této kapitoly čerpá z~\cite{Goodfellow-et-al-2016}, \cite{Nicholson_NeuralNets}, 
 \cite{Chalupnik_NeuronoveSite}, \cite{Mehrotra_ElementsOfNNs}, \cite{Nicholson_NeuralNets}, \cite{Nicholson_Perceptron} a \cite{Kvasnicka_NeuronoveSite}.
 \par
 
@@ -671,35 +671,35 @@ a připojen na dendrity dalších neuronů.
     \label{obrazekSchemaNeuronu}
 \end{figure*}
 
-V matematickém modelu neuronu (viz obrázek \ref{obrazekSchemaNeuronu}) 
-se signály $ x $ z předchozích neuronů
-násobí s váhami $ w $.
+V~matematickém modelu neuronu (viz obrázek \ref{obrazekSchemaNeuronu}) 
+se signály $ x $ z~předchozích neuronů
+násobí s~váhami $ w $.
 Váhy jsou trénovatelné hodnoty, 
 které řídí velikost potenciálu
 jednotlivých předchozích neuronů na neuron následující. 
 Každému vstupu neuronu je přiřazena váha, 
 která jej buď posílí, nebo utlumí.
-Stejně jako v biologickém neuronu vedou všechny dendrity (hodnoty $ xw $)
+Stejně jako v~biologickém neuronu vedou všechny dendrity (hodnoty $ xw $)
 do těla neuronu, kde jsou sečteny.
 Neuron vyšle signál dál pouze pokud vnitřní potenciál překoná jistý práh.
 Ten je ve formě záporné váhy $ w_0 $, 
 která do neuronu vstupuje nezměněna.
-Nakonec v modelu existuje aktivační funkce,
+Nakonec v~modelu existuje aktivační funkce,
 kterou prochází suma všech váhovaných vstupů a
 určuje, jestli a jak moc může signál pokračovat skrz síť.
 Tato funkce by měla být nelineární.
 Používá se například funkce Sigmoid nebo hyperbolický tangens 
 (zkracováno jako \emph{tanh}).
-Definice obou aktivačních funkcí je uvedena v rovnici
+Definice obou aktivačních funkcí je uvedena v~rovnici
 \ref{funkceSigmoid} a \ref{funkceTanh} 
 a jejich průběh je pro ilustraci znázorněn taktéž na obrázku 
 \ref{obrazekAktivačníFunkce}.
 případně rovnice níže.
-Z tvarů křivek lze identifikovat několik oblastí.
+Z~tvarů křivek lze identifikovat několik oblastí.
 Pokud je vnitřní potenciál nízký (záporný), 
-výstup neuronu s aktivační funkcí sigmoidy se bude blížit nule.
+výstup neuronu s~aktivační funkcí sigmoidy se bude blížit nule.
 Naopak, je-li potenciál dostatečně vysoký, výstupem neuronu bude 1.
-Neuron s aktivační funkcí tanh se chová obdobně,
+Neuron s~aktivační funkcí tanh se chová obdobně,
 ale nízké hodnoty potenciálu se na výstupu blíží hodnotě $ -1 $.
 
 \begin{equation}\label{funkceSigmoid}
@@ -737,17 +737,17 @@ Definice funkce ReLU je následující:
 
 Při kladných vstupních hodnotách propaguje hodnotu na výstup,
 zatímco místo záporných hodnot propaguje nulu.
-To s sebou přináší problém při učení,
+To s~sebou přináší problém při učení,
 kdy při záporných hodnotách je gradient nulový a učení stagnuje.
 Tento problém lze řešit upravenou funkcí \emph{Leaky ReLU},
 která místo nuly při záporném vstupu propaguje zápornou hodnotu blízkou nule.
 Gradient tedy není vždy nulový a neuron tak nepřestane reagovat.
 \par
 
-Aktivační funkce obvykle používaná u klasifikačních problémů se nazývá softmax.
-Úkolem je přiřadit vzorek do jedné z konečného počtu definovaných tříd.
-Tato funkce se tak používá až v poslední vrstvě,
-kde se stará o to, aby se suma výstupních hodnot neuronů rovnala jedné.
+Aktivační funkce obvykle používaná u~klasifikačních problémů se nazývá softmax.
+Úkolem je přiřadit vzorek do jedné z~konečného počtu definovaných tříd.
+Tato funkce se tak používá až v~poslední vrstvě,
+kde se stará o~to, aby se suma výstupních hodnot neuronů rovnala jedné.
 Výstupní hodnoty tak představují pravděpodobnosti příslušnosti prvku
 k~jednotlivým klasifikačním třídám.
 Následuje definice funkce softmax:
@@ -761,24 +761,24 @@ a výsledek je normalizován sumou exponenciál všech prvků vektoru.
 
 \section{Perceptron}
 Nejjednodušší neuronovou sítí je perceptron.
-Tento model je složen z jediného matematického modelu neuronu.
+Tento model je složen z~jediného matematického modelu neuronu.
 Perceptron dokáže klasifikovat pouze dvě lineárně separovatelné kategorie.
-Vstupem je, stejně jako u jediného neuronu, vektor vlastností $x$
-násobený vektorem vah \textbf{w} a s přičteným prahem $ w_0 $.
+Vstupem je, stejně jako u~jediného neuronu, vektor vlastností $x$
+násobený vektorem vah \textbf{w} a s~přičteným prahem $ w_0 $.
 Výsledkem je rovnice nadroviny
 \begin{equation}
     w_0 + \sum_{i=1}^{n} x_{i}w_{i} = y
 \end{equation}
 ,která dělí n-dimenzionální prostor na dva poloprostory.
-Je-li výsledný potenciál dostatečně velký, bod leží v jednom poloprostoru,
-naopak je-li potenciál příliš malý, pak leží v druhém poloprostoru.
-Kategorie bodu je dána jeho příslušností k jednomu, nebo druhému poloprostoru.
+Je-li výsledný potenciál dostatečně velký, bod leží v~jednom poloprostoru,
+naopak je-li potenciál příliš malý, pak leží v~druhém poloprostoru.
+Kategorie bodu je dána jeho příslušností k~jednomu, nebo druhému poloprostoru.
 Učení spočívá ve změně vah, tedy ve změně pozice nadroviny tak,
 aby každý poloprostor nejlépe odpovídal pozici kategorie, 
 kterou vyjadřuje. 
 
 \section{Neuronové sítě}
-Neuronové sítě jsou výpočetní model používaný v umělé inteligenci.
+Neuronové sítě jsou výpočetní model používaný v~umělé inteligenci.
 Existuje několik variant.
 Základním přístupem jsou dopředné neuronové sítě (Feedforward Neural Networks).
 Dále rozlišujeme konvoluční sítě\cite{krizhevsky2012imagenet} 
@@ -787,21 +787,21 @@ Vzory jsou jakékoliv data, čísla, obrázky, zvuk, text a další.
 Ty musí být převedeny na vektory čísel, 
 které jsou následně použity jako vstup.
 Před uvedením sítě do provozu je potřeba 
-ji nejprve jednorázově natrénovat na datech z datové sady.
+ji nejprve jednorázově natrénovat na datech z~datové sady.
 Ty se nazývají trénovací a jsou podobná těm, 
 která bude naučená síť zpracovávat.
-Učení sítě spočívá v úpravách hodnot vah mezi jednotlivými neurony.
+Učení sítě spočívá v~úpravách hodnot vah mezi jednotlivými neurony.
 Jednotlivé váhy postupně konvergují ke své optimální hodnotě.
 Tato fáze bývá výpočetně i časově velmi náročná,
 kvůli velkému množství výpočtů prováděných nad každým prvkem. 
-Po dokončení učení je síť připravena k použití.
+Po dokončení učení je síť připravena k~použití.
 To už zpravidla nepředstavuje takovou výpočetní zátěž
 a použití sítě je velmi rychlé.
 \par
 
 Neuronové sítě mají většinou několik propojených vrstev.
-Neurony jedné vrstvy jsou spojeny pouze s neurony z jiné vrstvy.
-Neurony v jedné vrstvě mezi sebou nesdílí žádné vazby.
+Neurony jedné vrstvy jsou spojeny pouze s~neurony z~jiné vrstvy.
+Neurony v~jedné vrstvě mezi sebou nesdílí žádné vazby.
 První vrstva se také nazývá vstupní, 
 zatímco poslední je výstupní.
 Vrstvy mezi vstupní a výstupní jsou takzvaně skryté.
@@ -818,7 +818,7 @@ Větším množstvím neuronů se zvyšuje počet různých rozdělení prostoru
 a tedy i rozlišovací schopnost sítě.
 Současně se však také zvyšují výpočetní nároky na učení sítě.
 Vstupem následující vrstvy už nejsou původní příznaky,
-ale příslušnost prvku k jednotlivým oblastem.
+ale příslušnost prvku k~jednotlivým oblastem.
 Celý problém je transformován do nového prostoru 
 a druhá vrstva rozdělení zpřesňuje.
 
@@ -843,20 +843,20 @@ a výstupem je opět vektor.
 
 
 \section{Učení neuronové sítě}
-Jedním z nejpoužívanějších algoritmů k učení neuronových sítí
+Jedním z~nejpoužívanějších algoritmů k~učení neuronových sítí
 je back-propagation, tedy zpětné šíření chyby.
 Tento algoritmus patří do třídy gradientních metod
-a zajišťuje změnu vah neuronů v jednotlivých vrstvách sítě.
-Algoritmus začíná pracovat u výstupní vrstvy
+a zajišťuje změnu vah neuronů v~jednotlivých vrstvách sítě.
+Algoritmus začíná pracovat u~výstupní vrstvy
 a postupně šíří chybu dalšími vrstvami směrem ke vstupní.
 Postupně upravuje jednotlivé váhy neuronů,
-dokud nedojde k lokálnímu nebo, 
-v lepším případě, globálnímu minimu chyby.
-V algoritmu se pracuje také s parametrem míry učení (anglicky learning rate), který určuje rychlost učení.
-Tento parametr nabývá hodnot z intervalu $<0,1>$.
+dokud nedojde k~lokálnímu nebo, 
+v~lepším případě, globálnímu minimu chyby.
+V~algoritmu se pracuje také s~parametrem míry učení (anglicky learning rate), který určuje rychlost učení.
+Tento parametr nabývá hodnot z~intervalu $<0,1>$.
 Při vyšších hodnotách je váhy modifikují výrazněji,
-ale mohou uváznout v lokálním minimu, z něhož už se nebudou moci dostat.
-Proto některé algoritmy míru učení postupně snižují v průběhu tréningu.
+ale mohou uváznout v~lokálním minimu, z~něhož už se nebudou moci dostat.
+Proto některé algoritmy míru učení postupně snižují v~průběhu tréningu.
 \par
 
 Algoritmus back-propagation klade podmínku na využitou aktivační funkci každého neuronu.
@@ -877,17 +877,17 @@ Následuje vztah pro postupnou změnu vah:
 
 Kde $w$ je hodnota váhy, $\eta$ je hodnota míry učení, 
 $\nabla G$ je hodnota gradientu a $i$ je aktuální krok.
-Před začátkem algoritmu jsou všechny váhy v sítě
-inicializovány na náhodnou hodnotu z rozmezí $<0,1>$.
+Před začátkem algoritmu jsou všechny váhy v~sítě
+inicializovány na náhodnou hodnotu z~rozmezí $<0,1>$.
 Iterativní postup algoritmu ke globálnímu minimu 
 ilustruje obrázek \ref{obrazekGradientDescent}.
 Algoritmus provede výpočet nad trénovací datovou sadou 
-s počátečními nastavenými váhami
+s~počátečními nastavenými váhami
 a vypočítá chybu.
-Následně s pomocí gradientního sestupu zjistí
+Následně s~pomocí gradientního sestupu zjistí
 jak se mají váhy změnit pro dosažení optimálnějšího řešení.
 Algoritmus se opakuje, dokud nenarazí na lokální,
-případně globální minimum chybové funkce v závislosti na váhách v neuronové síti
+případně globální minimum chybové funkce v~závislosti na váhách v~neuronové síti
 \cite{Raschka_GradientDescent, Goodfellow-et-al-2016}.
 
 \begin{figure*}[h]\centering
@@ -898,13 +898,13 @@ případně globální minimum chybové funkce v závislosti na váhách v neuro
 \end{figure*}
 
 \subsection{Chybové funkce}
-Abychom mohli provést aktualizaci vah v průběhu učící fáze,
+Abychom mohli provést aktualizaci vah v~průběhu učící fáze,
 používáme chybové funkce.
-Ty slouží k určení přesnosti sítě
-a při trénování také k učení sítě zpětným šířením chyby přes všechny neurony.
+Ty slouží k~určení přesnosti sítě
+a při trénování také k~učení sítě zpětným šířením chyby přes všechny neurony.
 \par
-Jednou z chybových funkcí je střední kvadratická chyba,
-neboli MSE z anglického \emph{Mean squared error}.
+Jednou z~chybových funkcí je střední kvadratická chyba,
+neboli MSE z~anglického \emph{Mean squared error}.
 Tato funkce odečte hodnotu na výstupu sítě od očekávané hodnoty.
 Aby chyba nebyla záporná, rozdíl hodnot je umocněn na druhou.
 Tímto způsobem se uměle zvyšuje rozdíl chyby mezi korektně
@@ -917,16 +917,16 @@ Definice funkce čtvercové chyby je následující:
 \begin{equation}
     MSE = \frac{1}{N} \sum^{N}_{i=1}(d_i - y_i)^2 
 \end{equation}
-,kde $N$ je počet prvků z trénovací sady, $d_i$ je očekávaná hodnota a $y_i$ je výstup sítě.
+,kde $N$ je počet prvků z~trénovací sady, $d_i$ je očekávaná hodnota a $y_i$ je výstup sítě.
 \par
 
 Jinou, hojně využívanou chybovou funkcí je křížová entropie
 (anglicky Cross-Entropy),
 která se používá při klasifikaci do tříd.
-Předpokladem k použití jsou dva a více neuronů ve výstupní vrstvě.
-Tato funkce se často používá zároveň s aktivační funkcí softmax,
+Předpokladem k~použití jsou dva a více neuronů ve výstupní vrstvě.
+Tato funkce se často používá zároveň s~aktivační funkcí softmax,
 která normalizuje výstupní hodnoty poslední vrstvy 
-do pravděpodobností náležitosti k jednotlivým třídám.
+do pravděpodobností náležitosti k~jednotlivým třídám.
 Následuje definice funkce křížové entropie (CE) pro počet výstupních neuronů $C > 2$:
 \begin{equation}
     CE = - \sum^C_i d_i log(y_i)
@@ -938,7 +938,7 @@ Pro binární klasifikátor, tedy $C = 2$, lze funkci zjednodušit následovně:
 \begin{equation}
     CE = - d_i log(y_i) + (1 - d_i) log(1 - y_i)
 \end{equation}
-Stejně jako u MSE platí, že lépe naučená síť má nižší hodnoty křížové entropie.
+Stejně jako u~MSE platí, že lépe naučená síť má nižší hodnoty křížové entropie.
 Dokonale naučená neuronová síť má křížovou entropii rovnu nule.
 
 \section{Rekurentní neuronové sítě}
@@ -949,16 +949,16 @@ jako výstup nebo jako obojí.
 Principem RNN jsou zpětnovazební smyčky, kdy výstupy jedné vrstvy jsou
 propojeny se svými vstupy.
 Systém si tak při řešení problému uchovává informaci
-o předešlých prvcích vstupních dat,
+o~předešlých prvcích vstupních dat,
 která může ovlivnit následující výsledky\cite{Karpathy_RNNs}.
 Takový přístup může být výhodný například
-v úloze harmonizace melodie,
+v~úloze harmonizace melodie,
 kde jsou typické závislosti akordů na předchozím průběhu skladby.
-Použití RNN je však spojeno s řadou komplikací.
+Použití RNN je však spojeno s~řadou komplikací.
 Například znatelně zvětšují prohledávaný prostor řešení,
 což zvyšuje požadavky na výpočetní čas při učení.
 \par
-Přenášení předchozích znalostí z důvodu ovlivnění 
+Přenášení předchozích znalostí z~důvodu ovlivnění 
 následujících prvků je problémové.
 Velmi totiž závisí na vzdálenosti mezi prvky,
 které se mohou ovlivnit.
@@ -977,11 +977,11 @@ rekurentní síť se nedokáže naučit spojitost mezi nimi
 \label{lstmTeorie}
 Long Short-Term Memory (dále jen LSTM) 
 jsou speciálním druhem rekurentních neuronových sítí.
-Jsou schopny se naučit i dlouhodobější závislosti v datech.
+Jsou schopny se naučit i dlouhodobější závislosti v~datech.
 S~touto vlastností byly primárně navrženy.
 Princip činnosti LSTM bude vysvětlen podrobněji,
-neboť jsou základem použitého modelu v této práci.
-Následující text čerpá z \cite{colah_lstm}.
+neboť jsou základem použitého modelu v~této práci.
+Následující text čerpá z~\cite{colah_lstm}.
 \par
 
 \begin{figure*}[h]\centering
@@ -994,19 +994,19 @@ Následující text čerpá z \cite{colah_lstm}.
 Narozdíl od RNN mají LSTM čtyři vrstvy v~jednom opakujícím se modulu.
 Schéma LSTM modulu je na obrázku \ref{obrazekLSTMBunka}.
 Charakteristickým rysem je přítomnost vektoru
-který je znázorněn v horní částí diagramu.
+který je znázorněn v~horní částí diagramu.
 Ten vede stav buňky (anglicky cell state).
 Informaci ve stavu lze modifikovat malými, lineárními změnami.
 Každá buňka může informaci přidat, odebrat, nebo nechat beze změny.
 \par
 
-V průběhu inference se musí LSTM nejprve rozhodnout,
+V~průběhu inference se musí LSTM nejprve rozhodnout,
 kterou informaci chce zapomenout, 
 tedy vyřadit ze stavu buňky.
 Toto rozhodnutí provádí takzvaná "forget gate layer",
-tedy vrstva s aktivační funkcí sigmoidy.
-Tato brána vezme v úvahu aktuální vstup a výstup předchozí buňky
-a převede je na hodnotu z intervalu $<0,1>$,
+tedy vrstva s~aktivační funkcí sigmoidy.
+Tato brána vezme v~úvahu aktuální vstup a výstup předchozí buňky
+a převede je na hodnotu z~intervalu $<0,1>$,
 přičemž 1 znamená ponechat informaci
 a 0 znamená kompletně zapomenout.
 Práce forget gate layer a její funkce jsou ilustrovány na obrázku 
@@ -1025,8 +1025,8 @@ Následuje rozhodnutí, jakou informaci ve stavu uchovat.
 Tento proces se skládá ze dvou částí.
 První se nazývá input gate layer, 
 opět vrstva se aktivační funkcí Sigmoid.
-Tato brána rozhoduje o tom, které hodnoty budou aktualizovány.
-Druhou částí je vrstva s aktivační funkcí tanh,
+Tato brána rozhoduje o~tom, které hodnoty budou aktualizovány.
+Druhou částí je vrstva s~aktivační funkcí tanh,
 jenž sestavuje vektor nových kandidátních hodnot
 určených pro přidání do stavu.
 Činnost input gate layer opět ilustruje následující obrázek \ref{obrazekInputLayer}.
@@ -1038,7 +1038,7 @@ určených pro přidání do stavu.
     \label{obrazekInputLayer}
 \end{figure*}
 
-Po výpočtu změn v předchozích dvou krocích
+Po výpočtu změn v~předchozích dvou krocích
 je potřeba aktualizovat starý stav buňky.
 Nejprve je násoben vektorem $f_t$, tedy tím, co má být zapomenuto.
 Následně je přičteno $i_t\tilde{C}_t $, 
@@ -1052,12 +1052,12 @@ která určuje, jak moc tyto informace ovlivní stav.
     \label{obrazekAktualizaceLSTM}
 \end{figure*}
 
-Zbývajícím krokem je určit výstupní data buňky v aktuálním kroku.
+Zbývajícím krokem je určit výstupní data buňky v~aktuálním kroku.
 Dá se říci, že tento krok je podobný obrácení předchozího kroku.
 Nejprve projde aktuální vstup vrstvou sigmoid, 
 která rozhodne, co bude na výstupu.
-Následně projde stav buňky vrstvou s aktivační funkcí tanh
-a výsledek se vynásobí s výstupem sigmoid vrstvy.
+Následně projde stav buňky vrstvou s~aktivační funkcí tanh
+a výsledek se vynásobí s~výstupem sigmoid vrstvy.
 Práce je patrná na obrázku \ref{obrazekLSTMOutput}
 
 \begin{figure*}[h]\centering
@@ -1067,10 +1067,10 @@ Práce je patrná na obrázku \ref{obrazekLSTMOutput}
     \label{obrazekLSTMOutput}
 \end{figure*}
 
-Kromě výše popsané implementace vycházející z \cite{HochSchm97} však existuje i řada variant \cite{cho-etal-2014-learning, Gers_schmidhuber}.
-Jedna z variant například dovoluje forget gate a input gate
+Kromě výše popsané implementace vycházející z~\cite{HochSchm97} však existuje i řada variant \cite{cho-etal-2014-learning, Gers_schmidhuber}.
+Jedna z~variant například dovoluje forget gate a input gate
 podívat se na stav buňky ještě předtím, 
-než rozhodnou o jeho modifikaci\cite{Gers_schmidhuber}.
+než rozhodnou o~jeho modifikaci\cite{Gers_schmidhuber}.
 Viz obrázek \ref{obrazekLSTMPeepholes}.
 
 \begin{figure*}[h]\centering
@@ -1080,12 +1080,12 @@ Viz obrázek \ref{obrazekLSTMPeepholes}.
     \label{obrazekLSTMPeepholes}
 \end{figure*}
 
-Další variantou vycházející z architektury LSTM
-je Gated Reccurent Unit (dále jen GRU) uvedená v
-\cite{cho-etal-2014-learning}.
+Další variantou vycházející z~architektury LSTM
+je Gated Reccurent Unit (dále jen GRU) uvedená
+v~\cite{cho-etal-2014-learning}.
 Nejvýznamnější je kombinace forget gate a input gate 
 do jediné update gate layer.
-Dále také kombinuje stav buňky s výstupní hodnotou.
+Dále také kombinuje stav buňky s~výstupní hodnotou.
 Strukturu buňky GRU reprezentuje obrázek \ref{obrazekGRU}.
 Výsledkem těchto modifikací je buňka,
 která zjednodušuje jak výpočet, tak trénování.
@@ -1154,13 +1154,13 @@ tento model bere v~úvahu předcházející akordy.
 
 \section{JamBot}
 \label{Jambot}
-JamBot \cite{Brunner_Jambot} je jeden z novějších přístupů generování akordů 
+JamBot \cite{Brunner_Jambot} je jeden z~novějších přístupů generování akordů 
 a polyfonní hudby založený na LSTM sítích.
 Pracuje ve dvou krocích.
-V prvním kroce akordová LSTM vygeneruje postup, vývoj akordů ve skladbě.
+V~prvním kroce akordová LSTM vygeneruje postup, vývoj akordů ve skladbě.
 Tato série akordů je následně vstupem druhé LSTM sítě,
 která na základě vstupu vygeneruje polyfonní hudbu (viz obrázek \ref{obrazekArchitekturaJambot}).
-Tento model tedy nejprve vygeneruje harmonii a k ní poté melodii.
+Tento model tedy nejprve vygeneruje harmonii a k~ní poté melodii.
 \par
 
 \begin{figure*}[h]\centering
@@ -1170,63 +1170,63 @@ Tento model tedy nejprve vygeneruje harmonii a k ní poté melodii.
     \label{obrazekArchitekturaJambot}
 \end{figure*}
 
-K reprezentaci dat pro akordovou LSTM 
+K~reprezentaci dat pro akordovou LSTM 
 je využita technika ze zpracování přirozeného jazyka 
-(dále jen NLP z anglického Natural Language Precessing).
+(dále jen NLP z~anglického Natural Language Precessing).
 Každý jedinečný akord je nahrazen číselným identifikátorem (id).
-K překladu mezi akordy a identifikátory pak slouží slovník dvojic (id, akord).
-V korpusu akordů je pouze N nejčastěji použitých akordů v trénovací sadě.
+K~překladu mezi akordy a identifikátory pak slouží slovník dvojic (id, akord).
+V~korpusu akordů je pouze N nejčastěji použitých akordů v~trénovací sadě.
 Akordy, které se do korpusu nevlezly (vyskytují se příliš řídce),
 získají označení "neznámý akord".
-V práci byla zvolena velikost korpusu 50 akordů.
+V~práci byla zvolena velikost korpusu 50 akordů.
 Před vstupem do LSTM sítě byly identifikátory 
-zakódovány na \emph{jedna z N} reprezentaci
+zakódovány na \emph{jedna z~N} reprezentaci
 \footnotetext{One-hot-encoding}.
 Vstupní vektor má velikost korpusu.
 Všechny záznamy vektoru jsou nastaveny na 0,
-kromě toho s indexem rovným identifikátoru akordu,
+kromě toho s~indexem rovným identifikátoru akordu,
 který je nastaven na 1.
 \par
 Akordová LSTM má dvě vrstvy.
 První je takzvaná embeddingová vrstva,
-která opět využívá techniku používanou v NLP.
-Tou jsou word embeddings, které mapují slova (v tomto případě akordy)
-z korpusu do vektorů reálných čísel.
+která opět využívá techniku používanou v~NLP.
+Tou jsou word embeddings, které mapují slova (v~tomto případě akordy)
+z~korpusu do vektorů reálných čísel.
 Word embeddings nejsou pevně dané a musí být natrénovány.
 Vektorový prostor pak zachycuje vztahy mezi jednotlivými slovy
-a sémanticky podobná slova jsou v tomto prostoru blízko sebe.
-V této práci byly místo slov použity akordy.
+a sémanticky podobná slova jsou v~tomto prostoru blízko sebe.
+V~této práci byly místo slov použity akordy.
 Za embeddingovou vrstvou následuje LSTM vrstva,
 která předpovídá akordy, které následují po aktuálním.
-K predikci nové posloupnosti potřebuje základ libovolné délky.
+K~predikci nové posloupnosti potřebuje základ libovolné délky.
 Další akord je získán vzorkováním výstupního pravděpodobnostního vektoru
-s parametrem temperature.
+s~parametrem temperature.
 Tento akord je potom dán zpět na vstup této vrstvy
 a na jeho základě je generován další a tak dále.
 Parametr temperature ovlivňuje různorodost generované posloupnosti.
 Nulová temperature znamená, že pro daný základ 
 budou všechny následující akordy stejné.
 \par
-Vstupní data pro polyfonní LSTM jsou ve tvaru tzv. pianoroll (více o pianoroll viz níže).
+Vstupní data pro polyfonní LSTM jsou ve tvaru tzv. pianoroll (více o~pianoroll viz níže).
 Každý takt je rozdělen na osm částí 
-a každá část je reprezentována vektorem s velikostí rovné počtu tónů.
-Pokud v dané části tón zní, pak je příslušný prvek vektoru nastaven na 1.
-Jedná se o podobný princip jako v části \ref{shodaSablon}.
+a každá část je reprezentována vektorem s~velikostí rovné počtu tónů.
+Pokud v~dané části tón zní, pak je příslušný prvek vektoru nastaven na 1.
+Jedná se o~podobný princip jako v~části \ref{shodaSablon}.
 Při generování melodie má vstup polyfonní LSTM několik částí.
 První je již zmiňovaný pianoroll vektor aktuálního kroku.
 Kromě aktuálně znějících tónů je na vstupu také embedding 
 aktuálního akordu.
 Díky tomu je možné naučit se, které tóny zní při kterém akordu.
-V hudbě melodie většinou "postupuje" k dalšímu akordu.
+V~hudbě melodie většinou "postupuje" k~dalšímu akordu.
 Kvůli tomu je další částí vstupu akord následující aktuálnímu kroku.
 Generované písničky jsou tak více strukturované.
 Poslední částí vstupu je binární počítadlo,
-které počítá od 0 do 7 v každém taktu.
+které počítá od 0 do 7 v~každém taktu.
 Toto umožňuje LSTM orientovat se uvnitř taktu
 a ví, kolik kroků zbývá do změny akordu 
 (akordy se mění pouze na začátku taktu, viz výše).
 Při generování nové písně je na vstupu opět nejprve
-základ skládající se z pianoroll vektoru a příslušných akordů.
+základ skládající se z~pianoroll vektoru a příslušných akordů.
 Noty jsou vzorkovány individuálně.
 Pokud je nota vybrána,
 pravděpodobnost výběru ostatních not ovlivněna není
@@ -1297,15 +1297,15 @@ což je vhodné při harmonizaci již existující melodie
 Základním předpokladem pro aplikaci neuronových sítí 
 je existence vhodné trénovací sady, 
 která obsahuje anotovaná data.
-V našem případě je nutné generovat harmonii na základě znalosti melodie. 
-Jednou z možností, jak k tomuto problému přistoupit
+V~našem případě je nutné generovat harmonii na základě znalosti melodie. 
+Jednou z~možností, jak k~tomuto problému přistoupit
 je využit model neuronové sítě Magenta. 
 Pro tento model jsou potřeba trénovací data, 
 která mají na vstupu izolované noty melodie a výstupem jsou izolované akordy
 
-Vstupní data budou v rámci práce získána tak, 
-že se využijí hudební soubory z platformy youtube 
-a anotace, která je dostupná v rámci projektu hooktheory.
+Vstupní data budou v~rámci práce získána tak, 
+že se využijí hudební soubory z~platformy youtube 
+a anotace, která je dostupná v~rámci projektu hooktheory.
 
 Pro sjednocení trénování i inference, 
 bude pro vstup použit standardní formát pro popis zvukových dat, tzv. MIDI.
@@ -1622,15 +1622,15 @@ Celková velikost všech souborů je $9.57$MB ($10 042 700$B)
 \chapter{Návrh systému}
 \label{navrhSystemu}
 Cílem práce je vytvořit systém,
-který bude schopen automaticky vygenerovat harmonii k již existující melodii,
+který bude schopen automaticky vygenerovat harmonii k~již existující melodii,
 což je úloha obtížnější, než prosté generování harmonie,
 neboť jednotlivé akordy nelze umisťovat svévolně. 
 Vstupem systému jsou postupně jednotlivé noty melodie
 Jak bylo napsáno, harmonie je souzvuk více zvuků najednou.
-Výstupem jsou tóny melodie doplněné o tóny harmonie.
+Výstupem jsou tóny melodie doplněné o~tóny harmonie.
 
 Architektura systému je uvedena na obrázku \ref{obrazekArchitekturaSystemu}.
-Systém se skládá z několika částí, 
+Systém se skládá z~několika částí, 
 které na sebe navazují.
 Vstupem je melodie ve formátu MIDI,
 která je konvertována do posloupnosti not ve formátu NoteSequence.
@@ -1647,11 +1647,11 @@ Pro potřeby učení jsou použity anotovaná data ve formátu SequenceExample.
 \section{Vstup}
 Vstupem celého systému je MIDI soubor, obsahující melodii,
 pro kterou je cílem vygenerovat harmonický doprovod.
-Soubory MIDI jsou získány z databáze.
-Postup je popsán v kapitole \ref{hooktheoryDB}.
+Soubory MIDI jsou získány z~databáze.
+Postup je popsán v~kapitole \ref{hooktheoryDB}.
 Formát MIDI však je příliš komplikovaný, 
 aby byl zpracováván přímo neuronovou sítí. 
-Z tohoto důvodu jsou vstupní data transformována 
+Z~tohoto důvodu jsou vstupní data transformována 
 na posloupnost not.
 Tato posloupnost je uložena pomocí formátu Protocol buffer \cite{google_ProtocolBuffers},
 který umožňuje nezávislost na platformě a jazyce 
@@ -1676,11 +1676,11 @@ Nevýhodou je velikost výsledných .tfrecord souborů s~touto definicí oproti 
 \cite{britz_undocumentedFeatures}.
 Dle dokumentace \cite{britz_undocumentedFeatures} 
 může použití tohoto formátu způsobit desetinásobný nárůst velikosti dat.
-Původní data však v článku uvedena nebyla 
+Původní data však v~článku uvedena nebyla 
 a je tedy nemožné specifikovat důvod malého nárůstu.
-V našem v případě byl zaznamenán 9410 násobný nárůst velikosti,
-neboť z 12103 MIDI souborů zabírajících 10MB celkem
-bylo vygenerován soubor s příponou .tfrecord zabírajícíc celkem 94GB dat 
+V~našem v~případě byl zaznamenán 9410 násobný nárůst velikosti,
+neboť z~12103 MIDI souborů zabírajících 10MB celkem
+bylo vygenerován soubor s~příponou .tfrecord zabírajícíc celkem 94GB dat 
 (viz výpočet podle měření \ref{rovniceVelikosti} níže).
 \begin{equation}\label{rovniceVelikosti}
      tf / m = 94454904591B / 10038169B = 9.409575e^3
@@ -1703,9 +1703,9 @@ kdy je také možné nastavit hyperparametry sítě jako například počet a ve
 \cite{google_git_polyphony}.
 \par
 
-Melodie bude představovat v tomto případě tzv. primer modelu.
+Melodie bude představovat v~tomto případě tzv. primer modelu.
 Vstupní soubor je transformován na NoteSequence strukturu
-přesně, jak bylo uvedeno v předchozí sekci.
+přesně, jak bylo uvedeno v~předchozí sekci.
 Úkolem systému je doplnění této melodie o~složku harmonie. 
 Melodie proto bude použita jako součást výstupu.
 
@@ -1721,7 +1721,7 @@ který obsahuje původní melodii(primer), která je následována její harmoni
 \label{trenovaniModelu}
 % popis implementace
 V~této kapitole je představen postup zprovoznění navrženého systému a jeho trénování.
-Všechny kroky byly automatizovány pomocí skriptu v jazyce BASH.
+Všechny kroky byly automatizovány pomocí skriptu v~jazyce BASH.
 Vstupní data a postup jejich vytvoření je popsán v~kapitole \ref{hooktheoryDB}.
 Využitý systém je představen v~části \ref{magenta} 
 a podrobnější návrh potom v~\ref{navrhSystemu}.
@@ -1766,12 +1766,12 @@ Pro automatizaci celého procesu instalace byly vytvořeny skripty
 První nainstaluje potřebné prerekvizity a
 vytvoří virtuální prostředí.
 Druhý skript do virtuálního prostředí nainstaluje veškeré vyžadované python balíčky.
-Z důvodu instalace prerekvizit skript vyžaduje administrátorská práva.
+Z~důvodu instalace prerekvizit skript vyžaduje administrátorská práva.
 Pokud počítač neobsahuje systém pro správu balíků Anaconda,
 skript \emph{prerequisities.sh} se jej pokusí nainstalovat sám.
-V takovém případě je nutné odsouhlasit autorská práva 
+V~takovém případě je nutné odsouhlasit autorská práva 
 a jiné požadavky této instalace.
-Po instalaci prerekvizit prvním skriptem je vhodné restartovat okno s terminálem
+Po instalaci prerekvizit prvním skriptem je vhodné restartovat okno s~terminálem
 a teprve spustit skript \emph{install.sh}.
 
 \section{Příprava dat}
@@ -1830,24 +1830,24 @@ Velikost obou souborů dohromady je $8.39GB + 79.5GB = 87.9GB$ ($94 454 904 5
 
 Celý proces automatizuje skript \emph{prepareData.sh},
 který má minimálně jeden a maximálně dva argumenty.
-První argument specifikuje cestu ke složce s MIDI soubory.
+První argument specifikuje cestu ke složce s~MIDI soubory.
 Tento argument je povinný.
-Pokud je toto jediný argument, počítá se s tím,
+Pokud je toto jediný argument, počítá se s~tím,
 že složka MIDI soubory už obsahuje.
-Skript také automatizuje konverzi databáze, která je popsaná v kapitole \ref{hooktheoryDB}.
-V tomto případě je opět nutné jako první argument zadat 
+Skript také automatizuje konverzi databáze, která je popsaná v~kapitole \ref{hooktheoryDB}.
+V~tomto případě je opět nutné jako první argument zadat 
 složku do které budou ukládány výsledky
-a jako druhý argument cestu k souboru se SQLite databází.
+a jako druhý argument cestu k~souboru se SQLite databází.
 Tímto způsobem bude převedena databáze na SequenceExample soubor,
 který je možné použít pro trénování sítě.
 \par
 
-Skript lze také použít pouze na soubor s NoteSequence prvky.
-V tom případě se jako první argument musí zadat přepínač \emph{-s},
-a jako druhý argument cesta k .tfrecord souboru obsahující NoteSequence zprávy.
+Skript lze také použít pouze na soubor s~NoteSequence prvky.
+V~tom případě se jako první argument musí zadat přepínač \emph{-s},
+a jako druhý argument cesta k~.tfrecord souboru obsahující NoteSequence zprávy.
 \par
 
-Ve všech případech se jedná o časově náročnou operaci, která může trvat až 8 hodin.
+Ve všech případech se jedná o~časově náročnou operaci, která může trvat až 8 hodin.
 
 \section{Trénování}
 Nyní je vše připraveno k~trénování modelu.
@@ -1970,8 +1970,8 @@ polyphony_rnn_generate \
 
 Proces tréningu automatizují dva skripty, \emph{train.sh} a \emph{eval.sh}
 Oba vyžadují dva argumenty.
-Prvním z nich je cesta k adresáři pro ukládání průběžných výsledků
-a druhý je cesta k souboru datové sady sloužící pro tréning, nebo evaluaci.
+Prvním z~nich je cesta k~adresáři pro ukládání průběžných výsledků
+a druhý je cesta k~souboru datové sady sloužící pro tréning, nebo evaluaci.
 Po dokončení tréningu je model automaticky zabalen jak bylo popsáno výše.
 
 \section{Použití modelu}
@@ -2079,10 +2079,10 @@ polyphony_rnn_generate \
 
 Harmonizaci skladby lze provést také skriptem \emph{harmonize.sh},
 který už obsahuje všechny potřebné parametry.
-Je ale potřeba v parametrech specifikovat 
-cestu k \emph{bundle\_file} souboru, 
+Je ale potřeba v~parametrech specifikovat 
+cestu k~\emph{bundle\_file} souboru, 
 který obsahuje natrénovaný model.
-Dále cestu k MIDI souboru určenému k harmonizace,
+Dále cestu k~MIDI souboru určenému k~harmonizace,
 a nakonec počet taktů, které tento soubor obsahuje.
 
 \chapter{Experimenty}
@@ -2098,7 +2098,7 @@ Model, na kterém byly experimenty prováděny,
 byl natrénován s~hyperparametry, které byly představeny v~minulé kapitole.
 
 Jak bylo uvedeno v~kapitole \ref{trenovaniModelu},
-natrénování modelu s těmito hyperparametry trvalo 25 hodin.
+natrénování modelu s~těmito hyperparametry trvalo 25 hodin.
 Parametry použité při generování, pokud není stanoveno jinak, jsou:
 \begin{itemize}
     \item condition\_on\_primer = false
@@ -2114,17 +2114,17 @@ Obrázky not byly generovány programem MuseScore\footnote{dostupný z~\url{muse
 který je vydáván pod licencí GNU GPL.
 
 \section{Způsob vyhodnocení výsledků}
-Měření výkonu v této oblasti není jednoduché.
-Z důvodu širokého spektra cílů výzkumů v oblasti generování hudby
-je možné setkat se v existující literatuře s různými přístupy
-k  vyhodnocování výstupů harmonizačních algoritmů.
-Jedná se například o porovnávání vygenerované sekvence akordů
-s původními akordy z anotované skladby,
+Měření výkonu v~této oblasti není jednoduché.
+Z~důvodu širokého spektra cílů výzkumů v~oblasti generování hudby
+je možné setkat se v~existující literatuře s~různými přístupy
+k~vyhodnocování výstupů harmonizačních algoritmů.
+Jedná se například o~porovnávání vygenerované sekvence akordů
+s~původními akordy z~anotované skladby,
 dále porovnávání jednotlivých generovaných akordů
 nebo vyhodnocení subjektivním poslechem.
 \cite{Raczynski}
 Posledním způsobem byl hodnocen například projekt JamBot
-uvedený v části \ref{Jambot} (v článku \cite{Brunner_Jambot}).
+uvedený v~části \ref{Jambot} (v~článku \cite{Brunner_Jambot}).
 \par
 
 Pro vyhodnocení poslechem je možné využít, mimo jiné,
@@ -2139,17 +2139,17 @@ a ten šířila virálně skrz sociální sítě.
 Některé články dokonce neposkytují žádné vyhodnocení
 své harmonizace.
 \cite{Raczynski}
-Vzhledem k povaze navrženého systému
+Vzhledem k~povaze navrženého systému
 budou výsledky harmonizace 
 manuálně hodnoceny subjektivním poslechem.
-Na základě empirických zkušeností s hudbou 
+Na základě empirických zkušeností s~hudbou 
 bude určeno, zda je skladba harmonizována správně.
 Předpokladem je schopnost rozlišit úplnou disharmonii 
 od harmonie.
 \par
 
 Dalším sledovaným parametrem je čas,
-který systém potřebuje k harmonizaci jedné melodie.
+který systém potřebuje k~harmonizaci jedné melodie.
 
 \section{Harmonizace krátké známé melodie}
 Prvním experimentem nechť je harmonizace skladby o~pouhých dvou taktech,
@@ -2188,7 +2188,7 @@ Při každém běhu bylo vytvořeno 10 souborů,
 které byly ručně analyzovány a poslechnuty.
 \par
 Vygenerování deseti souborů trvá 8 vteřin,
-z nichž první čtyři probíhá inicializace systému
+z~nichž první čtyři probíhá inicializace systému
 a samotné generování trvá 4 vteřin.
 Průměrně tak vygenerování jedné skladby trvá $0.2$ vteřiny,
 plus 5 fixních vteřin kvůli inicializaci.
@@ -2284,7 +2284,7 @@ vždy s~jiným parametrem temperature.
 Hodnoty parametrů jsou zvoleny stejně, tedy 0.7, 1.0, 1.3 a 2.0.
 \par
 
-Čas potřebný k harmonizaci skladby se oproti předchozímu experimentu nezměnil.
+Čas potřebný k~harmonizaci skladby se oproti předchozímu experimentu nezměnil.
 Harmonizace deseti skladeb opět trvala 8 vteřin
 se stejným rozdělením času mezi inicializaci systému a generování harmonie.
 
@@ -2358,7 +2358,7 @@ jako tomu bylo u~předchozích pokusů.
 \par
 
 Systém se při harmonizaci těchto skladeb dopouští velmi podobných chyb, 
-jako v předchozím experimentu.
+jako v~předchozím experimentu.
 Příčiny tohoto chování lze spatřovat opět v~malém modelu.
 Pokud si není schopen zapamatovat krátkou melodii z~trénovací sady,
 je pravděpodobné, že neznámou melodii harmonizovat lépe nebude.
@@ -2379,8 +2379,8 @@ zabralo systému 16 vteřin.
 Inicializace opět trvala 4 vteřiny, čímž je potvrzena její fixní doba.
 Zbývajících 12 vteřin systém generoval jednotlivé soubory.
 Při deseti souborech to je průměrně $1.2$ vteřiny na jeden soubor.
-Harmonizace každého taktu melodie tak v průměru zabere $0.15$ vteřiny,
-což je pomalejší o $0.05$ sekund oproti melodiím s dvěma takty.
+Harmonizace každého taktu melodie tak v~průměru zabere $0.15$ vteřiny,
+což je pomalejší o~$0.05$ sekund oproti melodiím s~dvěma takty.
 
 \begin{figure*}[h]\centering
     \centering
@@ -2399,7 +2399,7 @@ To znamená, že pokud se akordy mění, je to ve správný čas.
 Ve výsledku však lze říci, že delší skladby, oproti těm krátkým, 
 jsou harmonizovány lépe.
 Důvodem je, že v~celé době trvání má systém více prostoru se projevit 
-a vygenerovat části, které s původní melodií ladí.
+a vygenerovat části, které s~původní melodií ladí.
 \par
 
 Jako příklad za všechny z~tohoto experimentu,
@@ -2416,25 +2416,25 @@ Je také vidět, že poslední modrá část už není celý akord, ale samotný
 \end{figure*}
 
 \section{Harmonizace velmi dlouhé melodie}
-Posledním experimentem s modelem je harmonizace velmi dlouhé skladby.
+Posledním experimentem s~modelem je harmonizace velmi dlouhé skladby.
 Uvažovaná skladba má délku 127 taktů, 
 a tak je potřeba změnit paramet \emph{num\_steps} 
-z původní hodnoty 64 na $ 32 * 127 = 4064$ kroků.
-Stejně jako u předchozích experimentů budou skladby generovány
-s parametrem temperature o hodnotách 0.7, 1.0, 1.3 a 2.0.
+z~původní hodnoty 64 na $ 32 * 127 = 4064$ kroků.
+Stejně jako u~předchozích experimentů budou skladby generovány
+s~parametrem temperature o~hodnotách 0.7, 1.0, 1.3 a 2.0.
 Cílem je ověřit, že model vykazuje lepší výsledky 
 při harmonizaci delších skladeb.
-Dále je cílem zjistit, o kolik se zvýší doba harmonizace jednoho taktu,
-s ohledem na předchozí experiment,
-kdy se doba zvýšila o $0.05$ sekundy při použití čtyřikrát delší skladby.
+Dále je cílem zjistit, o~kolik se zvýší doba harmonizace jednoho taktu,
+s~ohledem na předchozí experiment,
+kdy se doba zvýšila o~$0.05$ sekundy při použití čtyřikrát delší skladby.
 \par
 Vygenerování deseti skladeb trvalo 5:24 minut.
 Po odečtení doby inicializace zbývá na generování 5:20 minut,
 tedy $320$ vteřin.
 Průměrná doba harmonizace jedné skladby činí $32$ sekund.
 Průměr každého taktu je tedy $0.25$s.
-V porovnání s délkou harmonizace předchozích experimentů
-se jedná o nepatrné zvýšení o $0.15$, respektive $0.1$ vteřiny.
+V~porovnání s~délkou harmonizace předchozích experimentů
+se jedná o~nepatrné zvýšení o~$0.15$, respektive $0.1$ vteřiny.
 Srovnání lze pozorovat na grafu na obrázku \ref{obrazekCasHarmonizace}.
 
 \begin{figure*}[h]\centering
@@ -2445,19 +2445,19 @@ Srovnání lze pozorovat na grafu na obrázku \ref{obrazekCasHarmonizace}.
     \label{obrazekCasHarmonizace}
 \end{figure*}
 
-Z harmonizačního hlediska jsou na tom výsledky lépe než v předchozích experimentech.
+Z~harmonizačního hlediska jsou na tom výsledky lépe než v~předchozích experimentech.
 Ve skladbě nevadí dlouhé akordy (za předpokladu použití správného syntetizátoru),
 jelikož je model včas změní na jiný.
 Dlouhé akordy se, oproti předchozím experimentům,
-vyskytují spíše ve skladbách generovaných s nízkou (0.7) a výchozí (1.0) hodnotou temperature.
-Harmonizace skladeb s tímto nastavením lze považovat za dobře provedené.
-Nicméně i v nich lze najít disharmonie.
+vyskytují spíše ve skladbách generovaných s~nízkou (0.7) a výchozí (1.0) hodnotou temperature.
+Harmonizace skladeb s~tímto nastavením lze považovat za dobře provedené.
+Nicméně i v~nich lze najít disharmonie.
 \par
-Naopak při generování s vyššími hodnotami temperature (1.3 a 2.0) 
+Naopak při generování s~vyššími hodnotami temperature (1.3 a 2.0) 
 se akordy a jejich tóny střídají až příliš rychle.
-Harmonizace je s těmito hodnotami spíše náhodná.
+Harmonizace je s~těmito hodnotami spíše náhodná.
 \par
-Potvrdila se tedy domněnka z předchozího experimentu,
+Potvrdila se tedy domněnka z~předchozího experimentu,
 že model vykazuje lepší výsledky při harmonizaci
 delších skladeb.
 
@@ -2480,7 +2480,7 @@ které by měl znát z~trénovací sady.
 Ve vygenerovaných skladbách byly patrné dva směry.
 Prvním je použití mnoha akordů.
 Ty ale byly málokdy zavedeny do skladby v~pravý čas, 
-a tak celkový dojem z poslechu spíše kazily.
+a tak celkový dojem z~poslechu spíše kazily.
 Správná harmonie těchto akordů byla ojedinělá.
 Toto bylo pozorováno především u~krátkých skladeb 
 s~nízkou hodnotou parametru temperature.
@@ -2493,18 +2493,18 @@ Složení akordů z~menšího počtu tónů byl také jeden z~častých jevů.
 Případně akord začal celý a postupně přestaly znít některé jeho tóny.
 Přes všechny tyto problémy se v~každém experimentu objevilo několik skladeb,
 které měly alespoň z~části správnou nebo zajímavě provedenou harmonii.
-V každém experimentu (40 skladeb) bylo možné najít 4 až 6 skladeb,
+V~každém experimentu (40 skladeb) bylo možné najít 4 až 6 skladeb,
 které měly zdařilou harmonizaci.
-To znamená úspěch v deseti až patnácti procentech případů.
+To znamená úspěch v~deseti až patnácti procentech případů.
 Obecně lze říci, že krátké skladby, 
 které byly generovány s~vyšší hodnotou parametru temperature,
 byly lépe zpracované ve smyslu správné harmonizace.
-Harmonizace dlouhých skladeb s původní hodnotou temperature
+Harmonizace dlouhých skladeb s~původní hodnotou temperature
 byly převážně harmonizovány správně i přes částečné disonance.
 \par
 Co se týče trvání generování harmonie byly výsledky velmi uspokojivé.
-Doba generování jednoho taktu se i u delších skladeb pohybovala okolo $0.15$ vteřiny.
-V porovnání s dobou znění jednoho taktu je doba generování téměř zanedbatelná.
+Doba generování jednoho taktu se i u~delších skladeb pohybovala okolo $0.15$ vteřiny.
+V~porovnání s~dobou znění jednoho taktu je doba generování téměř zanedbatelná.
 
 \par
 Tyto skutečnosti naznačují, že i když je model pro použití v~harmonizaci malý,
@@ -2537,19 +2537,19 @@ Podobně, jako se provádí u~obrázků
 Tato práce by však vyžadovala použití datové sady, 
 která by všechny žánry dostatečně pokrývala 
 a všechny skladby by byly anotované.
-Dále by mohl být problém s licencemi skladeb případně celé takové datové sady.
+Dále by mohl být problém s~licencemi skladeb případně celé takové datové sady.
 \par
 
 Pro automatizaci harmonizace by bylo možné 
 využít také architektury neuronových sítí
 jiné než LSTM.
-Z nich jsou pro tento problém vhodné například
+Z~nich jsou pro tento problém vhodné například
 generativní kontradiktorní sítě, 
 více známe pod svým anglickým překladem 
 Generative adversarial networks,
 nebo pod zkratkou GAN.
 Případně auto-regresivní modely,
-které při generování sekvencí berou v potaz i předchozí vygenerovanou sekvenci. 
+které při generování sekvencí berou v~potaz i předchozí vygenerovanou sekvenci. 
 
 % diskuse výsledků
 % možnosti dalšího rozšíření.
@@ -2582,7 +2582,7 @@ Jako harmonizační systém byla vybrána již existující neuronová síť,
 jejíž použití je popsáno v~kapitole sedmé.
 Po jejím natrénování na popsané datové sadě byly provedeny experimenty,
 jimž se věnuje další kapitola.
-Zkoumanými vlastnostmi byla doba potřebná k harmonizaci skladby
+Zkoumanými vlastnostmi byla doba potřebná k~harmonizaci skladby
 a správnost harmonizace,
 která byla manuálně zjištěna subjektivním poslechem.
 Následuje diskuse dosažených výsledků během testování,
