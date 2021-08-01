@@ -1499,7 +1499,7 @@ tento model bere v~úvahu předcházející akordy.
 
 \section{JamBot}
 \label{Jambot}
-JamBot je jeden z novějších přístupů generování akordů 
+JamBot \cite{Brunner_Jambot} je jeden z novějších přístupů generování akordů 
 a polyfonní hudby založený na LSTM sítích.
 Pracuje ve dvou krocích.
 V prvním kroce akordová LSTM vygeneruje postup, vývoj akordů ve skladbě.
@@ -1835,9 +1835,9 @@ Tento obsahuje zbývajících 10 \% dat.
 Velikost obou souborů dohromady je $8.39GB + 79.5GB = 87.9GB$ ($94 454 904 591$B).
 \par
 
-Celý proces automatizuje skript \emph{prepareData.sh}.
-Ten má celkově dva argumenty.
-Prvním argumentem je předána cesta ke složce s MIDI soubory.
+Celý proces automatizuje skript \emph{prepareData.sh},
+který má minimálně jeden a maximálně dva argumenty.
+První argument specifikuje cestu ke složce s MIDI soubory.
 Tento argument je povinný.
 Pokud je toto jediný argument, počítá se s tím,
 že složka MIDI soubory už obsahuje.
@@ -1845,7 +1845,7 @@ Skript také automatizuje konverzi databáze, která je popsaná v kapitole \ref
 V tomto případě je opět nutné jako první argument zadat 
 složku do které budou ukládány výsledky
 a jako druhý argument cestu k souboru se SQLite databází.
-Tímto způsobem bude převedena databáze až na SequenceExample soubor,
+Tímto způsobem bude převedena databáze na SequenceExample soubor,
 který je možné použít pro trénování sítě.
 \par
 
@@ -2447,7 +2447,7 @@ Srovnání lze pozorovat na grafu na obrázku \ref{obrazekCasHarmonizace}.
 \begin{figure*}[h]\centering
     \centering
     \includegraphics[width=0.8\linewidth]{obrazky/chartCasHarmonizace.png}\\[1pt]  
-    \caption{Graf založnený na datech ze všech experimentů,
+    \caption{Graf založený na datech ze všech experimentů,
      zobrazující vztah mezi délkou skladby, a dobou trvání harmonizace jednoho taktu.}    
     \label{obrazekCasHarmonizace}
 \end{figure*}
