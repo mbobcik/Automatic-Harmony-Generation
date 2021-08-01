@@ -52,14 +52,8 @@ které jsou v~této práci využity.
 Postupně jsou rozebrány neuronové sítě a neurony,
 rekurentní neuronové sítě a jejich LSTM architektura.
 \par
-Čtvrtá kapitola popisuje použitou datovou sadu.
-Nejprve je prozkoumán jeden z~formátů pro ukládání hudby.
-Je představeno, jak použití tohoto formátu, tak jeho vnitřní struktura.
-Dále se kapitola věnuje poskytnuté databázi.
-Ta obsahuje hudbu v~XML souborech.
-Tyto jsou prozkoumány, a následně je stanoven postup jejich konverze na vhodnější formát.
 
-Pátá kapitola obsahuje popis předchozích přístupů jiných autorů k~této problematice.
+Čtvrtá kapitola obsahuje popis předchozích přístupů jiných autorů k~této problematice.
 Mezi nimi lze nalézt například model založený na shodě šablon, 
 jenž porovnává části vstupní melodie s~těmi, které zná.
 Další přístup je založen na skrytých Markovových modelech, 
@@ -68,6 +62,12 @@ Na neuronových sítích jsou pak založeny modely firmy Google,
 které jsou představeny jako poslední v~této kapitole.
 Jeden z~těchto je použit v~této práci.
 \par
+Pátá kapitola popisuje použitou datovou sadu.
+Nejprve je prozkoumán jeden z~formátů pro ukládání hudby.
+Je představeno, jak použití tohoto formátu, tak jeho vnitřní struktura.
+Dále se kapitola věnuje poskytnuté databázi.
+Ta obsahuje hudbu v~XML souborech.
+Tyto jsou prozkoumány, a následně je stanoven postup jejich konverze na vhodnější formát.
 
 Šestá kapitola se věnuje návrhu systému,
 který umožňuje automatické generování harmonie na základě vstupní melodie.
@@ -107,6 +107,7 @@ Melodie vyjadřuje hlavní hudební myšlenku skladby.
 Přidáním více souznějících tónů dostáváme harmonii -- vertikální složku hudby.
 Rytmus dodává hudbě dynamiku střídáním dlouhých a krátkých,
 přízvučných a nepřízvučných tónů.
+Text této kapitoly čerpá z \cite{zenkl}, \cite{cmiral} a \cite{kofron}.
 \par
 
 Nejen pro harmonizaci melodie je potřeba znát hudební nauku. 
@@ -138,7 +139,6 @@ navzdory tomu, že všechny mají stejnou výšku.
 Rozmanitou barvitost mají především velké orchestry.
 Výšku tónu určujeme podle frekvence chvění čili počtu kmitů za vteřinu. 
 Čím vyšší frekvence, tím vyšší tón a čím nižší frekvence, tím hlubší tón.
-\cite{zenkl,cmiral} 
 \par
 
 \section{Soustava a jména tónů}
@@ -162,7 +162,6 @@ Díky tomu má každý jednotlivý tón nejen svůj vlastní název,
 ale také ustálené označení (viz tabulka \ref{tabulkaOktav}).
 Například tón \emph{e} v~dvoučárkové oktávě se nazývá dvoučárkové \emph{e}
 a značí se buď $e^2$, nebo{ e''}.
-\cite{zenkl,cmiral}
 \par
 
 \begin{table}[]
@@ -182,7 +181,6 @@ a značí se buď $e^2$, nebo{ e''}.
 
 Kromě označení tónů písmeny se lze také setkat se solmizačními slabikami do, re, mi, fa, sol, la, si,
 které v~10. století zavedl italský mnich Guido z~Arezza.
-\cite{cmiral}
 \par    
 
 \section{Alterace}
@@ -194,7 +192,6 @@ Naopak snížení označujeme příponou -es.
 Existují ovšem různé výjimky.
 Například snížením tónů\emph{~e}~a\emph{~a} získáme es, respektive as.
 Pro snížené \emph{h} se, místo hes, používá název~b.
-\cite{zenkl}
 \par
 
 Alterace posunuje tón vždy právě o~půltón, 
@@ -204,11 +201,10 @@ V~rozmezí oktávy se nachází dva půltóny ({e-f, h-c}), a pět celých tón�
 Dohromady oktáva sestává z~dvanácti půltónů.
 Přehledné uspořádání tónů a půltónů v~oktávě lze vidět na klaviaturách klávesových nástrojů (viz obrázek \ref{obrazekRozlozeniKlaviatury}).
 Základní tóny leží na bílých klávesách, jejich alterace pak na černých.
-\cite{zenkl,cmiral}
 \par
 
 Lze si všimnout tónů, které mají stejnou výšku, ale různá jména.
-Těmto tónům říkáme enharmonické. Enharmonická záměna je pak nahrazení tónu tónem stejné výšky, ale jiného jména.\cite{zenkl}
+Těmto tónům říkáme enharmonické. Enharmonická záměna je pak nahrazení tónu tónem stejné výšky, ale jiného jména.
 
 \begin{figure*}[h]\centering
     \centering
@@ -236,19 +232,16 @@ nejpodstatnější složkou hudby.
 To je patrné především v~hudbě národů na nízkém stupni kultury,
 kde rytmy určené bicími nástroji, doplněné tleskáním a podupáváním,
 zaujímají přední postavení tamní hudby.
-\cite{cmiral}
 
 \section{Stupnice a tónina}
 \label{stupnice}
 
 Stupnice je postupná řada tónů v~rozsahu jedné oktávy.
 Při poslechu je zřejmé, že jednotlivé stupně mezi sebou nemají konstantní vzdálenost.
-\cite{kofron}
 Některé dvojice dělí půltón čili malá sekunda, 
 jiné větší krok (celý tón), velká sekunda.
 Ta je rovna vzdálenosti dvou půltónů.
 Vzdálenosti jednotlivých stupňů jsou dány pravidly.
-\cite{cmiral}
 Stupnice je možné rozdělit podle vzdáleností do několika kategorií.
 
 \begin{enumerate}
@@ -273,7 +266,6 @@ Stupnice je možné rozdělit podle vzdáleností do několika kategorií.
 V~diatonických stupnicích jsou od sebe stupně vzdáleny jak o~celé tóny, tak o~půltóny.
 V~chromatických pak pouze o~půltóny.
 Exotické stupnice se od předchozích liší zvláštním uspořádáním stupňů.
-\cite{kofron}
 \par
 
 Stupnici lze vytvořit od libovolného tónu.
@@ -282,11 +274,9 @@ v~nichž se uplatňují odvozené tóny nanejvýš dvakrát zvýšené nebo sní
 Výchozí tón stupnice je jejím základním tónem a podle něj se stupnice jmenuje.
 Například stupnice G dur začíná tónem \emph{g}, fis moll tónem \emph{fis}.
 Rozdělení dur nebo moll se určuje podle vzdáleností mezi jednotlivými stupni.
-\cite{zenkl}
 Durové stupnice označujeme velkým písmenem, mollové malým.
 Jednotlivé stupně stupnice se značí římskými číslicemi.
 Mimo to má každý stupeň svůj funkční název:
-\cite{kofron}
 
 \begin{enumerate} [label=\Roman*]
     \item tónika
@@ -309,7 +299,6 @@ Velmi často melodie tónikou začíná nebo se k~ní vrací.
 V~závěru melodie bývá tónika uplatňována nejčastěji.
 V~takovém případě působí melodie přesvědčivě uzavřena 
 a posluchač necítí potřebu dalšího pokračování.
-\cite{zenkl}
 \par
 
 \subsection{Durové stupnice}
@@ -329,7 +318,6 @@ upravit vzdálenosti mezi jednotlivými stupni tak,
 aby byly intervaly uspořádány jako ve stupnici C dur.
 Takové stupnice  se jmenují transponované, je jich dohromady 14.
 Sedm s~křížky a sedm s~béčky.
-\cite{kofron}
 \par
 
 Při tvoření transponovaných durových stupnic s~křížky 
@@ -343,7 +331,6 @@ G dur (jeden křížek), D dur, A~dur, E dur, H dur, Fis dur a Cis dur (sedm kř
 Křížky v~předznamenání stupnic jsou v~tomto pořadí:
 fis, cis, gis, dis, ais, eis, his.
 Tento způsob tvoření stupnic se nazývá \emph{postup v~kvintovém kruhu}.
-\cite{kofron}
 \par
 
 Durové stupnice s~béčky se vytvářejí podobně.
@@ -355,7 +342,6 @@ F dur (jedno bé), B dur, Es dur, As dur, Des dur, Ges dur, Ces dur (sedm bé).
 Béčka v~předznamenání jsou v~tomto pořadí:
 b, es, as, des, ges, ces, fes.
 Způsob tvoření stupnic s~béčky se nazývá \emph{postup v~kvartovém kruhu}.
-\cite{kofron}
 \par
 
 \subsection{Mollové stupnice}
@@ -371,7 +357,6 @@ Následující stupnice s~křížkem začíná na V. stupni a zvyšuje se II. st
 Takto vzniknou stupnice e moll (jeden křížek), h moll, fis moll, cis moll, gis moll, dis moll a ais moll (sedm křížků).
 Nová stupnice s~bé začíná na IV. stupni a sníží se VI. stupeň.
 Postupně vzniknou stupnice d moll (jedno bé), g moll, c moll, f moll, b moll, es moll, as moll (sedm bé).
-\cite{kofron}
 \par
 
 \subsection{Akordy}
@@ -382,7 +367,6 @@ Vztahem jednotlivých souzvuků se zabývá harmonie.
 Při souznění všech tónů akordu najednou se jedná o~harmonický akord.
 Pokud jsou tóny zahrány po sobě, pak jde o~melodický rozklad akordu.
 Akordy lze třídit podle různých hledisek.
-\cite{zenkl}
 
 \begin{itemize}
     \item Podle počtu tónů: trojzvuky, čtyřzvuky, pětizvuky, vícezvuky
@@ -396,7 +380,6 @@ Velká tercie je interval mezi prvním a třetím tónem durové stupnice
 a má tedy čtyři půltóny.
 Malá tercie je také interval mezi prvním a třetím tónem, nyní ale mollové stupnice.
 Má tedy pouze tři půltóny.
-\cite{zenkl}
 \par
 
 Nejčastěji používané akordy jsou ty složené právě z~tercií.
@@ -406,7 +389,6 @@ kde interval mezi prvním a posledním tónem tvoří kvintu.
 Přidáním další tercie vzniká septakord, ze čtyř za sebou pak nónový akord.
 Změnou pořadí tónů akordu (například posunutím základního tónu o~oktávu) 
 vznikne obrat akordu.
-\cite{zenkl}
 \par
 
 Kvintakordy se tedy tvoří z~durových nebo mollových stupnic.
@@ -416,12 +398,10 @@ Mollový ze spodní malé a horní velké.
 Dále je možné použití dvou stejně velkých tercií.
 Tak vzniká zvětšený nebo zmenšený kvintakord 
 složený ze dvou velkých, respektive malých tercií.
-\cite{kofron}
 Pro akordy se vžila stejná pravidla jako pro stupnice, respektive tóniny.
 Durové se zapisují velkým písmenem, mollové malým.
 Tak jako stupnice, také durové akordy znějí vesele.
 Mollové pak smutně, snížené až stísněně a zvětšené ostře, jasně.
-\cite{cmiral}
 Příkladem může být akord C dur složený z~tónů \emph{c-e-g} 
 nebo a moll z~tónů \emph{a-c-e}.
 \par
@@ -430,7 +410,6 @@ Kvintakordy dur a moll jsou konsonantní.
 Svým zněním plně uspokojují posluchače a nevyžadují dalšího postupu (rozvedení hudby).
 Naopak zvětšené nebo zmenšené jsou disonantní 
 a je zvykem je dále rozvést (pokračovat) jiným, konsonantním akordem.
-\cite{cmiral}
 
 \subsection{Funkce akordů}
 Harmonie se, kromě stavby akordů, zabývá také jejich uplatněním v~hudbě.
@@ -449,7 +428,6 @@ Akordy na vedlejších stupních (II., III., VI., VII.)
 vyjadřují také tyto harmonické funkce, ale jiným způsobem.
 Pomocí nich je možné akordy hlavních stupňů zastupovat
 a tímto způsobem obohatit harmonický doprovod písně.
-\cite{kofron,zenkl}
 \par
 
 Hlavní akordy mají stejný tónorod jako tónina.
@@ -457,7 +435,6 @@ V~durové tónině jsou durové, v~přirozené mollové jsou mollové.
 Avšak někdy se v~mollové tónině využívá harmonická mollová stupnice,
 která má zvýšený VII. stupeň.
 U~takových stupnic je pak dominanta durová.
-\cite{kofron}
 \par
 
 Funkčnost akordů vyjadřuje snahu akordu po pohybu, jeho pohybovou energii.
@@ -469,27 +446,21 @@ Ovšem při zaznění dominantního kvintakordu je cítit snaha po dalším post
 Člověk má dojem, jako by tóny dominanty chtěly stoupat vzhůru.
 Pro uklidnění je po dominantě potřeba zahrát tóniku.
 Ta je akordem klidu, harmonickým centrem tóniny.
-\cite{kofron}
 Ve většině písní také slouží jako přesvědčivý závěr.
-\cite{zenkl}
 Naopak dominanta, protože obsahuje citlivý tón stoupající, 
 je akordem pohybu a snaží se stoupat k~tónice.
-\cite{kofron}
 Subdominanta je také akordem pohybu 
 a má snahu je od tóniky odklonit k~dominantě.
-\cite{zenkl}
 Pokud je subdominanta mollová, pak také obsahuje citlivý tón, 
 nyní ale klesající.
 Tyto tři hlavní kvintakordy velmi často stačí 
 k~harmonizaci jednoduchých a krátkých skladeb.
-\cite{kofron}
 Harmonizace moderních či více uměleckých skladeb využívá mimo jiné
 také kvartové akordy, nepravidelné souzvuky,
 akordy zhuštěné sekundami (interval mezi I. a II. stupněm) nebo
 kombinace tonálně uvolněných akordů, případně až atonálních.
 Chvilková disharmonie skladby také nemusí být na škodu,
 jedná-li se o~umělecký záměr skladatele.
-\cite{zenkl}
 \par
 
 \section{Notopis}
@@ -564,7 +535,6 @@ Tyto dva klíče se používají nejčastěji.
 Pro orientaci v~těchto klíčích je dobré vědět, že
 tón $c^1$ se v~houslovém klíči nachází na první spodní pomocné lince 
 a v~basovém se nachází na první horní pomocné lince.
-\cite{cmiral,zenkl}
 \par
 
 \subsection{Pomlky}
@@ -575,7 +545,6 @@ a mají stejné hodnoty jako noty.
 Délka pomlky je opět, jako u~not, 
 dána tvarem (viz obrázek \ref{obrazekPomlky}).
 Celá pomlka značí pomlku na jakýkoliv celý takt.
-\cite{cmiral,zenkl}
 
 \begin{figure*}[h]\centering
     \centering
@@ -596,7 +565,6 @@ Platnost posuvky před notou je do konce taktu.
 Je možné ukončit účinnost dříve, odrážkou ($\natural $).
 Zde ovšem platí, že pokud byla posuvka na začátku řádku, 
 odrážka platí do konce taktu.
-\cite{cmiral,zenkl}
 
 \subsection{Takty}
 Noty a pomlky se řadí do krátkých úseků, 
@@ -629,8 +597,7 @@ V~průběhu skladby může dojít ke změně taktu.
 Tato změna je značena taktovým označením hned za taktovou čáru, 
 kde změna začíná.
 Čtyřčtvrťový takt se většinou nazývá celý 
-a místo zlomku je značen velkým písmenem C.
-\cite{cmiral,zenkl}
+a místo zlomku je značen velkým písmenem C
 
 \chapter{Strojové učení}
 % rešerše strojového učení, jak funguje
@@ -919,8 +886,8 @@ a vypočítá chybu.
 Následně s pomocí gradientního sestupu zjistí
 jak se mají váhy změnit pro dosažení optimálnějšího řešení.
 Algoritmus se opakuje, dokud nenarazí na lokální,
-případně globální minimum chybové funkce v závislosti na váhách v neuronové síti.
-\cite{Raschka_GradientDescent, Goodfellow-et-al-2016}
+případně globální minimum chybové funkce v závislosti na váhách v neuronové síti
+\cite{Raschka_GradientDescent, Goodfellow-et-al-2016}.
 
 \begin{figure*}[h]\centering
     \centering
@@ -1130,19 +1097,217 @@ Díky tomu začíná být více populární a je často používána.
     \label{obrazekGRU}
 \end{figure*}
 
+
+\chapter{Přehled přístupů automatické harmonizace}
+\label{prehledPristupus}
+Pojem automatická harmonizace melodie označuje disciplínu, která se zabývá tvorbou modelu, 
+který dokáže vygenerovat harmonický doprovod k~dané melodii.
+Samotná harmonizace je složitý úkol, 
+protože tu samou melodii lze harmonizovat mnoha různými způsoby.
+Správná harmonie závisí na subjektivním pocitu, hudebním žánru a dalších faktorech.
+V~hudbě se ustálilo mnoho pouček a zákonů o~tom, které akordy k~sobě patří
+a jak na sebe navazují.
+Často určují jemné nuance, či jsou podmíněny kulturním vlivem, 
+což je pro stroj velmi obtížné zachytit
+\cite{YinCheng_comparativeStudy}.
+\par
+
+V~této kapitole bude představeno několik přístupů k~automatické harmonizaci.
+
+\section{Model založený na shodě šablon}
+\label{shodaSablon}
+Tento model nejdříve rozdělí všechny melodie z~trénovací sady po polovinách taktů 
+a pro každý, takto vytvořený segment vytvoří profil výšky tónů 
+(dále jen PCP\footnote{z anglického Pitch Class Profile}).
+\cite{YinCheng_comparativeStudy}
+PCP je dvanácti-dimenzionální binární vektor, 
+kde každá složka reprezentuje přítomnost 
+každého z~dvanácti možných půltónů v~daném půl-taktu.
+\cite{fujishima}
+PCP nového segmentu se porovná s~těmi z~trénovací sady
+a spočítá se podobnostní skóre.
+Nový segment je pak označen takovým akordem,
+který měl jemu nejpodobnější segment v~trénovací sadě -- s~nejvyšším skóre.
+Jestliže má nejvyšší skóre několik segmentů,
+je výsledný akord vybrán náhodně s~rovnoměrným rozložením pravděpodobnosti.
+Označení akordu je opět ve formě PCP, a to tak,
+že všechny tóny náležící akordu jsou nastaveny do 1.
+\par
+
+Nevýhodou tohoto modelu je, že určuje jednotlivé segmenty nezávisle bez toho,
+aby bral v~úvahu sousední akordy nebo postup akordů ve skladbě
+\cite{YinCheng_comparativeStudy}.
+
+\section{Skryté Markovovy modely}
+Jednou z~nejpoužívanějších metod generování akordů a harmonizace melodie, 
+před současným rozšířením hlubokého učení, byly skryté Markovovy modely 
+(dále HMM \footnote{z~anglického Hidden Markov Model}).
+HMM jsou pravděpodobnostní nástroj, 
+s~jehož pomocí lze modelovat sekvence se skrytými proměnnými.
+Označení akordů je považováno právě za skrytou proměnnou a 
+HMM se snaží odhadnout nejpravděpodobnější sekvenci akordů
+k~daným notám melodie.
+Na rozdíl od předchozího přístupu 
+tento model bere v~úvahu předcházející akordy.
+\cite{YinCheng_comparativeStudy}
+
+\section{JamBot}
+\label{Jambot}
+JamBot \cite{Brunner_Jambot} je jeden z novějších přístupů generování akordů 
+a polyfonní hudby založený na LSTM sítích.
+Pracuje ve dvou krocích.
+V prvním kroce akordová LSTM vygeneruje postup, vývoj akordů ve skladbě.
+Tato série akordů je následně vstupem druhé LSTM sítě,
+která na základě vstupu vygeneruje polyfonní hudbu (viz obrázek \ref{obrazekArchitekturaJambot}).
+Tento model tedy nejprve vygeneruje harmonii a k ní poté melodii.
+\par
+
+\begin{figure*}[h]\centering
+    \centering
+    \includegraphics[width=1\linewidth]{obrazky/JambotArchitecture.png}\\[1pt]  
+    \caption{Architektura modelu JamBot. \cite{Brunner_Jambot}}    
+    \label{obrazekArchitekturaJambot}
+\end{figure*}
+
+K reprezentaci dat pro akordovou LSTM 
+je využita technika ze zpracování přirozeného jazyka 
+(dále jen NLP z anglického Natural Language Precessing).
+Každý jedinečný akord je nahrazen číselným identifikátorem (id).
+K překladu mezi akordy a identifikátory pak slouží slovník dvojic (id, akord).
+V korpusu akordů je pouze N nejčastěji použitých akordů v trénovací sadě.
+Akordy, které se do korpusu nevlezly (vyskytují se příliš řídce),
+získají označení "neznámý akord".
+V práci byla zvolena velikost korpusu 50 akordů.
+Před vstupem do LSTM sítě byly identifikátory 
+zakódovány na \emph{jedna z N} reprezentaci
+\footnotetext{One-hot-encoding}.
+Vstupní vektor má velikost korpusu.
+Všechny záznamy vektoru jsou nastaveny na 0,
+kromě toho s indexem rovným identifikátoru akordu,
+který je nastaven na 1.
+\par
+Akordová LSTM má dvě vrstvy.
+První je takzvaná embeddingová vrstva,
+která opět využívá techniku používanou v NLP.
+Tou jsou word embeddings, které mapují slova (v tomto případě akordy)
+z korpusu do vektorů reálných čísel.
+Word embeddings nejsou pevně dané a musí být natrénovány.
+Vektorový prostor pak zachycuje vztahy mezi jednotlivými slovy
+a sémanticky podobná slova jsou v tomto prostoru blízko sebe.
+V této práci byly místo slov použity akordy.
+Za embeddingovou vrstvou následuje LSTM vrstva,
+která předpovídá akordy, které následují po aktuálním.
+K predikci nové posloupnosti potřebuje základ libovolné délky.
+Další akord je získán vzorkováním výstupního pravděpodobnostního vektoru
+s parametrem temperature.
+Tento akord je potom dán zpět na vstup této vrstvy
+a na jeho základě je generován další a tak dále.
+Parametr temperature ovlivňuje různorodost generované posloupnosti.
+Nulová temperature znamená, že pro daný základ 
+budou všechny následující akordy stejné.
+\par
+Vstupní data pro polyfonní LSTM jsou ve tvaru tzv. pianoroll (více o pianoroll viz níže).
+Každý takt je rozdělen na osm částí 
+a každá část je reprezentována vektorem s velikostí rovné počtu tónů.
+Pokud v dané části tón zní, pak je příslušný prvek vektoru nastaven na 1.
+Jedná se o podobný princip jako v části \ref{shodaSablon}.
+Při generování melodie má vstup polyfonní LSTM několik částí.
+První je již zmiňovaný pianoroll vektor aktuálního kroku.
+Kromě aktuálně znějících tónů je na vstupu také embedding 
+aktuálního akordu.
+Díky tomu je možné naučit se, které tóny zní při kterém akordu.
+V hudbě melodie většinou "postupuje" k dalšímu akordu.
+Kvůli tomu je další částí vstupu akord následující aktuálnímu kroku.
+Generované písničky jsou tak více strukturované.
+Poslední částí vstupu je binární počítadlo,
+které počítá od 0 do 7 v každém taktu.
+Toto umožňuje LSTM orientovat se uvnitř taktu
+a ví, kolik kroků zbývá do změny akordu 
+(akordy se mění pouze na začátku taktu, viz výše).
+Při generování nové písně je na vstupu opět nejprve
+základ skládající se z pianoroll vektoru a příslušných akordů.
+Noty jsou vzorkovány individuálně.
+Pokud je nota vybrána,
+pravděpodobnost výběru ostatních not ovlivněna není
+\cite{Brunner_Jambot}.
+
+\section{Google Magenta}
+\label{magenta}
+Magenta je open-source výzkumný projekt založený Google Brain týmem.
+Jedná se o~soubor nástrojů a modelů hlubokého i posilovaného učení.
+Zaměřuje se především na využití strojového učení jako nástroje
+v~kreativním procesu.
+Projekt je distribuován pro Python a JavaScript.
+Magenta.js je pouze API pro používání předtrénovaných modelů v~prohlížečích.
+Magenta pro Python je celá knihovna, která zahrnuje kromě předtrénovaných modelů
+také nástroje pro manipulaci dat, trénování vlastních modelů a generování
+nových výtvorů na jejich základě
+\cite{google_magentaHome}.
+Vytvořené modely se zabývají generováním a modifikací hudebních 
+a obrazových uměleckých dat.
+Obrazové modely jsou například image\_stylization\footnote{https://github.com/magenta/magenta/tree/master/magenta/models/image\_stylization},
+který vytvoří nový obraz na základě obsahu jednoho a stylu druhého\cite{dumoulin2017learned},
+nebo sketch-rnn\footnote{https://github.com/magenta/magenta/tree/master/magenta/models/sketch\_rnn},
+tedy rekurentní neuronovou síť, která se pokouší domalovat člověkem vytvořený náčrt,
+popřípadě načrtnout obrázek dle zadané třídy\cite{ha2017neural}.
+\par
+
+Z~hudebních modelů Magenta obsahuje Coconet, 
+který doplňuje zadanou melodii o~kontrapunkt, 
+tedy o~protihlas více melodií\cite{kofron, huang2017counterpoint}.
+Rozdílem oproti klasickým algoritmům doplňující kontrapunkt
+je oproštění od chronologického postupu od začátku skladby ke konci.
+Naopak noty jsou generovány v~jakémkoliv pořadí tak, 
+že model opakovaně přepisuje a maže svou vlastní práci.
+Při trénování model přijímá čtyřhlasou harmonii s~náhodně odstraněnými notami a snaží se tento vstup rekonstruovat.
+Na nižší úrovni je vstup tří dimenzionální pole, 
+kde jedna z~dimenzí vymezuje čtyřhlas, další číslo MIDI noty a poslední čas\footnote{V literatuře se pole s~dimenzemi (MIDI nota, čas) nazývají pianoroll}.
+Tento objekt je vstupem konvoluční neuronové sítě.  
+Výstupem je objekt o~stejné velikosti, 
+nyní obsahující pravděpodobnosti not ve smazaných částech
+\cite{huang2017counterpoint}.
+Tento natrénovaný model lze vyzkoušet jako Google Doodle na \url{https://www.google.com/doodles/celebrating-johann-sebastian-bach}
+\par
+Jedním z~dalších Magenta modelů, které se zabývá hudbou je Polyphony RNN. 
+Ten aplikuje jazykové modely ke generování polyfonní hudby za použití LSTM neuronových sítí
+a je založen na projektu BachBot, který je popsán v~následující citaci \cite{Liang_AutomaticComposition}.
+Na rozdíl od modelu Melody RNN, který také využívá jazykových modelů, 
+Polyphony RNN dokáže pracovat s~více souběžnými notami.
+Tento model tedy pracuje také s~vícehlasem.
+Více-hlasý vstup je zde modelován jako jeden proud notových událostí se speciálními řídícími symboly.
+Skladba je rozdělena na stejné časové úseky (stepy) 
+a každý z~úseků obsahuje seznam aktivních not.
+Noty jsou v~každém úseku seřazeny podle výšky (v~MIDI formátu) 
+a je popsán jejich vztah v~závislosti k~předchozímu stavu tónu
+\cite{google_git_polyphony}.
+
+Pro generování nové skladby potřebuje model tzv. primer, tedy pár not, 
+použitých jako počátek skladby. 
+Primer lze vložit ve třemi způsoby, a to jako počáteční akord,
+počáteční melodie, nebo MIDI soubor.
+Tento vstup lze vložit do modelu před generováním,
+tedy ve vygenerované sekvenci vstup nebude, ale bude jím ovlivněn.
+Toto se hodí například pro ustanovení tóniny generované skladby.
+Dále je možné použít vstup jako součást generované sekvence,
+což je vhodné při harmonizaci již existující melodie
+\cite{google_git_polyphony}.
+
 \chapter{Trénovací sada}
-% ABC, MIDI, GUIDO ... viz NOTES.md
-V~této části jsou popsány vstupní data.
-Zadání specifikuje některý ze standardizovaných formátů.
-Jedním z~nich je MIDI.
-Tento formát je popsán v~první části této kapitoly (viz \ref{midisoubory}).
-Veškerá data pro tuto diplomovou práci pochází z~webu hooktheory.
-Ten obsahuje takzvanou Theorytab DB, databázi přepisů známých písniček.
-Přepisy obsahují melodii, harmonii ve formě harmonické funkce 
-a odkaz na písničku na serveru youtube.com.
-Tyto hudební soubory je potřeba nejprve transformovat na MIDI soubory,
-aby systém odpovídal zadání.
-Jejich podobu a postup převedení do MIDI popisuje druhá část této kapitoly (viz \ref{hooktheoryDB}).
+Základním předpokladem pro aplikaci neuronových sítí 
+je existence vhodné trénovací sady, 
+která obsahuje anotovaná data.
+V našem případě je nutné generovat harmonii na základě znalosti melodie. 
+Jednou z možností, jak k tomuto problému přistoupit
+je využit model neuronové sítě Magenta. 
+Pro tento model jsou potřeba trénovací data, 
+která mají na vstupu izolované noty melodie a výstupem jsou izolované akordy
+
+Vstupní data budou v rámci práce získána tak, 
+že se využijí hudební soubory z platformy youtube 
+a anotace, která je dostupná v rámci projektu hooktheory.
+
+Pro sjednocení trénování i inference, 
+bude pro vstup použit standardní formát pro popis zvukových dat, tzv. MIDI.
 
 \section{Formát MIDI}
 \label{midisoubory}
@@ -1150,8 +1315,8 @@ MIDI (Musical Instrument Digital Interface) je volně přístupný standard,
 který specifikuje hardware i software 
 pro digitální komunikaci hudebních nástrojů,
 sekvencerů, počítačů, mixérů 
-a dokonce i jevištní techniky, jako jsou reflektory a lasery.
-\cite{MIDI_tutorials}
+a dokonce i jevištní techniky, jako jsou reflektory a lasery
+\cite{MIDI_tutorials}.
 \par
 
 Standardní MIDI soubor (zkráceně SFM) je formát binárních souborů 
@@ -1163,16 +1328,16 @@ ale parametry použitých nástrojů, informace o~tempu, kanálech,
 jednotlivé noty uložené jako kombinace (čas, hodnota, rychlost) 
 a další MIDI události.
 Data z~těchto souborů jsou načteny do nějakého přehrávače 
-a výsledný zvuk je vytvořen připojeným sound-enginem.
-\cite{MIDI_tutorials,Glatt_aboutMIDIFiles}
+a výsledný zvuk je vytvořen připojeným sound-enginem
+\cite{MIDI_tutorials,Glatt_aboutMIDIFiles}.
 \par
 
 Data v~SFM jsou uložena v~blocích.
 Každý z~těchto bloků začíná čtyřbajtovým textovým označením 
 a čtyřbajtovou délkou datového bloku udávající počet bajtů.
 Ihned po délce začíná datová část o~délce zadané v~hlavičce.
-Za datovou částí začíná buď další blok, nebo konec souboru.
-\cite{MIDI_tutorials,Back_SMF_Specif}
+Za datovou částí začíná buď další blok, nebo konec souboru
+\cite{MIDI_tutorials,Back_SMF_Specif}.
 \par
 
 Soubory MIDI mají dva druhy bloků. 
@@ -1453,200 +1618,6 @@ Ty, kterým jedna z~částí chybí, uloženy nejsou.
 Z~celkového počtu $13 633$ je tímto způsobem odstraněno zhruba $1500$ částí písniček.
 Celková velikost všech souborů je $9.57$MB ($10 042 700$B)
 
-\chapter{Přehled přístupů automatické harmonizace}
-\label{prehledPristupus}
-Pojem automatická harmonizace melodie označuje disciplínu, která se zabývá tvorbou modelu, 
-který dokáže vygenerovat harmonický doprovod k~dané melodii.
-Samotná harmonizace je složitý úkol, 
-protože tu samou melodii lze harmonizovat mnoha různými způsoby.
-Správná harmonie závisí na subjektivním pocitu, hudebním žánru a dalších faktorech.
-V~hudbě se ustálilo mnoho pouček a zákonů o~tom, které akordy k~sobě patří
-a jak na sebe navazují.
-Často určují jemné nuance, či jsou podmíněny kulturním vlivem, 
-což je pro stroj velmi obtížné zachytit
-\cite{YinCheng_comparativeStudy}.
-\par
-
-V~této kapitole bude představeno několik přístupů k~automatické harmonizaci.
-
-\section{Model založený na shodě šablon}
-\label{shodaSablon}
-Tento model nejdříve rozdělí všechny melodie z~trénovací sady po polovinách taktů 
-a pro každý, takto vytvořený segment vytvoří profil výšky tónů 
-(dále jen PCP\footnote{z anglického Pitch Class Profile}).
-\cite{YinCheng_comparativeStudy}
-PCP je dvanácti-dimenzionální binární vektor, 
-kde každá složka reprezentuje přítomnost 
-každého z~dvanácti možných půltónů v~daném půl-taktu.
-\cite{fujishima}
-PCP nového segmentu se porovná s~těmi z~trénovací sady
-a spočítá se podobnostní skóre.
-Nový segment je pak označen takovým akordem,
-který měl jemu nejpodobnější segment v~trénovací sadě -- s~nejvyšším skóre.
-Jestliže má nejvyšší skóre několik segmentů,
-je výsledný akord vybrán náhodně s~rovnoměrným rozložením pravděpodobnosti.
-Označení akordu je opět ve formě PCP, a to tak,
-že všechny tóny náležící akordu jsou nastaveny do 1.
-\par
-
-Nevýhodou tohoto modelu je, že určuje jednotlivé segmenty nezávisle bez toho,
-aby bral v~úvahu sousední akordy nebo postup akordů ve skladbě
-\cite{YinCheng_comparativeStudy}.
-
-\section{Skryté Markovovy modely}
-Jednou z~nejpoužívanějších metod generování akordů a harmonizace melodie, 
-před současným rozšířením hlubokého učení, byly skryté Markovovy modely 
-(dále HMM \footnote{z~anglického Hidden Markov Model}).
-HMM jsou pravděpodobnostní nástroj, 
-s~jehož pomocí lze modelovat sekvence se skrytými proměnnými.
-Označení akordů je považováno právě za skrytou proměnnou a 
-HMM se snaží odhadnout nejpravděpodobnější sekvenci akordů
-k~daným notám melodie.
-Na rozdíl od předchozího přístupu 
-tento model bere v~úvahu předcházející akordy.
-\cite{YinCheng_comparativeStudy}
-
-\section{JamBot}
-\label{Jambot}
-JamBot \cite{Brunner_Jambot} je jeden z novějších přístupů generování akordů 
-a polyfonní hudby založený na LSTM sítích.
-Pracuje ve dvou krocích.
-V prvním kroce akordová LSTM vygeneruje postup, vývoj akordů ve skladbě.
-Tato série akordů je následně vstupem druhé LSTM sítě,
-která na základě vstupu vygeneruje polyfonní hudbu (viz obrázek \ref{obrazekArchitekturaJambot}).
-Tento model tedy nejprve vygeneruje harmonii a k ní poté melodii.
-\par
-
-\begin{figure*}[h]\centering
-    \centering
-    \includegraphics[width=1\linewidth]{obrazky/JambotArchitecture.png}\\[1pt]  
-    \caption{Architektura modelu JamBot. \cite{Brunner_Jambot}}    
-    \label{obrazekArchitekturaJambot}
-\end{figure*}
-
-K reprezentaci dat pro akordovou LSTM 
-je využita technika ze zpracování přirozeného jazyka 
-(dále jen NLP z anglického Natural Language Precessing).
-Každý jedinečný akord je nahrazen číselným identifikátorem (id).
-K překladu mezi akordy a identifikátory pak slouží slovník dvojic (id, akord).
-V korpusu akordů je pouze N nejčastěji použitých akordů v trénovací sadě.
-Akordy, které se do korpusu nevlezly (vyskytují se příliš řídce),
-získají označení "neznámý akord".
-V práci byla zvolena velikost korpusu 50 akordů.
-Před vstupem do LSTM sítě byly identifikátory 
-zakódovány na \emph{jedna z N} reprezentaci
-\footnotetext{One-hot-encoding}.
-Vstupní vektor má velikost korpusu.
-Všechny záznamy vektoru jsou nastaveny na 0,
-kromě toho s indexem rovným identifikátoru akordu,
-který je nastaven na 1.
-\par
-Akordová LSTM má dvě vrstvy.
-První je takzvaná embeddingová vrstva,
-která opět využívá techniku používanou v NLP.
-Tou jsou word embeddings, které mapují slova (v tomto případě akordy)
-z korpusu do vektorů reálných čísel.
-Word embeddings nejsou pevně dané a musí být natrénovány.
-Vektorový prostor pak zachycuje vztahy mezi jednotlivými slovy
-a sémanticky podobná slova jsou v tomto prostoru blízko sebe.
-V této práci byly místo slov použity akordy.
-Za embeddingovou vrstvou následuje LSTM vrstva,
-která předpovídá akordy, které následují po aktuálním.
-K predikci nové posloupnosti potřebuje základ libovolné délky.
-Další akord je získán vzorkováním výstupního pravděpodobnostního vektoru
-s parametrem temperature.
-Tento akord je potom dán zpět na vstup této vrstvy
-a na jeho základě je generován další a tak dále.
-Parametr temperature ovlivňuje různorodost generované posloupnosti.
-Nulová temperature znamená, že pro daný základ 
-budou všechny následující akordy stejné.
-\par
-Vstupní data pro polyfonní LSTM jsou ve tvaru tzv. pianoroll (více o pianoroll viz níže).
-Každý takt je rozdělen na osm částí 
-a každá část je reprezentována vektorem s velikostí rovné počtu tónů.
-Pokud v dané části tón zní, pak je příslušný prvek vektoru nastaven na 1.
-Jedná se o podobný princip jako v části \ref{shodaSablon}.
-Při generování melodie má vstup polyfonní LSTM několik částí.
-První je již zmiňovaný pianoroll vektor aktuálního kroku.
-Kromě aktuálně znějících tónů je na vstupu také embedding 
-aktuálního akordu.
-Díky tomu je možné naučit se, které tóny zní při kterém akordu.
-V hudbě melodie většinou "postupuje" k dalšímu akordu.
-Kvůli tomu je další částí vstupu akord následující aktuálnímu kroku.
-Generované písničky jsou tak více strukturované.
-Poslední částí vstupu je binární počítadlo,
-které počítá od 0 do 7 v každém taktu.
-Toto umožňuje LSTM orientovat se uvnitř taktu
-a ví, kolik kroků zbývá do změny akordu 
-(akordy se mění pouze na začátku taktu, viz výše).
-Při generování nové písně je na vstupu opět nejprve
-základ skládající se z pianoroll vektoru a příslušných akordů.
-Noty jsou vzorkovány individuálně.
-Pokud je nota vybrána,
-pravděpodobnost výběru ostatních not ovlivněna není
-\cite{Brunner_Jambot}.
-
-\section{Google Magenta}
-\label{magenta}
-Magenta je open-source výzkumný projekt založený Google Brain týmem.
-Jedná se o~soubor nástrojů a modelů hlubokého i posilovaného učení.
-Zaměřuje se především na využití strojového učení jako nástroje
-v~kreativním procesu.
-Projekt je distribuován pro Python a JavaScript.
-Magenta.js je pouze API pro používání předtrénovaných modelů v~prohlížečích.
-Magenta pro Python je celá knihovna, která zahrnuje kromě předtrénovaných modelů
-také nástroje pro manipulaci dat, trénování vlastních modelů a generování
-nových výtvorů na jejich základě
-\cite{google_magentaHome}.
-Vytvořené modely se zabývají generováním a modifikací hudebních 
-a obrazových uměleckých dat.
-Obrazové modely jsou například image\_stylization\footnote{https://github.com/magenta/magenta/tree/master/magenta/models/image\_stylization},
-který vytvoří nový obraz na základě obsahu jednoho a stylu druhého\cite{dumoulin2017learned},
-nebo sketch-rnn\footnote{https://github.com/magenta/magenta/tree/master/magenta/models/sketch\_rnn},
-tedy rekurentní neuronovou síť, která se pokouší domalovat člověkem vytvořený náčrt,
-popřípadě načrtnout obrázek dle zadané třídy\cite{ha2017neural}.
-\par
-
-Z~hudebních modelů Magenta obsahuje Coconet, 
-který doplňuje zadanou melodii o~kontrapunkt, 
-tedy o~protihlas více melodií\cite{kofron, huang2017counterpoint}.
-Rozdílem oproti klasickým algoritmům doplňující kontrapunkt
-je oproštění od chronologického postupu od začátku skladby ke konci.
-Naopak noty jsou generovány v~jakémkoliv pořadí tak, 
-že model opakovaně přepisuje a maže svou vlastní práci.
-Při trénování model přijímá čtyřhlasou harmonii s~náhodně odstraněnými notami a snaží se tento vstup rekonstruovat.
-Na nižší úrovni je vstup tří dimenzionální pole, 
-kde jedna z~dimenzí vymezuje čtyřhlas, další číslo MIDI noty a poslední čas\footnote{V literatuře se pole s~dimenzemi (MIDI nota, čas) nazývají pianoroll}.
-Tento objekt je vstupem konvoluční neuronové sítě.  
-Výstupem je objekt o~stejné velikosti, 
-nyní obsahující pravděpodobnosti not ve smazaných částech
-\cite{huang2017counterpoint}.
-Tento natrénovaný model lze vyzkoušet jako Google Doodle na \url{https://www.google.com/doodles/celebrating-johann-sebastian-bach}
-\par
-Jedním z~dalších Magenta modelů, které se zabývá hudbou je Polyphony RNN. 
-Ten aplikuje jazykové modely ke generování polyfonní hudby za použití LSTM neuronových sítí
-a je založen na projektu BachBot, který je popsán v~následující citaci \cite{Liang_AutomaticComposition}.
-Na rozdíl od modelu Melody RNN, který také využívá jazykových modelů, 
-Polyphony RNN dokáže pracovat s~více souběžnými notami.
-Tento model tedy pracuje také s~vícehlasem.
-Více-hlasý vstup je zde modelován jako jeden proud notových událostí se speciálními řídícími symboly.
-Skladba je rozdělena na stejné časové úseky (stepy) 
-a každý z~úseků obsahuje seznam aktivních not.
-Noty jsou v~každém úseku seřazeny podle výšky (v~MIDI formátu) 
-a je popsán jejich vztah v~závislosti k~předchozímu stavu tónu
-\cite{google_git_polyphony}.
-
-Pro generování nové skladby potřebuje model tzv. primer, tedy pár not, 
-použitých jako počátek skladby. 
-Primer lze vložit ve třemi způsoby, a to jako počáteční akord,
-počáteční melodie, nebo MIDI soubor.
-Tento vstup lze vložit do modelu před generováním,
-tedy ve vygenerované sekvenci vstup nebude, ale bude jím ovlivněn.
-Toto se hodí například pro ustanovení tóniny generované skladby.
-Dále je možné použít vstup jako součást generované sekvence,
-což je vhodné při harmonizaci již existující melodie
-\cite{google_git_polyphony}.
-
 \chapter{Návrh systému}
 \label{navrhSystemu}
 Cílem práce je vytvořit systém,
@@ -1702,10 +1673,15 @@ kdy je možné rozdělit jeden .tfrecord soubor na více.
 Další výhodou je znovupoužitelnost modelu, který SequenceExamples využívá.
 Nevýhodou je velikost výsledných .tfrecord souborů s~touto definicí oproti původním datům 
 \cite{britz_undocumentedFeatures}.
-Tento formát může zvýšit velikost datové sady desetinásobně,
-avšak při převedení všech MIDI souborů (viz kapitola \ref{hooktheoryDB}) 
-je výsledná velikost $9.409e^3$krát vyšší (viz výpočet podle měření níže).
-\begin{equation}
+Dle dokumentace \cite{britz_undocumentedFeatures} 
+může použití tohoto formátu způsobit desetinásobný nárůst velikosti dat.
+Původní data však v článku uvedena nebyla 
+a je tedy nemožné specifikovat důvod malého nárůstu.
+V našem v případě byl zaznamenán 9410 násobný nárůst velikosti,
+neboť z 12103 MIDI souborů zabírajících 10MB celkem
+bylo vygenerován soubor s příponou .tfrecord zabírajícíc celkem 94GB dat 
+(viz výpočet podle měření \ref{rovniceVelikosti} níže).
+\begin{equation}\label{rovniceVelikosti}
      tf / m = 94454904591B / 10038169B = 9.409575e^3
 \end{equation}
 kde \emph{tf} je velikost všech výsledných .tfrecord souborů 
@@ -1722,8 +1698,8 @@ dostupné z~\url{https://web.archive.org/web/20150503021418/http://www.jsbchoral
 popřípadě z~\url{https://github.com/cuthbertLab/music21/tree/master/music21/corpus/bach}}.
 
 Kromě toho lze model natrénovat s~pomocí vlastních dat,
-kdy je také možné nastavit hyperparametry sítě jako například počet a velikost RNN vrstev.
-\cite{google_git_polyphony}
+kdy je také možné nastavit hyperparametry sítě jako například počet a velikost RNN vrstev
+\cite{google_git_polyphony}.
 \par
 
 Melodie bude představovat v tomto případě tzv. primer modelu.
@@ -1737,8 +1713,8 @@ Výstupem samotného modelu je protocol buffer
 kódující obsah struktury NoteSequence, 
 stejně jako na vstupu.
 Tato NoteSequence je interně převedena na výsledný MIDI soubor, 
-který obsahuje původní melodii(primer), která je následována její harmonizovanou podobou.
-\cite{google_git_polyphony}
+který obsahuje původní melodii(primer), která je následována její harmonizovanou podobou
+\cite{google_git_polyphony}.
 
 \chapter{Trénování systému}
 \label{trenovaniModelu}
