@@ -743,15 +743,24 @@ ale nízké hodnoty potenciálu se na výstupu blíží hodnotě $ -1 $.
     \label{obrazekAktivačníFunkce}
 \end{figure*}
 
-Další aktivační funkcí je tzv. \emph{Rectified Linear Unit} (dále jen ReLU).
-Jedná se o jednu z~nejpoužívanějších v moderních neuronových sítích,
-protože významně urychluje chod sítě.
-Důvodem je nižší počet výpočetních operací oproti sigmoidě
-nebo hyperbolickému tangentu.
+Mimo tyto základní aktivační funkce, které jsou historicky nejstarší, 
+však existují také další varianty,
+které jsou typickou součástí tzv. moderních neuronových sítí \cite{agarap_relu}. 
+Tyto funkce snižují výpočetní náročnost odstraněním několika operací.
+Nejběžnější alternativou Sigmoid je např. \emph{Rectified Linear Unit} (dále jen ReLU).
 Definice funkce ReLU je následující:
 \begin{equation}
     ReLU(x) = max(0, x)
 \end{equation}
+
+\begin{figure*}[h]\centering
+    \centering
+    \includegraphics[width=0.8\linewidth]{obrazky/ReLUGraf.png}\\[1pt]  
+    \caption{Aktivační funkce Rectified Linear Unit.}    
+    \label{obrazekAktivačníFunkceReLU}
+\end{figure*}
+
+
 Při kladných vstupních hodnotách propaguje hodnotu na výstup,
 zatímco místo záporných hodnot propaguje nulu.
 To s sebou přináší problém při učení,
@@ -800,9 +809,6 @@ Vzory jsou jakékoliv data, čísla, obrázky, zvuk, text a další.
 Ty musí být převedeny na vektory čísel, 
 které jsou následně použity jako vstup.
 Tyto sítě se také nazývají dopředné (Feedforward Neural Networks).
-Při činnosti neuronových sítí se přesně neví,
-co se uvnitř děje,
-fungují na principu zvaném černá skříňka, black box.
 Před uvedením sítě do provozu je potřeba 
 ji nejprve jednorázově natrénovat na datech z datové sady.
 Ty se nazývají trénovací a jsou podobná těm, 
@@ -898,7 +904,13 @@ Před začátkem algoritmu jsou všechny váhy v sítě
 inicializovány na náhodnou hodnotu z rozmezí $<0,1>$.
 Iterativní postup algoritmu ke globálnímu minimu 
 ilustruje obrázek \ref{obrazekGradientDescent}.
-
+Algoritmus provede výpočet nad trénovací datovou sadou 
+s počátečními nastavenými váhami
+a vypočítá chybu.
+Následně s pomocí gradientního sestupu zjistí
+jak se mají váhy změnit pro dosažení optimálnějšího řešení.
+Algoritmus se opakuje, dokud nenarazí na lokální,
+případně globální minimum chybové funkce v závislosti na váhách v neuronové síti.
 \cite{Raschka_GradientDescent, Goodfellow-et-al-2016}
 
 \begin{figure*}[h]\centering
@@ -953,12 +965,8 @@ Stejně jako u MSE platí, že lépe naučená síť má nižší hodnoty kří�
 Dokonale naučená neuronová síť má křížovou entropii rovnu nule.
 
 \section{Rekurentní neuronové sítě}
-Samotné neuronové sítě jsou pro některé typy problémů pořád příliš omezené.
-Jejich vstupem je vektor pevně dané velikosti, 
-výpočet probíhá v~předem známém počtu kroků 
-a na jeho konci je opět vektor pevné délky.
-Taková omezení neberou v~úvahu proudová data, 
-tedy sekvence na sobě závislých vektorů.
+Základní struktura neuronové sítě může být však pro některé úlohy omezující 
+neboť předpokládá, že na výstupu neuronová síť produkuje sekvence na sobě nezávislých vektorů.
 Rekurentní sítě umožňují mít takovou sekvenci jako vstup, 
 jako výstup nebo jako obojí.
 Principem RNN jsou zpětnovazební smyčky, kdy výstupy jedné vrstvy jsou
