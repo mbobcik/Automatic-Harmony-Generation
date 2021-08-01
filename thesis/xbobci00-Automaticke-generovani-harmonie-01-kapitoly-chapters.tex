@@ -1640,16 +1640,22 @@ což je vhodné při harmonizaci již existující melodie.
 
 \chapter{Návrh systému}
 \label{navrhSystemu}
-Cílem systému je přiřadit správnou harmonii k původní melodii.
-V~této kapitole je představen návrh systému,
-který umožní automatické generování harmonie.
+Cílem práce je vytvořit systém,
+který bude schopen automaticky vygenerovat harmonii k již existující melodii,
+což je úloha obtížnější, než prosté generování harmonie,
+neboť jednotlivé akordy nelze umisťovat svévolně. 
+Vstupem systému jsou postupně jednotlivé noty melodie
 Jak bylo napsáno, harmonie je souzvuk více zvuků najednou.
-Aby systém dokázal generovat tóny, které spolu opravdu souzní,
-musí obsahovat správně naučený model se správnými vstupy a výstupy.
-Diagram struktury navrženého systému je na obrázku \ref{obrazekArchitekturaSystemu}.
+Výstupem jsou tóny melodie doplněné o tóny harmonie.
+
+Architektura systému je uvedena na obrázku \ref{obrazekArchitekturaSystemu}.
 Systém se skládá z několika částí, 
 které na sebe navazují.
-
+Vstupem je melodie ve formátu MIDI,
+která je konvertována do posloupnosti not ve formátu NoteSequence.
+Výstupem jsou opět noty ve stejném formátu,
+který je konvertován do formátu MIDI.
+Pro potřeby učení jsou použity anotovaná data ve formátu SequenceExample.
 \begin{figure*}[h]\centering
     \centering
     \includegraphics[width=1\linewidth]{obrazky/SystemArchitecture.png}\\[1pt]  
@@ -1740,7 +1746,8 @@ Postup harmonizace melodie modelem a provedené experimenty jsou popsány v~kapi
 Před začátkem trénování je nutné nainstalovat Magentu.
 Jako testovací prostředí byl zvolen operační systém Ubuntu 20.04 LTS (Focal Fossa)
 nainstalovaný na počítači s~procesorem Intel Core i7-4720HQ s~frekvencí 2.6GHz
-a s~8GB operační paměti. 
+a s~8GB operační paměti.
+
 Pro instalaci knihovny na použitý operační systém je poskytnut instalační skript.
 
 \begin{verbatim}
