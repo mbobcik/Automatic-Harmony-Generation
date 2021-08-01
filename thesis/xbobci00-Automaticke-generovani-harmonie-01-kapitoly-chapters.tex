@@ -647,6 +647,8 @@ Harmonizace melodie je někde na pomyslné půli cesty mezi těmito extrémy.
 Na jednu stranu popsána pravidly hudební nauky,
 na stranu druhou nejsou pravidla zcela striktní 
 a ponechávají skladateli volnou ruku.
+Text této kapitoly čerpá z \cite{Goodfellow-et-al-2016}, \cite{Nicholson_NeuralNets}, 
+\cite{Chalupnik_NeuronoveSite}, \cite{Mehrotra_ElementsOfNNs}, \cite{Nicholson_NeuralNets}, \cite{Nicholson_Perceptron} a \cite{Kvasnicka_NeuronoveSite}.
 \par
 
 Strojové učení je ve~své~podstatě forma aplikované statistiky,
@@ -660,7 +662,6 @@ Trénovací výstupy může být obtížné získat automaticky,
 a proto musí být dodány člověkem, učitelem.
 Mezi algoritmy učící se s~učitelem patří například Support Vector Machines,
 k-nejbližších sousedů nebo rozhodovací stromy.
-\cite{Goodfellow-et-al-2016}
 \par
 
 Algoritmy bez učitele se učí pouze na základě vlastností objektů 
@@ -677,7 +678,6 @@ aby bylo zachováno co nejvíc informací.
 Mezi představitele tohoto přístupu patří například 
 shlukování k-nejbližších sousedů, 
 analýza hlavních komponent nebo lineární regrese. 
-\cite{Goodfellow-et-al-2016}
 
 \subsection*{Neurony}
 Základním stavebním prvkem umělých neuronových sítí je neuron,
@@ -727,7 +727,6 @@ výstup neuronu s aktivační funkcí sigmoidy se bude blížit nule.
 Naopak, je-li potenciál dostatečně vysoký, výstupem neuronu bude 1.
 Neuron s aktivační funkcí tanh se chová obdobně,
 ale nízké hodnoty potenciálu se na výstupu blíží hodnotě $ -1 $.
-\cite{Goodfellow-et-al-2016, Nicholson_NeuralNets}
 
 \begin{equation}\label{funkceSigmoid}
      Sigmoid(x) = \frac{e^x}{e^x + 1}
@@ -739,7 +738,7 @@ ale nízké hodnoty potenciálu se na výstupu blíží hodnotě $ -1 $.
 
 \begin{figure*}[h]\centering
     \centering
-    \includegraphics[width=0.8\linewidth]{obrazky/tanh_v_sigmoid.jpg}\\[1pt]  
+    \includegraphics[width=0.8\linewidth]{obrazky/novyTanhASigmoid.png}\\[1pt]  
     \caption{Aktivační funkce sigmoid a hyperbolický tangens.}    
     \label{obrazekAktivačníFunkce}
 \end{figure*}
@@ -760,7 +759,6 @@ kdy při záporných hodnotách je gradient nulový a učení stagnuje.
 Tento problém lze řešit upravenou funkcí \emph{Leaky ReLU},
 která místo nuly při záporném vstupu propaguje zápornou hodnotu blízkou nule.
 Gradient tedy není vždy nulový a neuron tak nepřestane reagovat.
-\cite{Mehrotra_ElementsOfNNs}
 \par
 
 Aktivační funkce obvykle používaná u klasifikačních problémů se nazývá softmax.
@@ -777,7 +775,6 @@ Následuje definice funkce softmax:
 ,kde $j \in (1,N)$ a N je délka výstupního vektoru.
 Na výstupní hodnotu je aplikována exponenciální funkce
 a výsledek je normalizován sumou exponenciál všech prvků vektoru.
-\cite{Mehrotra_ElementsOfNNs,Goodfellow-et-al-2016}
 
 \section{Perceptron}
 Nejjednodušší neuronovou sítí je perceptron.
@@ -796,7 +793,6 @@ Kategorie bodu je dána jeho příslušností k jednomu, nebo druhému poloprost
 Učení spočívá ve změně vah, tedy ve změně pozice nadroviny tak,
 aby každý poloprostor nejlépe odpovídal pozici kategorie, 
 kterou vyjadřuje. 
-\cite{Goodfellow-et-al-2016, Nicholson_Perceptron, Chalupnik_NeuronoveSite}
 
 \section{Neuronové sítě}
 Neuronové sítě jsou množina algoritmů určených k~rozpoznávání vzorů.
@@ -818,7 +814,6 @@ kvůli velkému množství výpočtů prováděných nad každým prvkem.
 Po dokončení učení je síť připravena k použití.
 To už zpravidla nepředstavuje takovou výpočetní zátěž
 a použití sítě je velmi rychlé.
-\cite{Goodfellow-et-al-2016, Nicholson_NeuralNets, Kvasnicka_NeuronoveSite, Mehrotra_ElementsOfNNs}
 \par
 
 Neuronové sítě mají většinou několik propojených vrstev.
@@ -843,7 +838,6 @@ Vstupem následující vrstvy už nejsou původní příznaky,
 ale příslušnost prvku k jednotlivým oblastem.
 Celý problém je transformován do nového prostoru 
 a druhá vrstva rozdělení zpřesňuje.
-\cite{Goodfellow-et-al-2016, Nicholson_NeuralNets, Kvasnicka_NeuronoveSite, Mehrotra_ElementsOfNNs}
 
 \begin{figure*}[h]\centering
     \centering
@@ -861,50 +855,9 @@ Samotná funkce \emph{f} se skládá z~několika zřetězených funkcí
 $f(x)=f^{(3)}(f^{(2)}(f^{(1)}(x)))$,
 kde $f^{(n)}$ označuje vrstvy sítě, 
 jejichž vstupem je vektor z~předchozí vrstvy 
-a výstupem je opět vektor.\cite{Goodfellow-et-al-2016}
+a výstupem je opět vektor.
 \par
 
-\section{Chybové funkce}
-Abychom mohli provést aktualizaci vah v průběhu učící fáze,
-používáme chybové funkce.
-Ty slouží k určení přesnosti sítě
-a při trénování také k učení sítě zpětným šířením chyby přes všechny neurony.
-\par
-Jednou z chybových funkcí je střední kvadratická chyba,
-neboli MSE z anglického \emph{Mean squared error}.
-Tato funkce odečte hodnotu na výstupu sítě od očekávané hodnoty.
-Aby chyba nebyla záporná, rozdíl hodnot je umocněn na druhou.
-Tímto způsobem se uměle zvyšuje rozdíl chyby mezi korektně
-a chybně klasifikovaným vzorkem,
-což zrychluje tréning sítě.
-Definice funkce čtvercové chyby je následující:
-\begin{equation}
-    MSE = \frac{1}{N} \sum^{N}_{i=1}(d_i - y_i)^2 
-\end{equation}
-,kde $N$ je počet prvků z trénovací sady, $d_i$ je očekávaná hodnota a $y_i$ je výstup sítě.
-\par
-
-Jinou, hojně využívanou chybovou funkcí je křížová entropie
-(anglicky Cross-Entropy),
-která se používá při klasifikaci do tříd.
-Předpokladem k použití jsou dva a více neuronů ve výstupní vrstvě.
-Tato funkce se často používá zároveň s aktivační funkcí softmax,
-která normalizuje výstupní hodnoty poslední vrstvy 
-do pravděpodobností náležitosti k jednotlivým třídám.
-Následuje definice funkce křížové entropie (CE) pro počet výstupních neuronů $C > 2$:
-\begin{equation}
-    CE = - \sum^C_i d_i log(y_i)
-\end{equation}
-,kde opět $d_i$ je očekávaná hodnota a $y_i$ je výstup sítě.
-\par
-
-Pro binární klasifikátor, tedy $C = 2$, lze funkci zjednodušit následovně:
-\begin{equation}
-    CE = - d_i log(y_i) + (1 - d_i) log(1 - y_i)
-\end{equation}
-Stejně jako u MSE platí, že lépe naučená síť má nižší hodnoty křížové entropie.
-Dokonale naučená neuronová síť má křížovou entropii rovnu nule.
-\cite{Goodfellow-et-al-2016, Kvasnicka_NeuronoveSite, Mehrotra_ElementsOfNNs}
 
 \section{Učení neuronové sítě}
 Jedním z nejpoužívanějších algoritmů k učení neuronových sítí
@@ -945,6 +898,7 @@ Před začátkem algoritmu jsou všechny váhy v sítě
 inicializovány na náhodnou hodnotu z rozmezí $<0,1>$.
 Iterativní postup algoritmu ke globálnímu minimu 
 ilustruje obrázek \ref{obrazekGradientDescent}.
+
 \cite{Raschka_GradientDescent, Goodfellow-et-al-2016}
 
 \begin{figure*}[h]\centering
@@ -953,6 +907,50 @@ ilustruje obrázek \ref{obrazekGradientDescent}.
     \caption{Gradientní sestup. \cite{Raschka_GradientDescent}}    
     \label{obrazekGradientDescent}
 \end{figure*}
+
+\subsection{Chybové funkce}
+Abychom mohli provést aktualizaci vah v průběhu učící fáze,
+používáme chybové funkce.
+Ty slouží k určení přesnosti sítě
+a při trénování také k učení sítě zpětným šířením chyby přes všechny neurony.
+\par
+Jednou z chybových funkcí je střední kvadratická chyba,
+neboli MSE z anglického \emph{Mean squared error}.
+Tato funkce odečte hodnotu na výstupu sítě od očekávané hodnoty.
+Aby chyba nebyla záporná, rozdíl hodnot je umocněn na druhou.
+Tímto způsobem se uměle zvyšuje rozdíl chyby mezi korektně
+a chybně klasifikovaným vzorkem,
+což zrychluje konvergenci trénování sítě.
+Nevýhodou naopak je, že jediná odlehlá predikce 
+může drasticky podhodnotit výkon modelu.
+Případně mnoho malých chyb (menších než 1) může výkon přecenit.
+Definice funkce čtvercové chyby je následující:
+\begin{equation}
+    MSE = \frac{1}{N} \sum^{N}_{i=1}(d_i - y_i)^2 
+\end{equation}
+,kde $N$ je počet prvků z trénovací sady, $d_i$ je očekávaná hodnota a $y_i$ je výstup sítě.
+\par
+
+Jinou, hojně využívanou chybovou funkcí je křížová entropie
+(anglicky Cross-Entropy),
+která se používá při klasifikaci do tříd.
+Předpokladem k použití jsou dva a více neuronů ve výstupní vrstvě.
+Tato funkce se často používá zároveň s aktivační funkcí softmax,
+která normalizuje výstupní hodnoty poslední vrstvy 
+do pravděpodobností náležitosti k jednotlivým třídám.
+Následuje definice funkce křížové entropie (CE) pro počet výstupních neuronů $C > 2$:
+\begin{equation}
+    CE = - \sum^C_i d_i log(y_i)
+\end{equation}
+,kde opět $d_i$ je očekávaná hodnota a $y_i$ je výstup sítě.
+\par
+
+Pro binární klasifikátor, tedy $C = 2$, lze funkci zjednodušit následovně:
+\begin{equation}
+    CE = - d_i log(y_i) + (1 - d_i) log(1 - y_i)
+\end{equation}
+Stejně jako u MSE platí, že lépe naučená síť má nižší hodnoty křížové entropie.
+Dokonale naučená neuronová síť má křížovou entropii rovnu nule.
 
 \section{Rekurentní neuronové sítě}
 Samotné neuronové sítě jsou pro některé typy problémů pořád příliš omezené.
@@ -967,8 +965,12 @@ Principem RNN jsou zpětnovazební smyčky, kdy výstupy jedné vrstvy jsou
 propojeny se svými vstupy.
 Systém si tak při řešení problému uchovává informaci
 o předešlých prvcích vstupních dat,
-která může ovlivnit následující výsledky.
-Použití rekurentních sítí znatelně zvětšuje prohledávaný prostor řešení,
+která může ovlivnit následující výsledky\cite{Karpathy_RNNs}.
+Takový přístup může být výhodný například
+v úloze harmonizace melodie,
+kde jsou typické závislosti akordů na předchozím průběhu skladby.
+Použití RNN je však spojeno s řadou komplikací.
+Například znatelně zvětšují prohledávaný prostor řešení,
 což zvyšuje požadavky na výpočetní čas při učení.
 \par
 Přenášení předchozích znalostí z důvodu ovlivnění 
@@ -976,8 +978,8 @@ následujících prvků je problémové.
 Velmi totiž závisí na vzdálenosti mezi prvky,
 které se mohou ovlivnit.
 Pokud jsou od sebe prvky až příliš vzdáleny,
-rekurentní síť se nedokáže naučit spojitost mezi nimi.
-\cite{Karpathy_RNNs, colah_lstm}
+rekurentní síť se nedokáže naučit spojitost mezi nimi
+\cite{colah_lstm}.
 
 \begin{figure*}[h]\centering
     \centering
@@ -991,7 +993,10 @@ rekurentní síť se nedokáže naučit spojitost mezi nimi.
 Long Short-Term Memory (dále jen LSTM) 
 jsou speciálním druhem rekurentních neuronových sítí.
 Jsou schopny se naučit i dlouhodobější závislosti v datech.
-S~touto vlastností byly primárně navrženy.\cite{colah_lstm}
+S~touto vlastností byly primárně navrženy.
+Princip činnosti LSTM bude vysvětlen podrobněji,
+neboť jsou základem použitého modelu v této práci.
+Následující text čerpá z \cite{colah_lstm}.
 \par
 
 \begin{figure*}[h]\centering
@@ -1003,11 +1008,11 @@ S~touto vlastností byly primárně navrženy.\cite{colah_lstm}
 
 Narozdíl od RNN mají LSTM čtyři vrstvy v~jednom opakujícím se modulu.
 Schéma LSTM modulu je na obrázku \ref{obrazekLSTMBunka}.
-Hlavním prvkem je horizontální čára,
-která vede horní částí diagramu.
-Ta vede vektor stavu buňky (anglicky cell state).
+Charakteristickým rysem je přítomnost vektoru
+který je znázorněn v horní částí diagramu.
+Ten vede stav buňky (anglicky cell state).
 Informaci ve stavu lze modifikovat malými, lineárními změnami.
-Každá buňka může informaci přidat, odebrat, nebo nechat beze změny.\cite{colah_lstm}
+Každá buňka může informaci přidat, odebrat, nebo nechat beze změny.
 \par
 
 V průběhu inference se musí LSTM nejprve rozhodnout,
@@ -1022,7 +1027,7 @@ a 0 znamená kompletně zapomenout.
 Práce forget gate layer a její funkce jsou ilustrovány na obrázku 
 \ref{obrazekForgetGate}, kde $W$ a $b$ jsou váhy a práh (bias),
 $h_{t-1}$ je předchozí výsledek, $x_t$ je aktuální vstup a 
-$[h_{t-1}, x_t]$ je konkatenace prvků.\cite{colah_lstm}
+$[h_{t-1}, x_t]$ je konkatenace prvků.
 
 \begin{figure*}[h]\centering
     \centering
@@ -1038,7 +1043,7 @@ opět vrstva se aktivační funkcí Sigmoid.
 Tato brána rozhoduje o tom, které hodnoty budou aktualizovány.
 Druhou částí je vrstva s aktivační funkcí tanh,
 jenž sestavuje vektor nových kandidátních hodnot
-určených pro přidání do stavu.\cite{colah_lstm}
+určených pro přidání do stavu.
 Činnost input gate layer opět ilustruje následující obrázek \ref{obrazekInputLayer}.
 
 \begin{figure*}[h]\centering
@@ -1053,7 +1058,7 @@ je potřeba aktualizovat starý stav buňky.
 Nejprve je násoben vektorem $f_t$, tedy tím, co má být zapomenuto.
 Následně je přičteno $i_t\tilde{C}_t $, 
 tedy nové kandidátní informace násobené hodnotou,
-která určuje, jak moc tyto informace ovlivní stav.\cite{colah_lstm}
+která určuje, jak moc tyto informace ovlivní stav.
 
 \begin{figure*}[h]\centering
     \centering
@@ -1067,7 +1072,7 @@ Dá se říci, že tento krok je podobný obrácení předchozího kroku.
 Nejprve projde aktuální vstup vrstvou sigmoid, 
 která rozhodne, co bude na výstupu.
 Následně projde stav buňky vrstvou s aktivační funkcí tanh
-a výsledek se vynásobí s výstupem sigmoid vrstvy.\cite{colah_lstm}
+a výsledek se vynásobí s výstupem sigmoid vrstvy.
 Práce je patrná na obrázku \ref{obrazekLSTMOutput}
 
 \begin{figure*}[h]\centering
@@ -1077,11 +1082,10 @@ Práce je patrná na obrázku \ref{obrazekLSTMOutput}
     \label{obrazekLSTMOutput}
 \end{figure*}
 
-Ne všechny LSTM mají stejnou strukturu jak výše popsaná síť.
-Do buněk lze zavést různé, více či méně zásadní prvky.
+Kromě výše popsané implementace vycházející z \cite{HochSchm97} však existuje i řada variant \cite{cho-etal-2014-learning, Gers_schmidhuber}.
 Jedna z variant například dovoluje forget gate a input gate
 podívat se na stav buňky ještě předtím, 
-než rozhodnou o jeho modifikaci.\cite{colah_lstm}
+než rozhodnou o jeho modifikaci\cite{Gers_schmidhuber}.
 Viz obrázek \ref{obrazekLSTMPeepholes}.
 
 \begin{figure*}[h]\centering
@@ -1092,7 +1096,8 @@ Viz obrázek \ref{obrazekLSTMPeepholes}.
 \end{figure*}
 
 Další variantou vycházející z architektury LSTM
-je Gated Reccurent Unit (dále jen GRU).
+je Gated Reccurent Unit (dále jen GRU) uvedená v
+\cite{cho-etal-2014-learning}.
 Nejvýznamnější je kombinace forget gate a input gate 
 do jediné update gate layer.
 Dále také kombinuje stav buňky s výstupní hodnotou.
@@ -1100,7 +1105,6 @@ Strukturu buňky GRU reprezentuje obrázek \ref{obrazekGRU}.
 Výsledkem těchto modifikací je buňka,
 která zjednodušuje jak výpočet, tak trénování.
 Díky tomu začíná být více populární a je často používána.
-\cite{colah_lstm}
 
 \begin{figure*}[h]\centering
     \centering
@@ -1699,12 +1703,15 @@ kdy je také možné nastavit hyperparametry sítě jako například počet a ve
 \cite{google_git_polyphony}
 \par
 
-Melodie bude představovat v tomto případě tzv. primer modelu. Vstupní soubor je transformován na NoteSequence strukturu přesně, jak bylo uvedeno v předchozí sekci.
+Melodie bude představovat v tomto případě tzv. primer modelu.
+Vstupní soubor je transformován na NoteSequence strukturu
+přesně, jak bylo uvedeno v předchozí sekci.
 Úkolem systému je doplnění této melodie o~složku harmonie. 
 Melodie proto bude použita jako součást výstupu.
 
 \section{Výstup}
-Výstupem samotného modelu je protocol buffer s~definicí NoteSequence, 
+Výstupem samotného modelu je protocol buffer 
+kódující obsah struktury NoteSequence, 
 stejně jako na vstupu.
 Tato NoteSequence je interně převedena na výsledný MIDI soubor, 
 který obsahuje původní melodii(primer), která je následována její harmonizovanou podobou.
