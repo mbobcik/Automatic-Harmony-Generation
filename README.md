@@ -1,5 +1,30 @@
 # Automatic Harmony Generation
 
+## Abstrakt
+Cílem této diplomové práce je studium problematiky generování harmonie na základě znalosti melodie a navržení systému,
+který tuto činnost smysluplně automatizuje. 
+V práci je popsán základ hudební nauky pro toto téma a předchozí a jiné přístupy k této problematice. 
+Dále je popsáno strojové učení, neuronové sítě a rekurentní neuronové sítě. 
+Je nastíněn návrh systému, postup jeho zprovoznění a použití. 
+Se systémem byly provedeny čtyři experimenty. 
+Harmonizace krátkých melodií uspokojivé nebyly. 
+Nicméně harmonizace delších melodií vykazovaly obecně lepší výsledky. 
+Jako možný důvod se jeví relativně malá použitá neuronová síť v systému.
+    
+## Abstract
+Goal of this master thesis is to study harmonization based on knowledge of given melody and to design a system 
+which will meaningfully automate this activity. 
+In the work there is covered basics of music theory needed for this topic and previous other approaches to this problematic. 
+There is also covered machine learning, neural networks and recurrent neural networks. 
+In the end, there is outlined design of the system, how to make it work and how to use it. 
+Four experiments were executed with the system. 
+Harmonization of the short melodies were unpleasant. 
+Harmonization of longer melodies were overall more successful though. 
+A possible cause might be relatively small used neural network of the system.
+
+_____
+
+
 **Vedoucí:** Vašíček Zdeněk, doc. Ing., Ph.D., UPSY FIT VUT
 
 **Student:** Bobčík Martin, Bc.
