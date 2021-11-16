@@ -8,3 +8,13 @@ geckodriver.log
 *.db
 
 *.pyc
+
+*.npz
+
+saved/
+
+runs/
+
+tmp/
+
+od vedoucího.txt
